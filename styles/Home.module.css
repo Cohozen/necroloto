@@ -77,7 +77,8 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 4rem 0;
+  padding: 3rem 0;
+  font-size: 50px;
 }
 
 .center::before {
@@ -104,18 +105,13 @@
   transform: translateZ(0);
 }
 
-.logo,
-.thirteen {
-  position: relative;
-}
-
 .thirteen {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 75px;
-  height: 75px;
-  padding: 25px 10px;
+  width: 320px;
+  height: 150px;
+  padding: 15px 10px;
   margin-left: 16px;
   transform: translateZ(0);
   border-radius: var(--border-radius);
@@ -133,8 +129,8 @@
 /* Conic Gradient Animation */
 .thirteen::before {
   animation: 6s rotate linear infinite;
-  width: 200%;
-  height: 200%;
+  width: 300%;
+  height: 300%;
   background: var(--tile-border);
 }
 
