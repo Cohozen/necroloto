@@ -1,10 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 
-// import necroloto1Img from '../public/necroloto_1.jpg'
-// import necroloto2Img from '../public/necroloto_2.jpg'
 import lotoImg from '../public/loto.jpg'
-
 
 export default function Home() {
   return (
@@ -24,9 +22,7 @@ export default function Home() {
                           <p className="text-sm md:text-base text-gray-50 mb-4">
                               Nécroloteurs, Faites vos prévisions ! <span className="italic">Pour l&apos;amour du jeu.</span>
                           </p>
-                          <a href="#" className="bg-transparent hover:bg-yellow-300 text-yellow-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent">
-                              Accéder aux paries
-                          </a>
+                          <Link href="/game" className="bg-transparent hover:bg-yellow-300 text-yellow-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent">Accéder aux paries</Link>
                       </div>
                       <div className="p-8 mt-12 mb-6 md:mb-0 md:mt-0 ml-0 md:ml-12 lg:w-2/3  justify-center">
                           <div className="h-48 flex flex-wrap content-center inline-block">
