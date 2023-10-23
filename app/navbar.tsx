@@ -7,7 +7,8 @@ import { UserButton, useAuth } from "@clerk/nextjs";
 
 const navigation = [
     { name: "Dashboard", href: "/" },
-    { name: "Playground", href: "/playground" }
+    { name: "Playground", href: "/playground" },
+    { name: "Mon pari", href: "/bet" }
 ];
 
 function classNames(...classes: string[]) {
