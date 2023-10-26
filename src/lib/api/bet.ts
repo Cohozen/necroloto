@@ -1,4 +1,5 @@
 import clientPromise from "../mongodb";
+import { ObjectId } from "bson";
 
 export interface CelebrityBet {
     name: string;
@@ -8,7 +9,7 @@ export interface CelebrityBet {
 }
 
 export interface Bet {
-    id: string;
+    _id?: ObjectId;
     userId: string;
     year: number;
     celebrities: CelebrityBet[];
@@ -34,7 +35,6 @@ export async function insertBet(userId: string, celebrities: CelebrityBet[]) {
     const collection = client.db("necroloto").collection("bets");
 
     const newBet: Bet = {
-        id: mongoObjectId(),
         userId,
         celebrities,
         year: new Date().getFullYear(),

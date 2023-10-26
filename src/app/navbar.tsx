@@ -4,21 +4,18 @@ import { usePathname } from "next/navigation";
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserButton, useAuth } from "@clerk/nextjs";
+import classNames from "classnames";
 
 const navigation = [
     { name: "Dashboard", href: "/" },
-    { name: "Playground", href: "/playground" },
-    { name: "Mon pari", href: "/bet" }
+    // { name: "Playground", href: "/playground" },
+    { name: "Parier", href: "/bet" }
 ];
-
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(" ");
-}
 
 export default function Navbar() {
     const pathname = usePathname();
 
-    const { isLoaded, userId, sessionId, getToken } = useAuth();
+    const { isLoaded, userId } = useAuth();
 
     if (!isLoaded || !userId) {
         return null;
