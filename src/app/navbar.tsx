@@ -5,21 +5,36 @@ import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserButton, useAuth } from "@clerk/nextjs";
 import classNames from "classnames";
-
-const navigation = [
-    { name: "Dashboard", href: "/" },
-    // { name: "Playground", href: "/playground" },
-    { name: "Parier", href: "/bet" }
-];
+import useSWR from "swr";
+import { useCallback } from "react";
 
 export default function Navbar() {
     const pathname = usePathname();
 
     const { isLoaded, userId } = useAuth();
 
+    const { data, isLoading } = useSWR(`/api/users/${userId}/bet`);
+
+    const navigation = useCallback(() => {
+        const defaultNav = [{ name: "Dashboard", href: "/" }];
+
+        return [
+            ...defaultNav,
+            data
+                ? { name: "Mon Parie", href: `/bets/${data._id}` }
+                : {
+                      name: "Parier",
+                      href: "/bet"
+                  }
+        ];
+    }, [data]);
+
     if (!isLoaded || !userId) {
         return null;
     }
+
+    console.log("nav bet : ", data);
+    console.log("userId : ", userId);
 
     return (
         <Disclosure as="nav" className="bg-white shadow-sm">
@@ -47,7 +62,7 @@ export default function Navbar() {
                                     </svg>
                                 </div>
                                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-                                    {navigation.map((item) => (
+                                    {navigation().map((item) => (
                                         <a
                                             key={item.name}
                                             href={item.href}
@@ -87,7 +102,7 @@ export default function Navbar() {
 
                     <Disclosure.Panel className="sm:hidden">
                         <div className="space-y-1 pt-2 pb-3">
-                            {navigation.map((item) => (
+                            {navigation().map((item) => (
                                 <Disclosure.Button
                                     key={item.name}
                                     as="a"
