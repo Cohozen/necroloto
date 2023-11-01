@@ -1,4 +1,4 @@
-import { CelebrityBet, getBetByUser, insertBet } from "../../lib/api/bet";
+import { CelebrityBet, getBetByUser, insertBet } from "@/lib/api/bet";
 import { Card, Title, Text, Grid, TextInput, Button } from "@tremor/react";
 import { auth } from "@clerk/nextjs";
 import InsertForm from "./insertForm";

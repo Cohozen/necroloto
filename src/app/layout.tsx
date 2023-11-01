@@ -1,11 +1,11 @@
 import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/react";
-import Nav from "./nav";
 import { Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 
-import { SWRProvider } from "./swr-provider";
+import { SWRProvider } from "@/utils/providers/swr-provider";
+import Navbar from "@/components/layout/navbar";
 
 export const metadata = {
     title: "Necroloto",
@@ -19,7 +19,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <html lang="fr" className="h-full bg-gray-50">
                     <body className="h-full">
                         <Suspense>
-                            <Nav />
+                            <Navbar />
                         </Suspense>
                         {children}
                         <Analytics />
