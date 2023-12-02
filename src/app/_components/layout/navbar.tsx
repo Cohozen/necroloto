@@ -5,15 +5,15 @@ import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { UserButton, useAuth } from "@clerk/nextjs";
 import classNames from "classnames";
-import useSWR from "swr";
 import { useCallback } from "react";
+import useClerkSWR from "@/utils/hooks/useClerkSWR";
 
 export default function Navbar() {
     const pathname = usePathname();
 
     const { isLoaded, userId } = useAuth();
 
-    const { data, isLoading } = useSWR(`/api/users/${userId}/bet`);
+    const { data, isLoading } = useClerkSWR(`/api/users/${userId}/bet`);
 
     const navigation = useCallback(() => {
         const defaultNav = [{ name: "Dashboard", href: "/" }];

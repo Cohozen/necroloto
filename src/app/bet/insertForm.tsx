@@ -1,12 +1,8 @@
 "use client";
 
 import { Button, TextInput } from "@tremor/react";
-import { CelebrityBet, insertBet } from "../../lib/api/bet";
 
 export default async function InsertForm() {
-
-
-
     return (
         <>
             <div className="grid grid-cols-3 gap-4">
