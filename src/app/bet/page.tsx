@@ -1,14 +1,15 @@
-import { CelebrityBet, getBetByUser, insertBet } from "@/lib/api/bet";
-import { Card, Title, Text, Grid, TextInput, Button } from "@tremor/react";
-import { auth } from "@clerk/nextjs";
+import { getBetByUser } from "@/lib/api/bet";
+import { Card, Title, Text, Grid } from "@tremor/react";
+import { useUser } from "@clerk/nextjs";
 import InsertForm from "./insertForm";
 
 export default async function BetPage() {
-    const { userId }: { userId: string | null } = auth();
+    const { user } = useUser();
+
     const getBet = async () => {
-        console.log("user?.id : ", userId);
-        if (userId) {
-            const result = await getBetByUser(userId);
+        if (user) {
+            console.log("user?.id : ", user.id);
+            const result = await getBetByUser(user.id);
             console.log("result get : ", result);
         }
     };
@@ -33,11 +34,11 @@ export default async function BetPage() {
     return (
         <main className="p-4 md:p-10 mx-auto max-w-7xl">
             <Title>Mon Pari</Title>
-            <Text>{userId ? "Vous n'avez pas encore parié !" : " Voici vos paries :"}</Text>
+            <Text>{user?.id ? "Vous n'avez pas encore parié !" : " Voici vos paries :"}</Text>
 
             {/* Main section */}
             <Card className="mt-6">
-                <InsertForm/>
+                <InsertForm />
             </Card>
 
             {/* KPI section */}

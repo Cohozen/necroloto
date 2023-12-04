@@ -1,5 +1,5 @@
 import { Title, Text } from "@tremor/react";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser, clerkClient } from "@clerk/nextjs";
 import { getUser, insertUser, User } from "@/lib/api/user";
 
 export default async function IndexPage() {
@@ -17,12 +17,14 @@ export default async function IndexPage() {
                 lastname: user.lastName || undefined,
                 clerkUpdatedAt: user.updatedAt
             };
-            const createResult = await insertUser(newUserDb);
-        }
-        else{
+            const insertResult = await insertUser(newUserDb);
+            await clerkClient.users.updateUser(user.id, { externalId: insertResult?.insertedId?.toString() });
+        } else {
             //TODO update db user
         }
     }
+
+    console.log(user)
 
     const buildUserName = () => {
         if (!user?.firstName && !user?.lastName) return user?.emailAddresses[0]?.emailAddress;

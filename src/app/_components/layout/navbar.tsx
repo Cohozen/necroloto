@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { UserButton, useAuth } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import classNames from "classnames";
 import { useCallback } from "react";
 import useClerkSWR from "@/utils/hooks/useClerkSWR";
@@ -15,9 +15,9 @@ interface NavBarProps {
 export default function Navbar({ isAdmin }: NavBarProps) {
     const pathname = usePathname();
 
-    const { isLoaded, userId } = useAuth();
+    const { user, isLoaded } = useUser();
 
-    const { data: userBet, isLoading } = useClerkSWR(`/api/users/${userId}/bet`);
+    const { data: userBet, isLoading } = useClerkSWR(`/api/users/${user?.externalId}/bet`);
 
     const navigation = useCallback(() => {
         const navigationLinks = [{ name: "Dashboard", href: "/" }];
@@ -34,7 +34,7 @@ export default function Navbar({ isAdmin }: NavBarProps) {
         return navigationLinks;
     }, [userBet]);
 
-    if (!isLoaded || !userId) {
+    if (!isLoaded || !user) {
         return null;
     }
 
