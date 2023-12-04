@@ -8,33 +8,35 @@ import classNames from "classnames";
 import { useCallback } from "react";
 import useClerkSWR from "@/utils/hooks/useClerkSWR";
 
-export default function Navbar() {
+interface NavBarProps {
+    isAdmin: boolean;
+}
+
+export default function Navbar({ isAdmin }: NavBarProps) {
     const pathname = usePathname();
 
     const { isLoaded, userId } = useAuth();
 
-    const { data, isLoading } = useClerkSWR(`/api/users/${userId}/bet`);
+    const { data: userBet, isLoading } = useClerkSWR(`/api/users/${userId}/bet`);
 
     const navigation = useCallback(() => {
-        const defaultNav = [{ name: "Dashboard", href: "/" }];
+        const navigationLinks = [{ name: "Dashboard", href: "/" }];
 
-        return [
-            ...defaultNav,
-            data
-                ? { name: "Mon Parie", href: `/bets/${data._id}` }
-                : {
-                      name: "Parier",
-                      href: "/bet"
-                  }
-        ];
-    }, [data]);
+        if (userBet) navigationLinks.push({ name: "Mon Parie", href: `/bets/${userBet._id}` });
+        else
+            navigationLinks.push({
+                name: "Parier",
+                href: "/bet"
+            });
+
+        if (isAdmin) navigationLinks.push({ name: "Administration", href: "/admin" });
+
+        return navigationLinks;
+    }, [userBet]);
 
     if (!isLoaded || !userId) {
         return null;
     }
-
-    console.log("nav bet : ", data);
-    console.log("userId : ", userId);
 
     return (
         <Disclosure as="nav" className="bg-white shadow-sm">

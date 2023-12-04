@@ -8,8 +8,6 @@ export default async function IndexPage() {
     if (user) {
         const userDb = await getUser(user.id);
 
-        console.log("userDb : ", userDb);
-
         if (!userDb) {
             const newUserDb: User = {
                 clerkId: user.id,
@@ -20,8 +18,9 @@ export default async function IndexPage() {
                 clerkUpdatedAt: user.updatedAt
             };
             const createResult = await insertUser(newUserDb);
-
-            console.log("createResult : ", createResult);
+        }
+        else{
+            //TODO update db user
         }
     }
 
@@ -32,8 +31,6 @@ export default async function IndexPage() {
         if (user?.firstName && user?.lastName) return `${user?.firstName} ${user?.lastName}`;
         return null;
     };
-
-    console.log("user", user);
 
     return (
         <main className="p-4 md:p-10 mx-auto max-w-7xl">
