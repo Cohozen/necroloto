@@ -13,24 +13,22 @@ export default async function BetPage() {
         }
     };
 
-    const insert = async () => {
-        const celebrities: CelebrityBet[] = [
-            {
-                name: "test"
-            },
-            {
-                name: "coucou"
-            }
-        ];
-        if (userId) {
-            const res = await insertBet(userId, celebrities);
-            console.log("insert : ", res);
-        }
-    };
+    // const insert = async () => {
+    //     const celebrities: CelebrityBet[] = [
+    //         {
+    //             name: "test"
+    //         },
+    //         {
+    //             name: "coucou"
+    //         }
+    //     ];
+    //     if (userId) {
+    //         const res = await insertBet(userId, celebrities);
+    //         console.log("insert : ", res);
+    //     }
+    // };
 
     await getBet();
-
-    //await insert();
 
     return (
         <main className="p-4 md:p-10 mx-auto max-w-7xl">

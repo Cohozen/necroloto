@@ -1,6 +1,8 @@
 import clientPromise from "../mongodb";
 import { ObjectId } from "bson";
 
+const _collectionName: string = "bets";
+
 export interface CelebrityBet {
     name: string;
     birth?: string;
@@ -18,21 +20,21 @@ export interface Bet {
 
 export async function getBet(id: string): Promise<Bet | null> {
     const client = await clientPromise;
-    const collection = client.db(process.env.MONGODB_DATABASE).collection("bets");
+    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
 
     return await collection.findOne<Bet>({ id }, {});
 }
 
 export async function getBetByUser(userId: string): Promise<Bet | null> {
     const client = await clientPromise;
-    const collection = client.db(process.env.MONGODB_DATABASE).collection("bets");
+    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
 
     return await collection.findOne<Bet>({ userId }, {});
 }
 
 export async function insertBet(userId: string, celebrities: CelebrityBet[]) {
     const client = await clientPromise;
-    const collection = client.db(process.env.MONGODB_DATABASE).collection("bets");
+    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
 
     const newBet: Bet = {
         userId,
