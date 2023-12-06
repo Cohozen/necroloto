@@ -24,8 +24,6 @@ export default async function IndexPage() {
         }
     }
 
-    console.log(user)
-
     const buildUserName = () => {
         if (!user?.firstName && !user?.lastName) return user?.emailAddresses[0]?.emailAddress;
         if (user?.firstName && !user?.lastName) return user?.firstName;

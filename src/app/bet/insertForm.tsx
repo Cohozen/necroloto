@@ -1,11 +1,17 @@
 "use client";
 
 import { Button, TextInput } from "@tremor/react";
+import useClerkSWRMutation from "@/utils/hooks/useClerkSWRMutation";
+import { useUser } from "@clerk/nextjs";
 
 export default async function InsertForm() {
+    const { user, isLoaded } = useUser();
+
+    const { trigger, isMutating } = useClerkSWRMutation(`/api/users/${user?.externalId}/bet`);
+
     return (
         <>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4 mb-4">
                 <TextInput className="flex-1" placeholder="Célébrité 1" />
                 <TextInput className="flex-1" placeholder="Célébrité 2" />
                 <TextInput className="flex-1" placeholder="Célébrité 3" />
@@ -22,7 +28,18 @@ export default async function InsertForm() {
                 <TextInput className="flex-1" placeholder="Célébrité 14" />
                 <TextInput className="flex-1" placeholder="Célébrité 15" />
             </div>
-            <Button>Insert test</Button>
+            <Button
+                disabled={isMutating}
+                onClick={async () => {
+                    try {
+                        const result = await trigger([{ name: "test" }]);
+                    } catch (e) {
+                        // gestion de l'erreur
+                    }
+                }}
+            >
+                Insert test
+            </Button>
         </>
     );
 }
