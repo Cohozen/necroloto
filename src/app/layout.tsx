@@ -1,16 +1,17 @@
-import "./globals.css";
+import React from "react";
 
 import { Analytics } from "@vercel/analytics/react";
-import { ClerkProvider, currentUser, UserButton } from "@clerk/nextjs";
 
 import ToggleTheme from "@/components/layout/toggleTheme";
+
+import "./globals.css";
 
 export const metadata = {
     title: "Necroloto",
     description: "Necroloto Application."
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function MainLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="fr" data-theme="halloween" className="h-full bg-base-100">
             {/*<ClerkProvider>*/}

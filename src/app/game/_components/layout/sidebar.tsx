@@ -1,10 +1,12 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
-import useClerkSWR from "@/utils/hooks/useClerkSWR";
 import { useCallback } from "react";
-import classNames from "classnames";
+
 import { usePathname } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import classNames from "classnames";
+
+import useClerkSWR from "@/utils/hooks/useClerkSWR";
 
 interface SidebarProps {
     isAdmin: boolean;
@@ -14,7 +16,7 @@ export default function Sidebar({ isAdmin }: SidebarProps) {
     const pathname = usePathname();
     const { user } = useUser();
 
-    const { data: userBet, isLoading } = useClerkSWR(`/api/users/${user?.externalId}/bet`);
+    const { data: userBet } = useClerkSWR(`/api/users/${user?.externalId}/bet`);
 
     const navigation = useCallback(() => {
         const navigationLinks = [{ name: "Dashboard", href: "/" }];
@@ -29,7 +31,7 @@ export default function Sidebar({ isAdmin }: SidebarProps) {
         if (isAdmin) navigationLinks.push({ name: "Administration", href: "/admin" });
 
         return navigationLinks;
-    }, [userBet]);
+    }, [userBet, isAdmin]);
 
     return (
         <div className="drawer-side">

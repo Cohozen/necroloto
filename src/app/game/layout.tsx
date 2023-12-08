@@ -1,4 +1,4 @@
-import "./globals.css";
+import React from "react";
 
 import { Analytics } from "@vercel/analytics/react";
 import { ClerkProvider, currentUser } from "@clerk/nextjs";
@@ -11,7 +11,7 @@ export const metadata = {
     description: "Necroloto Application."
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function GameLayout({ children }: { children: React.ReactNode }) {
     const user = await currentUser();
 
     const isAdmin = () => {
