@@ -26,9 +26,11 @@ export default function Navbar() {
                         </svg>
                     </label>
                 </div>
+
                 <div className="flex flex-1 md:gap-1 lg:gap-2">
 
                 </div>
+
                 <div className="flex-0">
                     <div className="flex-none items-center block mx-2">
                         <UserButton afterSignOutUrl="/" />

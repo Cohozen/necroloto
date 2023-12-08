@@ -31,6 +31,9 @@
       "@/components/*": [
         "app/_components/*"
       ],
+      "@/game/components/*": [
+        "app/game/_components/*"
+      ],
       "@/utils/*": [
         "app/_utils/*"
       ]
