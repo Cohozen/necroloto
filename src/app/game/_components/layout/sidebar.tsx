@@ -37,7 +37,7 @@ export default function Sidebar({ isAdmin }: SidebarProps) {
         <div className="drawer-side">
             <label htmlFor="main-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
             <div className="bg-base-100 sticky top-0 z-20 hidden items-center gap-2 bg-opacity-90 px-4 py-2 backdrop-blur lg:flex mb-4">
-                <a href="/" aria-label="Homepage" className="flex-0 btn btn-ghost px-2">
+                <a href="/game" aria-label="Homepage" className="flex-0 btn btn-ghost px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
                         <path
                             fill="currentColor"

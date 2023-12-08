@@ -1,7 +1,6 @@
 import React from "react";
 
-import { Analytics } from "@vercel/analytics/react";
-import { ClerkProvider, currentUser } from "@clerk/nextjs";
+import { currentUser, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
 import Navbar from "@/game/components/layout/navbar";
 import Sidebar from "@/game/components/layout/sidebar";
@@ -26,24 +25,20 @@ export default async function GameLayout({ children }: { children: React.ReactNo
     };
 
     return (
-        <html lang="fr" data-theme="halloween" className="h-full bg-base-100">
-            <ClerkProvider>
-                {/*<SWRProvider>*/}
-                <body className="h-full">
-                    <div className="drawer lg:drawer-open">
-                        <input id="main-drawer" type="checkbox" className="drawer-toggle" />
-                        <div className="drawer-content flex flex-col">
-                            {/* Navbar */}
-                            <Navbar />
-                            {/* Page content here */}
-                            {children}
-                        </div>
-                        <Sidebar isAdmin={isAdmin()} />
-                    </div>
-                    <Analytics />
-                </body>
-                {/*</SWRProvider>*/}
-            </ClerkProvider>
-        </html>
+        <>
+            <SignedOut>
+                <RedirectToSignIn />
+            </SignedOut>
+            <div className="drawer lg:drawer-open">
+                <input id="main-drawer" type="checkbox" className="drawer-toggle" />
+                <div className="drawer-content flex flex-col">
+                    {/* Navbar */}
+                    <Navbar />
+                    {/* Page content here */}
+                    {children}
+                </div>
+                <Sidebar isAdmin={isAdmin()} />
+            </div>
+        </>
     );
 }
