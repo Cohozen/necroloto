@@ -32,7 +32,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 {/*<SWRProvider>*/}
                 <body className="h-full">
                     <div className="drawer lg:drawer-open">
-                        <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+                        <input id="main-drawer" type="checkbox" className="drawer-toggle" />
                         <div className="drawer-content flex flex-col">
                             {/* Navbar */}
                             <Navbar />
