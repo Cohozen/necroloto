@@ -2,6 +2,11 @@ import { Title, Text } from "@tremor/react";
 import { currentUser, clerkClient } from "@clerk/nextjs";
 import { getUser, insertUser, User } from "@/lib/api/user";
 
+export const metadata = {
+    title: "Necroloto - Mon Necroloto",
+};
+
+
 export default async function IndexPage() {
     const user = await currentUser();
 
