@@ -25,11 +25,11 @@ export async function getBet(id: string): Promise<Bet | null> {
     return await collection.findOne<Bet>({ id }, {});
 }
 
-export async function getBetByUser(userId: string): Promise<Bet | null> {
+export async function getBetByUser(userId: string, year = 2023): Promise<Bet | null> {
     const client = await clientPromise;
     const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
 
-    return await collection.findOne<Bet>({ userId }, {});
+    return await collection.findOne<Bet>({ userId, year }, {});
 }
 
 export async function insertBet(userId: string, celebrities: CelebrityBet[]) {
