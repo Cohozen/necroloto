@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export default function ToggleTheme() {
-    const [theme, setTheme] = useState("halloween");
+    const [theme, setTheme] = useState("");
     
     const toggleTheme = (evt: any) => {
         const themesList = evt.target.getAttribute("data-toggle-theme");
@@ -25,8 +25,9 @@ export default function ToggleTheme() {
     };
 
     useEffect(() => {
+        console.log("theme", document.documentElement.getAttribute("data-theme"))
         const localTheme = localStorage.getItem("theme");
-        if (localTheme) {
+        if (localTheme && localTheme !== document.documentElement.getAttribute("data-theme")) {
             setTheme(localTheme);
             document.documentElement.setAttribute("data-theme", localTheme);
         }

@@ -14,7 +14,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="fr" data-theme="halloween" className="h-full bg-base-100">
+        <html lang="fr" className="h-full bg-base-100">
             <ClerkProvider>
                 <body className="h-full">
                     <SignedOut>

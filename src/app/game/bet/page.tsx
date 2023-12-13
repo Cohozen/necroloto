@@ -1,13 +1,26 @@
 import { getBetByUser } from "@/lib/api/bet";
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import InsertForm from "./insertForm";
+import Link from "next/link";
+
+export const metadata = {
+    title: "Necroloto | Mes paries"
+};
 
 export default async function BetPage() {
-    const { userId }: { userId: string | null } = auth();
+    const user = await currentUser();
 
-    if (userId) {
-        const result = await getBetByUser(userId);
-        if (result) return <div>Bonjour voici votre pari en cours</div>;
+    if (user && user.externalId) {
+        const result = await getBetByUser(user.externalId);
+        if (result)
+            return (
+                <div className="p-4 md:p-10 mx-auto max-w-7xl prose">
+                    <h1>Vous avez déjà parier pour 2023</h1>
+                    <Link href={`/game/bets/${result._id?.toString()}`} className="btn btn-outline btn-primary">
+                        Voir mon parie
+                    </Link>
+                </div>
+            );
     }
 
     return (
