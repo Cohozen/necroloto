@@ -22,7 +22,7 @@ export default async function GameLayout({ children }: { children: React.ReactNo
                     {/* Navbar */}
                     <Navbar />
                     {/* Page content here */}
-                    {children}
+                    <div className="px-6">{children}</div>
                 </div>
                 <Sidebar />
             </div>

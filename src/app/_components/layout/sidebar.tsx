@@ -94,21 +94,21 @@ export default function Sidebar() {
                                 Parier
                             </a>
                         </li>
-                        <li className="disabled">
+                        <li>
                             <a
-                                //href="/game/stats"
+                                href={`/game/users/${user?.externalId}/bets`}
                                 className={classNames({
-                                    active: pathname === "/game/stats"
+                                    active: pathname === `/game/users/${user?.externalId}/bets`
                                 })}
                             >
-                                Mes stats
+                                Mes paries
                             </a>
                         </li>
-                        <li className="disabled">
+                        <li>
                             <a
-                                //href="/bets"
+                                href="/game/bets"
                                 className={classNames({
-                                    active: pathname === "/bets"
+                                    active: pathname.split("/").slice(1, 3).join("/") === "game/bets"
                                 })}
                             >
                                 Tous les paries
