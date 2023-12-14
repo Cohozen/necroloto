@@ -25,11 +25,32 @@ export async function getBet(id: string): Promise<Bet | null> {
     return await collection.findOne<Bet>({ _id: new ObjectId(id) }, {});
 }
 
-export async function getBetByUser(userId: string, year = 2023): Promise<Bet | null> {
+export async function getBetByUser(userId: string, year?: number): Promise<Bet | null> {
     const client = await clientPromise;
     const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
 
-    return await collection.findOne<Bet>({ userId, year }, {});
+    const filter = {
+        userId,
+        ...(year && {
+            year
+        })
+    };
+
+    return await collection.findOne<Bet>(filter, {});
+}
+
+export async function listBetByUser(userId: string, year?: number): Promise<Bet[] | null> {
+    const client = await clientPromise;
+    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
+
+    const filter = {
+        userId,
+        ...(year && {
+            year
+        })
+    };
+
+    return await collection.find<Bet>(filter, {}).toArray();
 }
 
 export async function insertBet(userId: string, celebrities: CelebrityBet[]) {
