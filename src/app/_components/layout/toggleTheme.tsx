@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export default function ToggleTheme() {
-    const [theme, setTheme] = useState(localStorage.getItem("theme"));
+    const [theme, setTheme] = useState("");
 
     const toggleTheme = (evt: any) => {
         // const themesList = evt.target.getAttribute("data-toggle-theme");
