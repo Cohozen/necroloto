@@ -1,5 +1,6 @@
 import clientPromise from "../mongodb";
 import { ObjectId } from "bson";
+import { User } from "@/lib/api/user";
 
 const _collectionName: string = "bets";
 
@@ -13,10 +14,11 @@ export interface CelebrityBet {
 
 export interface Bet {
     _id?: ObjectId;
-    userId: string;
+    userId: ObjectId;
     year: number;
     celebrities: CelebrityBet[];
     createdAt: string;
+    user?: User;
 }
 
 export async function getBet(id: string): Promise<Bet | null> {
@@ -31,7 +33,7 @@ export async function getBetByUser(userId: string, year?: number): Promise<Bet |
     const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
 
     const filter = {
-        userId,
+        userId: new ObjectId(userId),
         ...(year && {
             year
         })
@@ -45,7 +47,7 @@ export async function listBetByUser(userId: string, year?: number): Promise<Bet[
     const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
 
     const filter = {
-        userId,
+        userId: new ObjectId(userId),
         ...(year && {
             year
         })
@@ -59,13 +61,30 @@ export async function insertBet(userId: string, celebrities: CelebrityBet[]) {
     const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
 
     const newBet: Bet = {
-        userId,
+        userId: new ObjectId(userId),
         celebrities,
         year: new Date().getFullYear(),
         createdAt: new Date().toDateString()
     };
 
     return await collection.insertOne(newBet, {});
+}
+
+export async function updateBet(betId: string, celebrities: CelebrityBet[]) {
+    const client = await clientPromise;
+    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
+
+    const bet = await getBet(betId);
+    if (bet) {
+        const updatedBet = {
+            ...bet,
+            celebrities
+        };
+
+        return await collection.updateOne({ _id: new ObjectId(betId) }, updatedBet, {});
+    }
+
+    return await collection.updateOne({ _id: new ObjectId(betId) }, {}, {});
 }
 
 export async function listBetWithCelebritiesNotAttached(): Promise<Bet[] | null> {
@@ -86,6 +105,24 @@ export async function listBetWithCelebritiesNotAttached(): Promise<Bet[] | null>
                     }
                 ]
             }
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "_id",
+                as: "result"
+            }
+        },
+        {
+            $addFields: {
+                user: {
+                    $first: "$result"
+                }
+            }
+        },
+        {
+            $unset: "result"
         }
     ];
 

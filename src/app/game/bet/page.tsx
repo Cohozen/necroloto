@@ -12,6 +12,7 @@ export default async function BetPage() {
 
     if (user && user.externalId) {
         const result = await getBetByUser(user.externalId, new Date().getFullYear());
+
         if (result)
             return (
                 <div className="p-4 md:p-10 mx-auto max-w-7xl prose">

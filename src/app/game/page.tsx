@@ -14,8 +14,11 @@ export default async function IndexPage() {
         const userDb = await getUser(user.id);
 
         if (!userDb) {
+            const email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId);
+
             const newUserDb: User = {
                 clerkId: user.id,
+                email: email?.emailAddress,
                 imageUrl: user.imageUrl,
                 username: user.username || undefined,
                 firstname: user.firstName || undefined,

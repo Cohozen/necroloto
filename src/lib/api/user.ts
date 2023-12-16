@@ -6,6 +6,7 @@ const _collectionName: string = "users";
 export interface User {
     _id?: ObjectId;
     clerkId: string;
+    email?: string;
     imageUrl?: string;
     username?: string;
     firstname?: string;
@@ -36,6 +37,7 @@ export async function updateUser(user: User) {
         { _id: user._id },
         {
             $set: {
+                email: user.email,
                 imageUrl: user.imageUrl,
                 username: user.username,
                 firstname: user.firstname,
