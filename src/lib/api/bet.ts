@@ -5,6 +5,7 @@ const _collectionName: string = "bets";
 
 export interface CelebrityBet {
     name: string;
+    celebrityId?: string;
     birth?: string;
     death?: string;
     point?: number;
@@ -65,4 +66,28 @@ export async function insertBet(userId: string, celebrities: CelebrityBet[]) {
     };
 
     return await collection.insertOne(newBet, {});
+}
+
+export async function listBetWithCelebritiesNotAttached(): Promise<Bet[] | null> {
+    const client = await clientPromise;
+    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
+
+    const pipeline = [
+        {
+            $match: {
+                $or: [
+                    {
+                        "celebrities.celebrityId": {
+                            $exists: false
+                        }
+                    },
+                    {
+                        "celebrities.celebrityId": null
+                    }
+                ]
+            }
+        }
+    ];
+
+    return await collection.aggregate<Bet>(pipeline, {}).toArray();
 }

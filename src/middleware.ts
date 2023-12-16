@@ -11,7 +11,7 @@ export default authMiddleware({
             return redirectToSignIn({ returnBackUrl: req.url });
         }
 
-        // redirect them to organization selection page
+        // redirect to game page
         if (auth.userId && req.nextUrl.pathname === "/") {
             const orgSelection = new URL("/game", req.url);
             return NextResponse.redirect(orgSelection);
