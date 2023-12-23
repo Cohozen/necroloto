@@ -1,7 +1,5 @@
 import { currentUser } from "@clerk/nextjs";
 import Link from "next/link";
-import { listBetWithCelebritiesNotAttached } from "@/lib/api/bet";
-import BetsList from "./betsList";
 
 export default async function Page() {
     const user = await currentUser();
@@ -23,13 +21,13 @@ export default async function Page() {
         }
     }
 
-    const bets = await listBetWithCelebritiesNotAttached();
+    // const bets = await listBetWithCelebritiesNotAttached();
 
     return (
         <div className="p-4 md:p-10 mx-auto max-w-7xl prose">
             <h1>Administration</h1>
-            <p>{bets && `${bets.length} parie${bets.length > 1 ? "s" : ""} avec des célébrités non relié`}</p>
-            {bets && <BetsList Bets={bets} />}
+            {/*<p>{bets && `${bets.length} parie${bets.length > 1 ? "s" : ""} avec des célébrités non relié`}</p>*/}
+            {/*{bets && <BetsList Bets={bets} />}*/}
         </div>
     );
 }

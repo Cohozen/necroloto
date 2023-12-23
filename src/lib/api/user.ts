@@ -1,49 +1,46 @@
-import clientPromise from "../mongodb";
-import { ObjectId } from "bson";
+import { PrismaClient, User } from "@prisma/client";
 
-const _collectionName: string = "users";
+type CreatedUser = Pick<User, "clerkId" | "email" | "image" | "username" | "firstname" | "lastname">;
 
-export interface User {
-    _id?: ObjectId;
-    clerkId: string;
-    email?: string;
-    imageUrl?: string;
-    username?: string;
-    firstname?: string;
-    lastname?: string;
-    clerkCreatedAt?: number;
-    clerkUpdatedAt?: number;
+export async function findUserByClerkId(clerkId: string) {
+    const prisma = new PrismaClient();
+
+    return prisma.user.findFirst({
+        where: {
+            clerkId
+        }
+    });
 }
 
-export async function getUser(clerkId: string): Promise<User | null> {
-    const client = await clientPromise;
-    const collection = client.db(process.env.MONGODB_DATABASE).collection("users");
+export async function insertUser(user: CreatedUser) {
+    const prisma = new PrismaClient();
 
-    return await collection.findOne<User>({ clerkId }, {});
-}
-
-export async function insertUser(user: User) {
-    const client = await clientPromise;
-    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
-
-    return await collection.insertOne(user, {});
+    return prisma.user.create({
+        data: {
+            clerkId: user.clerkId,
+            email: user?.email,
+            image: user.image,
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname
+        }
+    });
 }
 
 export async function updateUser(user: User) {
-    const client = await clientPromise;
-    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
+    const prisma = new PrismaClient();
 
-    return await collection.updateOne(
-        { _id: user._id },
-        {
-            $set: {
-                email: user.email,
-                imageUrl: user.imageUrl,
-                username: user.username,
-                firstname: user.firstname,
-                lastname: user.lastname,
-                clerkUpdatedAt: user.clerkUpdatedAt
-            }
+    return prisma.user.update({
+        where: {
+            id: user.id
+        },
+        data: {
+            clerkId: user.clerkId,
+            email: user?.email,
+            image: user.image,
+            username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname
         }
-    );
+    });
 }

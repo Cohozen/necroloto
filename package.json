@@ -5,7 +5,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate:dev": "npx prisma migrate dev",
+    "generate": "npx prisma generate"
   },
   "prettier": {
     "arrowParens": "always",
@@ -18,10 +20,12 @@
     "@clerk/nextjs": "^4.27.2",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
-    "@tremor/react": "^3.6.6",
+    "@prisma/client": "^5.7.0",
     "@vercel/analytics": "^1.0.2",
+    "classnames": "^2.3.2",
     "mongodb": "^6.2.0",
     "next": "^14.0.3",
+    "prisma": "^5.7.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

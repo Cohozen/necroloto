@@ -1,6 +1,7 @@
 import { currentUser } from "@clerk/nextjs";
-import { Bet, getBetByUser, listBetByUser } from "@/lib/api/bet";
+import { listBetByUser } from "@/lib/api/bet";
 import Link from "next/link";
+import { Bet } from "@prisma/client";
 
 export default async function BetsCardList() {
     const user = await currentUser();
@@ -18,12 +19,12 @@ export default async function BetsCardList() {
             {bets &&
                 bets.map((b) => {
                     return (
-                        <div key={b._id?.toString()} className="card card-compact w-96 bg-base-100 shadow-xl">
+                        <div key={b.id} className="card card-compact w-96 bg-base-100 shadow-xl">
                             <div className="card-body">
                                 <h2 className="card-title">{b.year}</h2>
-                                <p>{b.createdAt}</p>
+                                <p>{b.createdAt.toDateString()}</p>
                                 <div className="card-actions justify-end">
-                                    <Link href={`/game/bets/${b._id?.toString()}`} className="btn btn-primary">
+                                    <Link href={`/game/bets/${b.id}`} className="btn btn-primary">
                                         Voir le parie
                                     </Link>
                                 </div>

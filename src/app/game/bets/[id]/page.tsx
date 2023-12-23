@@ -1,7 +1,7 @@
-import { getBet } from "@/lib/api/bet";
+import { getBetWithCelebrities } from "@/lib/api/bet";
 
 export default async function Page({ params }: { params: { id: string } }) {
-    const bet = await getBet(params.id);
+    const bet = await getBetWithCelebrities(params.id);
 
     return (
         <div className="p-4 md:p-10 mx-auto max-w-7xl prose">
@@ -19,13 +19,15 @@ export default async function Page({ params }: { params: { id: string } }) {
                     </thead>
                     <tbody>
                         {bet &&
-                            bet.celebrities.map((celebrity, index) => (
-                                <tr key={`${celebrity?.name}-${index}`} className="hover">
+                            bet.CelebritiesOnBet.map((celebrityBet, index) => (
+                                <tr key={celebrityBet.celebrity.id} className="hover">
                                     <th>{index + 1}</th>
-                                    <td>{celebrity?.name}</td>
-                                    <td>{celebrity?.birth}</td>
+                                    <td>{celebrityBet.celebrity.name}</td>
+                                    <td>{celebrityBet.celebrity.birth?.toDateString()}</td>
                                     <td>
-                                        <div className="badge badge-secondary">En vie</div>
+                                        {!celebrityBet.celebrity.death && (
+                                            <div className="badge badge-secondary">En vie</div>
+                                        )}
                                     </td>
                                 </tr>
                             ))}

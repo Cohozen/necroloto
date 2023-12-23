@@ -3,28 +3,29 @@
 import useClerkSWRMutation from "@/utils/hooks/useClerkSWRMutation";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
-import { CelebrityBet } from "@/lib/api/bet";
 import { useRouter } from "next/navigation";
 
 export default function InsertForm() {
     const { user, isLoaded } = useUser();
     const router = useRouter();
 
-    const [celebrity1, setCelebrity1] = useState<CelebrityBet>();
-    const [celebrity2, setCelebrity2] = useState<CelebrityBet>();
-    const [celebrity3, setCelebrity3] = useState<CelebrityBet>();
-    const [celebrity4, setCelebrity4] = useState<CelebrityBet>();
-    const [celebrity5, setCelebrity5] = useState<CelebrityBet>();
-    const [celebrity6, setCelebrity6] = useState<CelebrityBet>();
-    const [celebrity7, setCelebrity7] = useState<CelebrityBet>();
-    const [celebrity8, setCelebrity8] = useState<CelebrityBet>();
-    const [celebrity9, setCelebrity9] = useState<CelebrityBet>();
-    const [celebrity10, setCelebrity10] = useState<CelebrityBet>();
-    const [celebrity11, setCelebrity11] = useState<CelebrityBet>();
-    const [celebrity12, setCelebrity12] = useState<CelebrityBet>();
-    const [celebrity13, setCelebrity13] = useState<CelebrityBet>();
-    const [celebrity14, setCelebrity14] = useState<CelebrityBet>();
-    const [celebrity15, setCelebrity15] = useState<CelebrityBet>();
+    const year = 2024;
+
+    const [celebrity1, setCelebrity1] = useState<string>();
+    const [celebrity2, setCelebrity2] = useState<string>();
+    const [celebrity3, setCelebrity3] = useState<string>();
+    const [celebrity4, setCelebrity4] = useState<string>();
+    const [celebrity5, setCelebrity5] = useState<string>();
+    const [celebrity6, setCelebrity6] = useState<string>();
+    const [celebrity7, setCelebrity7] = useState<string>();
+    const [celebrity8, setCelebrity8] = useState<string>();
+    const [celebrity9, setCelebrity9] = useState<string>();
+    const [celebrity10, setCelebrity10] = useState<string>();
+    const [celebrity11, setCelebrity11] = useState<string>();
+    const [celebrity12, setCelebrity12] = useState<string>();
+    const [celebrity13, setCelebrity13] = useState<string>();
+    const [celebrity14, setCelebrity14] = useState<string>();
+    const [celebrity15, setCelebrity15] = useState<string>();
 
     const [errorForm, setErrorForm] = useState(false);
     const [successForm, setSuccessForm] = useState(false);
@@ -74,91 +75,91 @@ export default function InsertForm() {
                     type="text"
                     placeholder="Célébrité 1"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity1({ name: e.target.value })}
+                    onChange={(e) => setCelebrity1(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 2"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity2({ name: e.target.value })}
+                    onChange={(e) => setCelebrity2(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 3"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity3({ name: e.target.value })}
+                    onChange={(e) => setCelebrity3(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 4"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity4({ name: e.target.value })}
+                    onChange={(e) => setCelebrity4(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 5"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity5({ name: e.target.value })}
+                    onChange={(e) => setCelebrity5(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 6"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity6({ name: e.target.value })}
+                    onChange={(e) => setCelebrity6(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 7"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity7({ name: e.target.value })}
+                    onChange={(e) => setCelebrity7(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 8"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity8({ name: e.target.value })}
+                    onChange={(e) => setCelebrity8(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 9"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity9({ name: e.target.value })}
+                    onChange={(e) => setCelebrity9(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 10"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity10({ name: e.target.value })}
+                    onChange={(e) => setCelebrity10(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 11"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity11({ name: e.target.value })}
+                    onChange={(e) => setCelebrity11(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 12"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity12({ name: e.target.value })}
+                    onChange={(e) => setCelebrity12(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 13"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity13({ name: e.target.value })}
+                    onChange={(e) => setCelebrity13(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 14"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity14({ name: e.target.value })}
+                    onChange={(e) => setCelebrity14(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Célébrité 15"
                     className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity15({ name: e.target.value })}
+                    onChange={(e) => setCelebrity15(e.target.value)}
                 />
             </div>
             <button
@@ -192,11 +193,14 @@ export default function InsertForm() {
                     // }
 
                     try {
-                        const result = await insertBet(celebrities);
-                        if (result) {
-                            console.log(result);
+                        const createResult = await insertBet({
+                            year,
+                            celebrities: celebrities.filter((c) => typeof c === "string")
+                        });
+                        if (createResult) {
+                            console.log("createBetResult : ", createResult);
                             setSuccessForm(true);
-                            router.push(`/game/bets/${result.insertedId}`);
+                            router.push(`/game/bets/${createResult.id}`);
                         }
                     } catch (e) {
                         // gestion de l'erreur

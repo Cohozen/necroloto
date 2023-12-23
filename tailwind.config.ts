@@ -1,7 +1,7 @@
 module.exports = {
     content: ["./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
 
-    plugins: [require("@tailwindcss/typography"), require("@headlessui/tailwindcss"), require("daisyui")],
+    plugins: [require("@tailwindcss/typography"), require("daisyui")],
 
     // daisyUI config (optional - here are the default values)
     daisyui: {

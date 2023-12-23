@@ -1,4 +1,4 @@
-import { getBet, insertBet } from "@/lib/api/bet";
+import { getBet } from "@/lib/api/bet";
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
     const { id } = params;

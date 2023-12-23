@@ -3,7 +3,6 @@
 import { UserButton } from "@clerk/nextjs";
 import ToggleTheme from "@/components/layout/toggleTheme";
 import { usePathname } from "next/navigation";
-import { is } from "date-fns/locale";
 
 export default function Navbar() {
     const pathname = usePathname();

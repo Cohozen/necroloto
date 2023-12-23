@@ -1,5 +1,5 @@
-import { getBetByUser } from "@/lib/api/bet";
-import { auth, currentUser } from "@clerk/nextjs";
+import { getBetByUserAndYear } from "@/lib/api/bet";
+import { currentUser } from "@clerk/nextjs";
 import InsertForm from "./insertForm";
 import Link from "next/link";
 
@@ -11,13 +11,13 @@ export default async function BetPage() {
     const user = await currentUser();
 
     if (user && user.externalId) {
-        const result = await getBetByUser(user.externalId, new Date().getFullYear());
+        const result = await getBetByUserAndYear(user.externalId, 2024);
 
         if (result)
             return (
                 <div className="p-4 md:p-10 mx-auto max-w-7xl prose">
-                    <h1>Vous avez déjà parier pour {new Date().getFullYear()}</h1>
-                    <Link href={`/game/bets/${result._id?.toString()}`} className="btn btn-outline btn-primary">
+                    <h1>Vous avez déjà parier pour 2024</h1>
+                    <Link href={`/game/bets/${result.id}`} className="btn btn-outline btn-primary">
                         Voir mon parie
                     </Link>
                 </div>

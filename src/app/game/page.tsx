@@ -1,6 +1,7 @@
-import { Title, Text } from "@tremor/react";
 import { currentUser, clerkClient } from "@clerk/nextjs";
-import { getUser, insertUser, User } from "@/lib/api/user";
+import { findUserByClerkId, insertUser, updateUser } from "@/lib/api/user";
+
+import { User } from "@prisma/client";
 import BetsCardList from "./betsCardList";
 
 export const metadata = {
@@ -11,24 +12,40 @@ export default async function IndexPage() {
     const user = await currentUser();
 
     if (user) {
-        const userDb = await getUser(user.id);
+        const userDb = await findUserByClerkId(user.id);
 
         if (!userDb) {
             const email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId);
 
             const newUserDb: User = {
+                id: "",
                 clerkId: user.id,
-                email: email?.emailAddress,
-                imageUrl: user.imageUrl,
-                username: user.username || undefined,
-                firstname: user.firstName || undefined,
-                lastname: user.lastName || undefined,
-                clerkUpdatedAt: user.updatedAt
+                email: email?.emailAddress || null,
+                image: user.imageUrl,
+                username: user.username,
+                firstname: user.firstName,
+                lastname: user.lastName,
+                clerkUpdatedAt: new Date(user.updatedAt),
+                clerkCreatedAt: new Date(user.createdAt),
+                updatedAt: new Date(),
+                createdAt: new Date()
             };
             const insertResult = await insertUser(newUserDb);
-            await clerkClient.users.updateUser(user.id, { externalId: insertResult?.insertedId?.toString() });
+            await clerkClient.users.updateUser(user.id, { externalId: insertResult.id });
         } else {
-            //TODO update db user
+            if (userDb.clerkUpdatedAt && new Date(user.updatedAt) > userDb.clerkUpdatedAt) {
+                const userToUpdate = {
+                    ...userDb,
+                    image: user.imageUrl,
+                    username: user.username,
+                    firstname: user.firstName,
+                    lastname: user.lastName,
+                    clerkUpdatedAt: new Date(user.updatedAt),
+                    clerkCreatedAt: new Date(user.createdAt)
+                };
+
+                await updateUser(userToUpdate);
+            }
         }
     }
 

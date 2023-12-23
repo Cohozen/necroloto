@@ -1,40 +1,29 @@
-import clientPromise from "../mongodb";
-import { ObjectId } from "bson";
+import { PrismaClient, Celebrity } from "@prisma/client";
 
-const _collectionName: string = "celebrities";
+type CreatedCelebrity = Pick<Celebrity, "name" | "birth" | "death" | "photo">;
 
-export interface Celebrity {
-    _id?: ObjectId;
-    name: string;
-    birth?: string;
-    death?: string;
-    photo?: string;
-}
+export async function insertCelebrity(celebrity: CreatedCelebrity) {
+    const prisma = new PrismaClient();
 
-export async function getCelebrity(id: string): Promise<Celebrity | null> {
-    const client = await clientPromise;
-    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
-
-    return await collection.findOne<Celebrity>({ _id: new ObjectId(id) }, {});
-}
-
-export async function listCelebrities(): Promise<Celebrity[] | null> {
-    const client = await clientPromise;
-    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
-
-    return await collection.find<Celebrity>({}, {}).toArray();
-}
-
-export async function insertCelebrity(celebrity: Celebrity) {
-    const client = await clientPromise;
-    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
-
-    return await collection.insertOne(celebrity, {});
+    return prisma.celebrity.create({
+        data: {
+            name: celebrity.name,
+            birth: celebrity.birth,
+            death: celebrity.death,
+            photo: celebrity.photo
+        }
+    });
 }
 
 export async function updateCelebrity(celebrity: Celebrity) {
-    const client = await clientPromise;
-    const collection = client.db(process.env.MONGODB_DATABASE).collection(_collectionName);
+    const prisma = new PrismaClient();
 
-    return await collection.updateOne({ _id: celebrity._id }, celebrity, {});
+    return prisma.celebrity.update({
+        where: { id: celebrity.id },
+        data: {
+            birth: celebrity.birth,
+            death: celebrity.death,
+            photo: celebrity.photo
+        }
+    });
 }
