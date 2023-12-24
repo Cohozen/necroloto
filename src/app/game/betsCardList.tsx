@@ -1,15 +1,17 @@
 import { currentUser } from "@clerk/nextjs";
-import { listBetByUser } from "@/lib/api/bet";
+import { listBetsByUser } from "@/lib/api/bet";
 import Link from "next/link";
-import { Bet } from "@prisma/client";
+import { Bet, Prisma } from "@prisma/client";
 
 export default async function BetsCardList() {
     const user = await currentUser();
 
-    let bets: Bet[] = [];
+    type BetsWithUser = Prisma.BetGetPayload<{ include: { user: true } }>;
+
+    let bets: BetsWithUser[] = [];
 
     if (user && user?.externalId) {
-        const result = await listBetByUser(user?.externalId);
+        const result = await listBetsByUser(user?.externalId);
         if (result) bets = result;
     }
 
@@ -19,7 +21,7 @@ export default async function BetsCardList() {
             {bets &&
                 bets.map((b) => {
                     return (
-                        <div key={b.id} className="card card-compact w-96 bg-base-100 shadow-xl">
+                        <div key={b.id} className="card card-compact card-bordered w-96 bg-base-100 shadow-xl">
                             <div className="card-body">
                                 <h2 className="card-title">{b.year}</h2>
                                 <p>{b.createdAt.toDateString()}</p>

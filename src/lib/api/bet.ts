@@ -36,12 +36,15 @@ export async function getBetByUserAndYear(userId: string, year: number) {
     });
 }
 
-export async function listBetByUser(userId: string) {
+export async function listBetsByUser(userId: string) {
     const prisma = new PrismaClient();
 
     return prisma.bet.findMany({
         where: {
             userId
+        },
+        include: {
+            user: true
         }
     });
 }
