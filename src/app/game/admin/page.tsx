@@ -1,5 +1,8 @@
 import { currentUser } from "@clerk/nextjs";
 import Link from "next/link";
+import { listIncompleteCelebrities } from "@/lib/api/celebrity";
+import { Prisma, Celebrity } from "@prisma/client";
+import CelebritiesList from "./celebritiesList";
 
 export default async function Page() {
     const user = await currentUser();
@@ -21,13 +24,18 @@ export default async function Page() {
         }
     }
 
-    // const bets = await listBetWithCelebritiesNotAttached();
+    const celebrities: Celebrity[] = await listIncompleteCelebrities();
 
     return (
         <div className="p-4 md:p-10 mx-auto max-w-7xl prose">
             <h1>Administration</h1>
-            {/*<p>{bets && `${bets.length} parie${bets.length > 1 ? "s" : ""} avec des célébrités non relié`}</p>*/}
-            {/*{bets && <BetsList Bets={bets} />}*/}
+            <p>
+                {celebrities &&
+                    `${celebrities.length} célébrité${
+                        celebrities.length > 1 ? "s" : ""
+                    } avec des informations manquantes`}
+            </p>
+            {celebrities && <CelebritiesList celebrities={celebrities} />}
         </div>
     );
 }

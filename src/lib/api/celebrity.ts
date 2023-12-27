@@ -2,6 +2,16 @@ import { PrismaClient, Celebrity } from "@prisma/client";
 
 type CreatedCelebrity = Pick<Celebrity, "name" | "birth" | "death" | "photo">;
 
+export async function listIncompleteCelebrities() {
+    const prisma = new PrismaClient();
+
+    return prisma.celebrity.findMany({
+        where: {
+            OR: [{ birth: null }, { death: null }]
+        }
+    });
+}
+
 export async function insertCelebrity(celebrity: CreatedCelebrity) {
     const prisma = new PrismaClient();
 
