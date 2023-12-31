@@ -1,10 +1,9 @@
-import { PrismaClient, Bet } from "@prisma/client";
+import { Bet } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
 type CreatedBet = Pick<Bet, "userId" | "year">;
 
 export async function getBet(id: string) {
-    const prisma = new PrismaClient();
-
     return prisma.bet.findUnique({
         where: {
             id
@@ -13,8 +12,6 @@ export async function getBet(id: string) {
 }
 
 export async function getBetWithCelebrities(id: string) {
-    const prisma = new PrismaClient();
-
     return prisma.bet.findUnique({
         where: {
             id
@@ -26,8 +23,6 @@ export async function getBetWithCelebrities(id: string) {
 }
 
 export async function getBetByUserAndYear(userId: string, year: number) {
-    const prisma = new PrismaClient();
-
     return prisma.bet.findFirst({
         where: {
             userId,
@@ -37,8 +32,6 @@ export async function getBetByUserAndYear(userId: string, year: number) {
 }
 
 export async function listBetsByUser(userId: string) {
-    const prisma = new PrismaClient();
-
     return prisma.bet.findMany({
         where: {
             userId
@@ -50,8 +43,6 @@ export async function listBetsByUser(userId: string) {
 }
 
 export async function insertBet(bet: CreatedBet) {
-    const prisma = new PrismaClient();
-
     return prisma.bet.create({
         data: {
             userId: bet.userId,
@@ -61,8 +52,6 @@ export async function insertBet(bet: CreatedBet) {
 }
 
 export async function insertBetWithCelebrities(bet: CreatedBet, celebrities: string[]) {
-    const prisma = new PrismaClient();
-
     return prisma.$transaction(async (tx) => {
         const createdBet = await tx.bet.create({
             data: {

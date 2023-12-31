@@ -9,23 +9,9 @@ export default function InsertForm() {
     const { user, isLoaded } = useUser();
     const router = useRouter();
 
-    const year = 2024;
+    const year: number = 2024;
 
-    const [celebrity1, setCelebrity1] = useState<string>();
-    const [celebrity2, setCelebrity2] = useState<string>();
-    const [celebrity3, setCelebrity3] = useState<string>();
-    const [celebrity4, setCelebrity4] = useState<string>();
-    const [celebrity5, setCelebrity5] = useState<string>();
-    const [celebrity6, setCelebrity6] = useState<string>();
-    const [celebrity7, setCelebrity7] = useState<string>();
-    const [celebrity8, setCelebrity8] = useState<string>();
-    const [celebrity9, setCelebrity9] = useState<string>();
-    const [celebrity10, setCelebrity10] = useState<string>();
-    const [celebrity11, setCelebrity11] = useState<string>();
-    const [celebrity12, setCelebrity12] = useState<string>();
-    const [celebrity13, setCelebrity13] = useState<string>();
-    const [celebrity14, setCelebrity14] = useState<string>();
-    const [celebrity15, setCelebrity15] = useState<string>();
+    const [values, setValues] = useState("");
 
     const [errorForm, setErrorForm] = useState(false);
     const [successForm, setSuccessForm] = useState(false);
@@ -70,124 +56,26 @@ export default function InsertForm() {
                     <span>Votre parie est enregistré.</span>
                 </div>
             )}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-                <input
-                    type="text"
-                    placeholder="Célébrité 1"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity1(e.target.value)}
+            <label className="form-control">
+                <textarea
+                    className="textarea textarea-bordered h-24"
+                    placeholder="Paries"
+                    onChange={(e) => setValues(e.target.value)}
                 />
-                <input
-                    type="text"
-                    placeholder="Célébrité 2"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity2(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 3"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity3(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 4"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity4(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 5"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity5(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 6"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity6(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 7"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity7(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 8"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity8(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 9"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity9(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 10"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity10(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 11"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity11(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 12"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity12(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 13"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity13(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 14"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity14(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Célébrité 15"
-                    className="input input-bordered w-full max-w-xs"
-                    onChange={(e) => setCelebrity15(e.target.value)}
-                />
-            </div>
+                <div className="label">
+                    <span className="label-text-alt">{`Séparer les noms des célébrités par des points virgules ( ; )`}</span>
+                </div>
+            </label>
             <button
                 className="btn btn-outline btn-primary"
                 disabled={isMutating}
                 onClick={async () => {
                     setErrorForm(false);
 
-                    const celebrities = [
-                        celebrity1,
-                        celebrity2,
-                        celebrity3,
-                        celebrity4,
-                        celebrity5,
-                        celebrity6,
-                        celebrity7,
-                        celebrity8,
-                        celebrity9,
-                        celebrity10,
-                        celebrity11,
-                        celebrity12,
-                        celebrity13,
-                        celebrity14,
-                        celebrity15
-                    ];
+                    const celebrities = values.split(";").filter((v) => v.trim());
 
-                    // const someEmpty = celebrities.some((c) => !c?.name?.trim());
-                    // if (someEmpty) {
+                    // const someEmpty = celebrities.some((c) => !c.trim());
+                    // if (someEmpty || celebrities.length !== 50) {
                     //     setErrorForm(true);
                     //     return;
                     // }
@@ -195,7 +83,7 @@ export default function InsertForm() {
                     try {
                         const createResult = await insertBet({
                             year,
-                            celebrities: celebrities.filter((c) => typeof c === "string")
+                            celebrities
                         });
                         if (createResult) {
                             console.log("createBetResult : ", createResult);

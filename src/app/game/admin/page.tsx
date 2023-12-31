@@ -27,14 +27,16 @@ export default async function Page() {
     const celebrities: Celebrity[] = await listIncompleteCelebrities();
 
     return (
-        <div className="p-4 md:p-10 mx-auto max-w-7xl prose">
-            <h1>Administration</h1>
-            <p>
-                {celebrities &&
-                    `${celebrities.length} célébrité${
-                        celebrities.length > 1 ? "s" : ""
-                    } avec des informations manquantes`}
-            </p>
+        <div className="p-4 md:p-10 mx-auto max-w-7xl">
+            <div className="prose mb-4">
+                <h1>Administration</h1>
+                <p>
+                    {celebrities &&
+                        `${celebrities.length} célébrité${
+                            celebrities.length > 1 ? "s" : ""
+                        } avec des informations manquantes :`}
+                </p>
+            </div>
             {celebrities && <CelebritiesList celebrities={celebrities} />}
         </div>
     );

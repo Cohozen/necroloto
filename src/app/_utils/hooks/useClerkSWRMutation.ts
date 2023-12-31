@@ -1,12 +1,14 @@
 import { useAuth } from "@clerk/nextjs";
 import useSWRMutation from "swr/mutation";
 
-export default function useClerkSWRMutation(url: string) {
+type fetchMethod = "POST" | "PUT";
+
+export default function useClerkSWRMutation(url: string, method: fetchMethod = "POST") {
     const { getToken } = useAuth();
 
     const fetcher = async (url: string, { arg }: { arg: any }) => {
         return fetch(url, {
-            method: "POST",
+            method,
             headers: { Authorization: `Bearer ${await getToken()}` },
             body: JSON.stringify(arg)
         }).then((res) => res.json());

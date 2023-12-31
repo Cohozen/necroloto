@@ -1,10 +1,9 @@
-import { PrismaClient, User } from "@prisma/client";
+import { User } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
 type CreatedUser = Pick<User, "clerkId" | "email" | "image" | "username" | "firstname" | "lastname">;
 
 export async function findUserByClerkId(clerkId: string) {
-    const prisma = new PrismaClient();
-
     return prisma.user.findFirst({
         where: {
             clerkId
@@ -13,8 +12,6 @@ export async function findUserByClerkId(clerkId: string) {
 }
 
 export async function insertUser(user: CreatedUser) {
-    const prisma = new PrismaClient();
-
     return prisma.user.create({
         data: {
             clerkId: user.clerkId,
@@ -28,8 +25,6 @@ export async function insertUser(user: CreatedUser) {
 }
 
 export async function updateUser(user: User) {
-    const prisma = new PrismaClient();
-
     return prisma.user.update({
         where: {
             id: user.id

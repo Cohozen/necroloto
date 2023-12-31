@@ -1,10 +1,9 @@
-import { PrismaClient, Celebrity } from "@prisma/client";
+import { Celebrity } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
 type CreatedCelebrity = Pick<Celebrity, "name" | "birth" | "death" | "photo">;
 
 export async function listIncompleteCelebrities() {
-    const prisma = new PrismaClient();
-
     return prisma.celebrity.findMany({
         where: {
             OR: [{ birth: null }, { death: null }]
@@ -13,8 +12,6 @@ export async function listIncompleteCelebrities() {
 }
 
 export async function insertCelebrity(celebrity: CreatedCelebrity) {
-    const prisma = new PrismaClient();
-
     return prisma.celebrity.create({
         data: {
             name: celebrity.name,
@@ -26,8 +23,6 @@ export async function insertCelebrity(celebrity: CreatedCelebrity) {
 }
 
 export async function updateCelebrity(celebrity: Celebrity) {
-    const prisma = new PrismaClient();
-
     return prisma.celebrity.update({
         where: { id: celebrity.id },
         data: {

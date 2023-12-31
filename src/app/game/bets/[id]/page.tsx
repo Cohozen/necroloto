@@ -1,4 +1,5 @@
 import { getBetWithCelebrities } from "@/lib/api/bet";
+import dayjs from "dayjs";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const bet = await getBetWithCelebrities(params.id);
@@ -14,6 +15,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                             <th></th>
                             <th>Nom</th>
                             <th>Date de naissance</th>
+                            <th>Date de décès</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -23,10 +25,14 @@ export default async function Page({ params }: { params: { id: string } }) {
                                 <tr key={celebrityBet.celebrity.id} className="hover">
                                     <th>{index + 1}</th>
                                     <td>{celebrityBet.celebrity.name}</td>
-                                    <td>{celebrityBet.celebrity.birth?.toDateString()}</td>
+                                    <td>{celebrityBet.celebrity.birth ? dayjs(celebrityBet.celebrity.birth).format("DD/MM/YYYY") : "-"}</td>
+                                    <td>{celebrityBet.celebrity.death ? dayjs(celebrityBet.celebrity.death).format("DD/MM/YYYY") : "-"}</td>
                                     <td>
                                         {!celebrityBet.celebrity.death && (
-                                            <div className="badge badge-secondary">En vie</div>
+                                            <div className="badge badge-info">En vie</div>
+                                        )}
+                                        {celebrityBet.celebrity.death && (
+                                            <div className="badge badge-error">décédé</div>
                                         )}
                                     </td>
                                 </tr>

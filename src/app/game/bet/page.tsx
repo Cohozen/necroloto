@@ -27,7 +27,7 @@ export default async function BetPage() {
     return (
         <div className="p-4 md:p-10 mx-auto max-w-7xl prose">
             <h1>Mes prédictions</h1>
-            <p>Saisir 15 noms de célébrités.</p>
+            <p>{`Saisir jusqu'a 50 noms de célébrités.`}</p>
             <InsertForm />
         </div>
     );

@@ -16,24 +16,31 @@ export default async function BetsCardList() {
     }
 
     return (
-        <div className="">
-            <h1>Mes paries : </h1>
-            {bets &&
-                bets.map((b) => {
-                    return (
-                        <div key={b.id} className="card card-compact card-bordered w-96 bg-base-100 shadow-xl">
-                            <div className="card-body">
-                                <h2 className="card-title">{b.year}</h2>
-                                <p>{b.createdAt.toDateString()}</p>
-                                <div className="card-actions justify-end">
-                                    <Link href={`/game/bets/${b.id}`} className="btn btn-primary">
-                                        Voir le parie
-                                    </Link>
+        <div>
+            {bets && bets.length > 0 && (
+                <>
+                    <h1>Mes paries : </h1>
+                    {bets.map((b) => {
+                        return (
+                            <div key={b.id} className="card card-compact card-bordered w-96 bg-base-100 shadow-xl">
+                                <div className="card-body">
+                                    <h2 className="card-title">{b.year}</h2>
+                                    <p>{b.createdAt.toDateString()}</p>
+                                    <div className="card-actions justify-end">
+                                        <Link href={`/game/bets/${b.id}`} className="btn btn-primary">
+                                            Voir le parie
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </>
+            ) || (<>
+                <Link href="/game/bet" className="btn btn-primary">
+                    Aller parier
+                </Link>
+            </>)}
         </div>
     );
 }

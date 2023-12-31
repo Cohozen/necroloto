@@ -1,4 +1,4 @@
-import { getBetByUserAndYear, insertBet, insertBetWithCelebrities } from "@/lib/api/bet";
+import { getBetByUserAndYear, insertBetWithCelebrities } from "@/lib/api/bet";
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
     const { id } = params;

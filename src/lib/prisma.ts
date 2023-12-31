@@ -1,21 +1,22 @@
-import { PrismaClient } from '@prisma/client'
+// @ts-nocheck
+import { PrismaClient } from "@prisma/client";
 
-// See here: https://github.com/prisma/prisma-client-js/issues/228#issuecomment-618433162
-let prisma
-
-if (process.env.NODE_ENV === 'production') {
-    prisma = new PrismaClient()
-}
-// `stg` or `dev`
-else {
-    // @ts-ignore
-    if (!global.prisma) {
-        // @ts-ignore
-        global.prisma = new PrismaClient()
+declare global {
+    namespace NodeJS {
+        interface Global {
+            prisma: PrismaClient;
+        }
     }
-
-    // @ts-ignore
-    prisma = global.prisma
 }
 
-export default prisma
+let prisma: PrismaClient;
+
+if (!global.prisma) {
+    global.prisma = new PrismaClient({
+        log: ["info"]
+    });
+}
+
+prisma = global.prisma;
+
+export default prisma;
