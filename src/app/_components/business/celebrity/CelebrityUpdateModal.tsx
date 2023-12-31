@@ -27,16 +27,20 @@ export default function CelebrityUpdateModal({ open, celebrity }: CelebrityUpdat
     const { trigger: updateCelebrity, isMutating } = useClerkSWRMutation(`/api/celebrities/${celebrity.id}`, "PUT");
 
     useEffect(() => {
-        if(celebrity.birth){
+        if (celebrity.birth) {
             setBirthDate({
                 startDate: celebrity.birth,
                 endDate: celebrity.birth
-            })
+            });
         }
     }, [celebrity]);
 
     return (
-        <Modal id={`modal_celebrity_${celebrity.id}`} title={`Mise à jour de la célébrité ${celebrity?.name}`} open={open}>
+        <Modal
+            id={`modal_celebrity_${celebrity.id}`}
+            title={`Mise à jour de la célébrité ${celebrity?.name}`}
+            open={open}
+        >
             <div className="flex flex-col gap-4 p-4">
                 <Datepicker
                     asSingle={true}
@@ -67,9 +71,10 @@ export default function CelebrityUpdateModal({ open, celebrity }: CelebrityUpdat
                         try {
                             const updateResult = await updateCelebrity(celebrityToUpdate);
                             if (updateResult) {
-                                console.log("updateResult : ", updateResult);
-
                                 router.push(`/game/admin/`);
+
+                                // @ts-ignore
+                                document.getElementById(`modal_celebrity_${celebrity.id}`)?.close();
                             }
                         } catch (e) {
                             // gestion de l'erreur

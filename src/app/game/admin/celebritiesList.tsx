@@ -3,6 +3,7 @@
 import { Celebrity } from "@prisma/client";
 import CelebrityUpdateModal from "@/components/business/celebrity/CelebrityUpdateModal";
 import { useState } from "react";
+import dayjs from "dayjs";
 
 interface CelebritiesListProps {
     celebrities: Celebrity[];
@@ -37,8 +38,8 @@ export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
                             <tr key={celebrity.id}>
                                 <th>{index + 1}</th>
                                 <td>{celebrity.name}</td>
-                                <td>{celebrity.birth?.toDateString()}</td>
-                                <td>{celebrity.death?.toDateString()}</td>
+                                <td>{celebrity.birth ? dayjs(celebrity.birth).format("DD/MM/YYYY") : "-"}</td>
+                                <td>{celebrity.death ? dayjs(celebrity.death).format("DD/MM/YYYY") : "-"}</td>
                                 <td>
                                     <button className="btn btn-primary" onClick={() => handleClick(celebrity)}>
                                         Mise à jour
@@ -48,18 +49,6 @@ export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
                         ))}
                 </tbody>
             </table>
-            {/*<dialog id="my_modal_3" className="modal">*/}
-            {/*    <div className="modal-box">*/}
-            {/*        <form method="dialog">*/}
-            {/*            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>*/}
-            {/*        </form>*/}
-            {/*        <h3 className="font-bold text-lg">Hello!</h3>*/}
-            {/*        <p className="py-4">Press ESC key or click on ✕ button to close</p>*/}
-            {/*    </div>*/}
-            {/*    <form method="dialog" className="modal-backdrop">*/}
-            {/*        <button>close</button>*/}
-            {/*    </form>*/}
-            {/*</dialog>*/}
         </div>
     );
 }

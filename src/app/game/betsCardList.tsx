@@ -2,6 +2,7 @@ import { currentUser } from "@clerk/nextjs";
 import { listBetsByUser } from "@/lib/api/bet";
 import Link from "next/link";
 import { Bet, Prisma } from "@prisma/client";
+import dayjs from "dayjs";
 
 export default async function BetsCardList() {
     const user = await currentUser();
@@ -25,7 +26,7 @@ export default async function BetsCardList() {
                             <div key={b.id} className="card card-compact card-bordered w-96 bg-base-100 shadow-xl">
                                 <div className="card-body">
                                     <h2 className="card-title">{b.year}</h2>
-                                    <p>{b.createdAt.toDateString()}</p>
+                                    <p>{`Créé le ${dayjs(b.createdAt).format("DD/MM/YYYY")}`}</p>
                                     <div className="card-actions justify-end">
                                         <Link href={`/game/bets/${b.id}`} className="btn btn-primary">
                                             Voir le parie
