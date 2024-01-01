@@ -1,5 +1,6 @@
 import React from "react";
 
+import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
 import { ClerkProvider, SignedOut } from "@clerk/nextjs";
 
@@ -15,6 +16,9 @@ export const metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="fr" className="h-full bg-base-100">
+            <Head>
+                <script defer data-domain="necroloto.fr" src="https://plausible.corentinlegal.fr/js/script.js"></script>
+            </Head>
             <ClerkProvider>
                 <body className="h-full">
                     <SignedOut>
