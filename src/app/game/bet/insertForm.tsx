@@ -4,6 +4,7 @@ import useClerkSWRMutation from "@/utils/hooks/useClerkSWRMutation";
 import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { uniq } from "lodash";
 
 export default function InsertForm() {
     const { user, isLoaded } = useUser();
@@ -13,14 +14,14 @@ export default function InsertForm() {
 
     const [values, setValues] = useState("");
 
-    const [errorForm, setErrorForm] = useState(false);
+    const [errorForm, setErrorForm] = useState("");
     const [successForm, setSuccessForm] = useState(false);
 
     const { trigger: insertBet, isMutating } = useClerkSWRMutation(`/api/users/${user?.externalId}/bet`);
 
     return (
         <div className="flex flex-col gap-4">
-            {errorForm && (
+            {errorForm.length > 0 && (
                 <div role="alert" className="alert alert-error">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +36,7 @@ export default function InsertForm() {
                             d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                     </svg>
-                    <span>Erreur ! Veuillez saisir tous les champs textes.</span>
+                    <span>{errorForm}</span>
                 </div>
             )}
             {successForm && (
@@ -53,13 +54,14 @@ export default function InsertForm() {
                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                     </svg>
-                    <span>Votre parie est enregistré.</span>
+                    <span>Votre pari est enregistré.</span>
                 </div>
             )}
             <label className="form-control">
                 <textarea
                     className="textarea textarea-bordered h-24"
-                    placeholder="Paries"
+                    placeholder="Paris"
+                    disabled={isMutating}
                     onChange={(e) => setValues(e.target.value)}
                 />
                 <div className="label">
@@ -70,15 +72,26 @@ export default function InsertForm() {
                 className="btn btn-outline btn-primary"
                 disabled={isMutating}
                 onClick={async () => {
-                    setErrorForm(false);
+                    setErrorForm("");
 
-                    const celebrities = values.split(";").filter((v) => v.trim());
+                    const celebrities = uniq(values.split(";").filter((v) => v.trim()));
+                    console.log(celebrities);
+                    const someEmpty = celebrities.some((c) => !c.trim());
 
-                    // const someEmpty = celebrities.some((c) => !c.trim());
-                    // if (someEmpty || celebrities.length !== 50) {
-                    //     setErrorForm(true);
-                    //     return;
-                    // }
+                    if (celebrities.length < 30) {
+                        setErrorForm(`Il te manque des noms ! ${30 - celebrities.length} manquant.`);
+                        return;
+                    }
+
+                    if (celebrities.length > 30) {
+                        setErrorForm(`Trop de noms ! ${celebrities.length - 30} en trop.`);
+                        return;
+                    }
+
+                    if (someEmpty) {
+                        setErrorForm("Il reste des cases vides !");
+                        return;
+                    }
 
                     try {
                         const createResult = await insertBet({
@@ -96,6 +109,7 @@ export default function InsertForm() {
                 }}
             >
                 Parier
+                {isMutating && <span className="loading loading-spinner loading-sm"></span>}
             </button>
         </div>
     );

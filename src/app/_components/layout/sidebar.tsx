@@ -28,7 +28,7 @@ export default function Sidebar() {
     // const navigation = useCallback(() => {
     //     const navigationLinks = [{ name: "Dashboard", href: "/" }];
     //
-    //     if (userBet) navigationLinks.push({ name: "Mon Parie", href: `/bets/${userBet._id}` });
+    //     if (userBet) navigationLinks.push({ name: "Mon Pari", href: `/bets/${userBet._id}` });
     //     else
     //         navigationLinks.push({
     //             name: "Parier",
@@ -105,7 +105,7 @@ export default function Sidebar() {
                                     active: pathname === `/game/users/${user?.externalId}/bets`
                                 })}
                             >
-                                Mes paries
+                                Mes paris
                             </a>
                         </li>
                         <li>
@@ -115,7 +115,7 @@ export default function Sidebar() {
                                     active: pathname.split("/").slice(1, 3).join("/") === "game/bets"
                                 })}
                             >
-                                Tous les paries
+                                Tous les paris
                             </a>
                         </li>
                     </ul>

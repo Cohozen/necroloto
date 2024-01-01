@@ -20,7 +20,7 @@ export default async function BetsCardList() {
         <div>
             {bets && bets.length > 0 && (
                 <>
-                    <h1>Mes paries : </h1>
+                    <h1>Mes paris : </h1>
                     {bets.map((b) => {
                         return (
                             <div key={b.id} className="card card-compact card-bordered w-96 bg-base-100 shadow-xl">
@@ -29,7 +29,7 @@ export default async function BetsCardList() {
                                     <p>{`Créé le ${dayjs(b.createdAt).format("DD/MM/YYYY")}`}</p>
                                     <div className="card-actions justify-end">
                                         <Link href={`/game/bets/${b.id}`} className="btn btn-primary">
-                                            Voir le parie
+                                            Voir le pari
                                         </Link>
                                     </div>
                                 </div>

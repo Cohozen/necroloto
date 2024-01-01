@@ -11,8 +11,8 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div className="p-4 md:p-10 mx-auto max-w-7xl prose">
             <h1>
                 {user?.externalId === bet?.userId
-                    ? `Détails de votre parie ${bet?.year}`
-                    : `Détails du parie ${bet?.year}`}
+                    ? `Détails de votre pari ${bet?.year}`
+                    : `Détails du pari ${bet?.year}`}
             </h1>
             <div className="overflow-x-auto">
                 <table className="table">

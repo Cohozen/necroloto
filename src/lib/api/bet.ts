@@ -1,4 +1,4 @@
-import { Bet } from "@prisma/client";
+import { Bet, CelebritiesOnBet } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
 type CreatedBet = Pick<Bet, "userId" | "year">;
@@ -52,42 +52,53 @@ export async function insertBet(bet: CreatedBet) {
 }
 
 export async function insertBetWithCelebrities(bet: CreatedBet, celebrities: string[]) {
-    return prisma.$transaction(async (tx) => {
-        const createdBet = await tx.bet.create({
-            data: {
-                userId: bet.userId,
-                year: bet.year
-            }
-        });
-
-        for (const celebrityName of celebrities) {
-            const celebrityFound = await tx.celebrity.findFirst({
-                where: { name: celebrityName }
+    return prisma.$transaction(
+        async (tx) => {
+            const createdBet = await tx.bet.create({
+                data: {
+                    userId: bet.userId,
+                    year: bet.year
+                }
             });
 
-            if (celebrityFound) {
-                const linked = await tx.celebritiesOnBet.create({
-                    data: {
-                        betId: createdBet.id,
-                        celebrityId: celebrityFound.id
-                    }
-                });
-            } else {
-                const createdCelebrity = await tx.celebrity.create({
-                    data: {
-                        name: celebrityName
-                    }
+            const celebritiesOnBetPromises: Promise<CelebritiesOnBet>[] = [];
+
+            for (const celebrityName of celebrities) {
+                const celebrityFound = await tx.celebrity.findFirst({
+                    where: { name: celebrityName }
                 });
 
-                const linked = await tx.celebritiesOnBet.create({
-                    data: {
-                        betId: createdBet.id,
-                        celebrityId: createdCelebrity.id
-                    }
-                });
+                if (celebrityFound) {
+                    celebritiesOnBetPromises.push(
+                        tx.celebritiesOnBet.create({
+                            data: {
+                                betId: createdBet.id,
+                                celebrityId: celebrityFound.id
+                            }
+                        })
+                    );
+                } else {
+                    const createdCelebrity = await tx.celebrity.create({
+                        data: {
+                            name: celebrityName
+                        }
+                    });
+
+                    celebritiesOnBetPromises.push(
+                        tx.celebritiesOnBet.create({
+                            data: {
+                                betId: createdBet.id,
+                                celebrityId: createdCelebrity.id
+                            }
+                        })
+                    );
+                }
             }
-        }
 
-        return createdBet;
-    });
+            await Promise.all(celebritiesOnBetPromises);
+
+            return createdBet;
+        },
+        { timeout: 30000 }
+    );
 }
