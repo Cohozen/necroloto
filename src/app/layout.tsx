@@ -17,7 +17,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     return (
         <html lang="fr" className="h-full bg-base-100">
             <Head>
-                <script defer data-domain="necroloto.fr" src="https://plausible.corentinlegal.fr/js/script.js"></script>
+                <script defer data-domain="necroloto.fr" src="/js/script.js"></script>
             </Head>
             <ClerkProvider>
                 <body className="h-full">
