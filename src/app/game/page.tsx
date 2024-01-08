@@ -3,6 +3,8 @@ import { findUserByClerkId, insertUser, updateUser } from "@/lib/api/user";
 
 import { User } from "@prisma/client";
 import BetsCardList from "./betsCardList";
+import { BetsWithUser } from "@/lib/types/bet";
+import { listBetsByUser } from "@/lib/api/bet";
 
 export const metadata = {
     title: "Necroloto | Dashboard"
@@ -57,13 +59,23 @@ export default async function IndexPage() {
         return null;
     };
 
+    let bets: BetsWithUser[] = [];
+
+    if (user && user?.externalId) {
+        const result = await listBetsByUser(user?.externalId);
+        if (result) bets = result;
+    }
+
     return (
-        <main className="p-4 md:p-10 mx-auto max-w-7xl prose">
-            <h2>
-                Bonjour <span className="font-bold">{buildUserName()}</span>
-            </h2>
-            <p>Bienvenue sur le Necroloto.</p>
-            <BetsCardList />
+        <main className="p-4 md:p-10 mx-auto max-w-7xl">
+            <div className="flex flex-col gap-4">
+                <h1 className="text-5xl">
+                    Bonjour <span className="font-bold">{buildUserName()}</span>
+                </h1>
+                <p className="text-xl">Bienvenue sur le Necroloto.</p>
+                <h2 className="text-3xl mb-2">Mes paris : </h2>
+            </div>
+            <BetsCardList bets={bets} />
         </main>
     );
 }

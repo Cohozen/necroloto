@@ -42,6 +42,17 @@ export async function listBetsByUser(userId: string) {
     });
 }
 
+export async function listBetsByYear(year: number) {
+    return prisma.bet.findMany({
+        where: {
+            year
+        },
+        include: {
+            user: true
+        }
+    });
+}
+
 export async function insertBet(bet: CreatedBet) {
     return prisma.bet.create({
         data: {
