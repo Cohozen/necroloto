@@ -76,7 +76,7 @@ export async function insertBetWithCelebrities(bet: CreatedBet, celebrities: str
 
             for (const celebrityName of celebrities) {
                 const celebrityFound = await tx.celebrity.findFirst({
-                    where: { name: celebrityName }
+                    where: { name: celebrityName.trim() }
                 });
 
                 if (celebrityFound) {
@@ -91,7 +91,7 @@ export async function insertBetWithCelebrities(bet: CreatedBet, celebrities: str
                 } else {
                     const createdCelebrity = await tx.celebrity.create({
                         data: {
-                            name: celebrityName
+                            name: celebrityName.trim()
                         }
                     });
 

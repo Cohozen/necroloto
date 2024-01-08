@@ -1,6 +1,5 @@
 import { currentUser, clerkClient } from "@clerk/nextjs";
 import { findUserByClerkId, insertUser, updateUser } from "@/lib/api/user";
-
 import { User } from "@prisma/client";
 import BetsCardList from "./betsCardList";
 import { BetsWithUser } from "@/lib/types/bet";
