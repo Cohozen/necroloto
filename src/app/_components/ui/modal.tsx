@@ -15,7 +15,7 @@ export default function Modal({ id, title, open, onClose, children }: ModalProps
     }, [open]);
 
     return (
-        <dialog id={id} className="modal">
+        <dialog id={id} className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
                 <form method="dialog">
                     <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -25,9 +25,6 @@ export default function Modal({ id, title, open, onClose, children }: ModalProps
                 <h3 className="font-bold text-lg">{title}</h3>
                 {children}
             </div>
-            <form method="dialog" className="modal-backdrop">
-                <button onClick={onClose}>Fermer</button>
-            </form>
         </dialog>
     );
 }

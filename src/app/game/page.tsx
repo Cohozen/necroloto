@@ -5,8 +5,6 @@ import { BetsWithUser } from "@/lib/types/bet";
 import { listBetsByUser } from "@/lib/api/bet";
 import BetsCardList from "@/components/business/bet/betsCardList";
 
-import "react-responsive-modal/styles.css";
-
 export const metadata = {
     title: "Necroloto | Dashboard"
 };
