@@ -20,7 +20,7 @@ model User {
   clerkUpdatedAt DateTime @default(now())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  Bet            Bet[]
+  Bets           Bet[]
 }
 
 model Celebrity {
