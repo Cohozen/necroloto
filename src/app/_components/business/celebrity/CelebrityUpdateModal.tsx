@@ -51,6 +51,7 @@ export default function CelebrityUpdateModal({ open, onClose, celebrity }: Celeb
                     onChange={(value) => setBirthDate(value)}
                     displayFormat={"DD/MM/YYYY"}
                     placeholder="Date de naissance"
+                    disabled={!!celebrity.birth}
                 />
                 <Datepicker
                     asSingle={true}
@@ -74,9 +75,7 @@ export default function CelebrityUpdateModal({ open, onClose, celebrity }: Celeb
                             const updateResult = await updateCelebrity(celebrityToUpdate);
                             if (updateResult) {
                                 router.push(`/game/admin/`);
-
-                                // @ts-ignore
-                                document.getElementById(`modal_celebrity_${celebrity.id}`)?.close();
+                                onClose();
                             }
                         } catch (e) {
                             // gestion de l'erreur

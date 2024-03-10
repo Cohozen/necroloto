@@ -55,22 +55,29 @@ export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
                 </thead>
                 <tbody>
                     {celebrities &&
-                        celebrities.map((celebrity, index) => (
-                            <tr key={celebrity.id}>
-                                <th>{index + 1}</th>
-                                <td>{celebrity.name}</td>
-                                <td>{celebrity.birth ? dayjs(celebrity.birth).format("DD/MM/YYYY") : "-"}</td>
-                                <td>{celebrity.death ? dayjs(celebrity.death).format("DD/MM/YYYY") : "-"}</td>
-                                <td className="flex flex-row gap-2">
-                                    <button className="btn btn-primary" onClick={() => handleUpdateClick(celebrity)}>
-                                        Mise à jour
-                                    </button>
-                                    <button className="btn btn-accent" onClick={() => handleMergeClick(celebrity)}>
-                                        Fusionner
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                        celebrities
+                            .sort((a, b) => {
+                                return a.name.localeCompare(b.name);
+                            })
+                            .map((celebrity, index) => (
+                                <tr key={celebrity.id}>
+                                    <th>{index + 1}</th>
+                                    <td>{celebrity.name}</td>
+                                    <td>{celebrity.birth ? dayjs(celebrity.birth).format("DD/MM/YYYY") : "-"}</td>
+                                    <td>{celebrity.death ? dayjs(celebrity.death).format("DD/MM/YYYY") : "-"}</td>
+                                    <td className="flex flex-row gap-2">
+                                        <button
+                                            className="btn btn-primary"
+                                            onClick={() => handleUpdateClick(celebrity)}
+                                        >
+                                            Mise à jour
+                                        </button>
+                                        <button className="btn btn-accent" onClick={() => handleMergeClick(celebrity)}>
+                                            Fusionner
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
                 </tbody>
             </table>
         </div>
