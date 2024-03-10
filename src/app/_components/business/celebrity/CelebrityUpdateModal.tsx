@@ -9,10 +9,11 @@ import { useRouter } from "next/navigation";
 
 interface CelebrityUpdateModalProps {
     open: boolean;
+    onClose: () => void;
     celebrity: Celebrity;
 }
 
-export default function CelebrityUpdateModal({ open, celebrity }: CelebrityUpdateModalProps) {
+export default function CelebrityUpdateModal({ open, onClose, celebrity }: CelebrityUpdateModalProps) {
     const [birthDate, setBirthDate] = useState<DateValueType>({
         startDate: null,
         endDate: null
@@ -40,6 +41,7 @@ export default function CelebrityUpdateModal({ open, celebrity }: CelebrityUpdat
             id={`modal_celebrity_${celebrity.id}`}
             title={`Mise à jour de la célébrité ${celebrity?.name}`}
             open={open}
+            onClose={onClose}
         >
             <div className="flex flex-col gap-4 p-4">
                 <Datepicker

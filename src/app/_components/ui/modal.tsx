@@ -6,24 +6,27 @@ type ModalProps = PropsWithChildren<{
     id: string;
     title: string;
     open: boolean;
+    onClose: () => void;
 }>;
-export default function Modal({ id, title, open, children }: ModalProps) {
+export default function Modal({ id, title, open, onClose, children }: ModalProps) {
     useEffect(() => {
         // @ts-ignore
-        document.getElementById(id)?.showModal();
+        if (open) document.getElementById(id)?.showModal();
     }, [open]);
 
     return (
         <dialog id={id} className="modal">
             <div className="modal-box">
                 <form method="dialog">
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                        ✕
+                    </button>
                 </form>
                 <h3 className="font-bold text-lg">{title}</h3>
                 {children}
             </div>
             <form method="dialog" className="modal-backdrop">
-                <button>Fermer</button>
+                <button onClick={onClose}>Fermer</button>
             </form>
         </dialog>
     );

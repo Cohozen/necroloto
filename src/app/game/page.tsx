@@ -1,9 +1,11 @@
 import { currentUser, clerkClient } from "@clerk/nextjs";
 import { findUserByClerkId, insertUser, updateUser } from "@/lib/api/user";
 import { User } from "@prisma/client";
-import BetsCardList from "./betsCardList";
 import { BetsWithUser } from "@/lib/types/bet";
 import { listBetsByUser } from "@/lib/api/bet";
+import BetsCardList from "@/components/business/bet/betsCardList";
+
+import "react-responsive-modal/styles.css";
 
 export const metadata = {
     title: "Necroloto | Dashboard"
