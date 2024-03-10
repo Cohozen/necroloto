@@ -10,7 +10,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         name: body.name,
         birth: body.birth,
         death: body.death,
-        photo: null
+        photo: body.photo
     };
 
     const result = await updateCelebrity(celebrity);

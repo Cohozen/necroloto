@@ -22,6 +22,7 @@ export default function CelebrityUpdateModal({ open, onClose, celebrity }: Celeb
         startDate: null,
         endDate: null
     });
+    const [urlPhoto, setUrlPhoto] = useState<string | null>(null);
 
     const router = useRouter();
 
@@ -29,25 +30,26 @@ export default function CelebrityUpdateModal({ open, onClose, celebrity }: Celeb
 
     const updateIsDisabled = () => {
         if (isMutating) return true;
+        if (celebrity.photo !== urlPhoto) return false;
         if (!!birthDate?.startDate && celebrity.birth && !deathDate?.startDate) return true;
         if (!birthDate?.startDate && !deathDate?.startDate) return true;
         return false;
     };
 
     useEffect(() => {
-        if (celebrity.birth) {
+        if (celebrity.photo) setUrlPhoto(celebrity.photo);
+
+        if (celebrity.birth)
             setBirthDate({
                 startDate: celebrity.birth,
                 endDate: celebrity.birth
             });
-        }
 
-        if (celebrity.death) {
+        if (celebrity.death)
             setBirthDate({
                 startDate: celebrity.death,
                 endDate: celebrity.death
             });
-        }
     }, [celebrity]);
 
     return (
@@ -59,6 +61,13 @@ export default function CelebrityUpdateModal({ open, onClose, celebrity }: Celeb
         >
             <>
                 <div className="flex flex-col gap-4 py-6 mb-48">
+                    <input
+                        type="text"
+                        placeholder="Url photo"
+                        className="input input-bordered w-full"
+                        value={urlPhoto || ""}
+                        onChange={(v) => setUrlPhoto(v.target.value)}
+                    />
                     <Datepicker
                         asSingle={true}
                         useRange={false}
@@ -67,9 +76,9 @@ export default function CelebrityUpdateModal({ open, onClose, celebrity }: Celeb
                         displayFormat={"DD/MM/YYYY"}
                         placeholder="Date de naissance"
                         disabled={!!celebrity.birth}
+                        inputClassName="input input-bordered w-full text-base-content"
                     />
                     <Datepicker
-                        containerClassName="relative"
                         asSingle={true}
                         showShortcuts={true}
                         useRange={false}
@@ -78,10 +87,13 @@ export default function CelebrityUpdateModal({ open, onClose, celebrity }: Celeb
                         displayFormat={"DD/MM/YYYY"}
                         placeholder="Date de décès"
                         disabled={!!celebrity.death}
+                        inputClassName="input input-bordered w-full text-base-content"
                     />
                 </div>
                 <div className="flex flex-row justify-between">
-                    <button className="btn btn-ghost" onClick={onClose}>Fermer</button>
+                    <button className="btn btn-ghost" onClick={onClose}>
+                        Fermer
+                    </button>
                     <button
                         className="btn btn-outline btn-primary"
                         disabled={updateIsDisabled()}
@@ -89,7 +101,8 @@ export default function CelebrityUpdateModal({ open, onClose, celebrity }: Celeb
                             const celebrityToUpdate = {
                                 ...celebrity,
                                 birth: new Date(birthDate?.startDate || "") || null,
-                                death: new Date(deathDate?.startDate || "") || null
+                                death: new Date(deathDate?.startDate || "") || null,
+                                photo: urlPhoto || null
                             };
 
                             try {
