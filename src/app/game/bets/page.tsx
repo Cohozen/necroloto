@@ -1,6 +1,6 @@
 import { BetsWithUser } from "@/lib/types/bet";
 import { listBetsByYear } from "@/lib/api/bet";
-import BetsCardList from "../betsCardList";
+import BetsCardList from "@/components/business/bet/betsCardList";
 
 export default async function Page() {
     let bets: BetsWithUser[] = [];

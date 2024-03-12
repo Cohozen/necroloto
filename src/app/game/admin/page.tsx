@@ -1,7 +1,7 @@
 import { currentUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { listIncompleteCelebrities } from "@/lib/api/celebrity";
-import { Prisma, Celebrity } from "@prisma/client";
+import { Celebrity } from "@prisma/client";
 import CelebritiesList from "./celebritiesList";
 
 export default async function Page() {

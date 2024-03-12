@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { useAuth } from "@clerk/nextjs";
 
-export default function useClerkSWR(url: string) {
+export default function useClerkSWR<T>(url: string) {
     const { getToken } = useAuth();
 
     const fetcher = async (...args: [RequestInfo]) => {
@@ -10,5 +10,5 @@ export default function useClerkSWR(url: string) {
         }).then((res) => res.json());
     };
 
-    return useSWR(url, fetcher);
+    return useSWR<T>(url, fetcher);
 }
