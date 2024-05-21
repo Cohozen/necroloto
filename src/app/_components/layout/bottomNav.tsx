@@ -13,8 +13,7 @@ export default function BottomNav() {
             <Link
                 href="/game"
                 className={classNames("text-base-content", {
-                    active: pathname === "/game",
-                    "text-primary": pathname === "/game"
+                    active: pathname === "/game"
                 })}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-6 w-6">
@@ -44,8 +43,7 @@ export default function BottomNav() {
             <Link
                 href="/game/rank"
                 className={classNames("text-base-content", {
-                    active: pathname === "/game/rank",
-                    "text-primary": pathname === "/game/rank"
+                    active: pathname === "/game/rank"
                 })}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-6 w-6">
@@ -62,9 +60,8 @@ export default function BottomNav() {
             </Link>
             <Link
                 href="/game/bet"
-                className={classNames("text-base-content", {
-                    active: pathname === "/game/bet",
-                    "text-primary": pathname === "/game/bet"
+                className={classNames("text-secondary", {
+                    active: pathname === "/game/bet"
                 })}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-10 w-10">
@@ -82,8 +79,7 @@ export default function BottomNav() {
             <Link
                 href="/game/celebrities"
                 className={classNames("text-base-content", {
-                    active: pathname === "/game/celebrities",
-                    "text-primary": pathname === "/game/celebrities"
+                    active: pathname === "/game/celebrities"
                 })}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-6 w-6">
@@ -96,8 +92,7 @@ export default function BottomNav() {
             <Link
                 href="/game/settings"
                 className={classNames("text-base-content", {
-                    active: pathname === "/game/settings",
-                    "text-primary": pathname === "/game/settings"
+                    active: pathname === "/game/settings"
                 })}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-6 w-6">
