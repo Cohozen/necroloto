@@ -54,7 +54,7 @@ export default function Sidebar() {
                     <div className="font-title inline-flex text-lg md:text-2xl">Necroloto</div>
                 </a>
             </div>
-            <ul className="menu bg-base-100 p-4 w-80 min-h-full">
+            <ul className="menu bg-base-100 p-4 w-80">
                 <li>
                     <a
                         href="/game"

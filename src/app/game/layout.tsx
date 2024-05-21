@@ -4,6 +4,7 @@ import { SignedOut, RedirectToSignIn } from "@clerk/nextjs";
 
 import Navbar from "@/components/layout/navbar";
 import Sidebar from "@/components/layout/sidebar";
+import BottomNav from "@/components/layout/bottomNav";
 
 export const metadata = {
     title: "Necroloto",
@@ -16,15 +17,27 @@ export default async function GameLayout({ children }: { children: React.ReactNo
             <SignedOut>
                 <RedirectToSignIn />
             </SignedOut>
-            <div className="drawer lg:drawer-open">
-                <input id="main-drawer" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content flex flex-col">
-                    {/* Navbar */}
-                    <Navbar />
-                    {/* Page content here */}
-                    <div className="px-6">{children}</div>
+            {/*Desktop layout*/}
+            <div className="mb-auto hidden lg:flex">
+                <div className="drawer lg:drawer-open">
+                    <input id="main-drawer" type="checkbox" className="drawer-toggle" />
+                    <div className="drawer-content flex flex-col">
+                        {/* Navbar */}
+                        <Navbar />
+                        {/* Page content here */}
+                        <div className="px-6">{children}</div>
+                    </div>
+                    <Sidebar />
                 </div>
-                <Sidebar />
+            </div>
+
+            {/*Mobile layout*/}
+            <div className="lg:hidden">
+                <Navbar />
+
+                {children}
+
+                <BottomNav />
             </div>
         </>
     );
