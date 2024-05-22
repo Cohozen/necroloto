@@ -59,9 +59,9 @@ export default function BottomNav() {
                 </svg>
             </Link>
             <Link
-                href="/game/bet"
+                href="/game/bets"
                 className={classNames("text-secondary", {
-                    active: pathname === "/game/bet"
+                    active: pathname === "/game/bets"
                 })}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-10 w-10">

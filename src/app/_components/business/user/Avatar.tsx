@@ -4,12 +4,13 @@ import { User } from "@prisma/client";
 
 interface AvatarProps {
     user: User;
+    size?: string;
 }
 
-export default function Avatar({ user }: AvatarProps) {
+export default function Avatar({ user, size }: AvatarProps) {
     return user.image ? (
         <div className="avatar">
-            <div className="w-8 rounded-full">
+            <div className={`rounded-full ${size || "w-8"}`}>
                 <img src={user.image} />
             </div>
         </div>

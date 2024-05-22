@@ -27,6 +27,9 @@ export async function getBetByUserAndYear(userId: string, year: number) {
         where: {
             userId,
             year
+        },
+        include: {
+            CelebritiesOnBet: { include: { celebrity: true } }
         }
     });
 }
