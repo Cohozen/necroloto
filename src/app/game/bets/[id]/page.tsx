@@ -51,22 +51,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                                             </div>
                                         </td>
 
-                                        <td>
-                                            {celebrity.death ? "2 pts" : "-"}
-                                            {/*{celebrityBet.celebrity.birth*/}
-                                            {/*    ? dayjs(celebrityBet.celebrity.birth).format(*/}
-                                            {/*          "DD/MM/YYYY"*/}
-                                            {/*      )*/}
-                                            {/*    : "-"}*/}
-                                            {/*<br />*/}
-                                            {/*<span className="badge badge-ghost badge-sm">*/}
-                                            {/*    {celebrityBet.celebrity.death*/}
-                                            {/*        ? dayjs(celebrityBet.celebrity.death).format(*/}
-                                            {/*              "DD/MM/YYYY"*/}
-                                            {/*          )*/}
-                                            {/*        : "-"}*/}
-                                            {/*</span>*/}
-                                        </td>
+                                        <td>{celebrity.death ? "2 pts" : "-"}</td>
                                         {/*<th>*/}
                                         {/*    <button className="btn btn-ghost btn-xs">details</button>*/}
                                         {/*</th>*/}
