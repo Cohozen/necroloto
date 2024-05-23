@@ -26,7 +26,7 @@ export default async function Page() {
     const youngerCelebrity = last(sortBy(celebrities?.filter((c) => c.birth), (c) => c.birth));
 
     return (
-        <div className="flex flex-col items-center gap-8 p-4 md:p-10 mx-auto">
+        <div className="flex flex-col items-center gap-8 p-4 md:p-10 h-full">
             <div className="flex text-2xl font-bold">Mon pari 2024</div>
             {myBet && celebrities && (
                 <>

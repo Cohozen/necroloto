@@ -72,7 +72,7 @@ export default async function IndexPage() {
     }
 
     return (
-        <div className="flex flex-col gap-8 p-4 md:p-10 mx-auto">
+        <div className="flex flex-col gap-8 p-4 md:p-10 h-full">
             {userDb && (
                 <div className="flex flex-row gap-4 justify-center px-2 pt-4">
                     <UserAvatar user={userDb} size="w-20" />
