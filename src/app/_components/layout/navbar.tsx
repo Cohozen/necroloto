@@ -14,22 +14,25 @@ export default function Navbar() {
         <div className="h-20 sticky top-0 z-30 bg-primary bg-opacity-90 backdrop-blur shadow-sm rounded-[100%/0%_0%_100%_100%]">
             <div className="navbar text-primary-content items-start">
                 <div className="flex navbar-start">
-                    <button className="btn btn-circle btn-sm" onClick={() => router.back()}>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            className="h-4 w-4"
-                        >
-                            <path
-                                fill="none"
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="1.5"
-                                d="m15 5l-6 7l6 7"
-                            ></path>
-                        </svg>
-                    </button>
+                    {pathname !== "/game" && (
+                        <button className="btn btn-circle btn-sm" onClick={() => router.back()}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                className="h-4 w-4"
+                            >
+                                <path
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="1.5"
+                                    d="m15 5l-6 7l6 7"
+                                ></path>
+                            </svg>
+                        </button>
+                    )}
+
                     {/*<div className="text-sm breadcrumbs px-2">*/}
                     {/*    <ul>*/}
                     {/*        {pathname.split("/").map((route, index) => {*/}
@@ -55,6 +58,7 @@ export default function Navbar() {
                         {pathname.split("/").length === 2 && "Home"}
                         {pathname.split("/")[2] === "bets" && "Les paris"}
                         {pathname.split("/")[2] === "celebrities" && "Les Célébrités"}
+                        {pathname.split("/")[2] === "settings" && "Paramètres"}
                     </div>
                 </div>
 
