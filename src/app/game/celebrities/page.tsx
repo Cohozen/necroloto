@@ -7,9 +7,15 @@ export default async function Page({ params }: { params: { id: string } }) {
     const celebrities: Celebrity[] = await listAllCelebrities();
 
     return (
-        <div className="flex flex-col items-center gap-8 p-4 md:p-10 h-full">
-            <div className="flex text-2xl font-bold">Les célébrités</div>
-            {celebrities && <CelebritiesCardList celebrities={celebrities} />}
-        </div>
+        <main className="flex-1 overflow-auto">
+            <div className="flex flex-col gap-4 p-4">
+                {celebrities && (
+                    <>
+                        <div className="flex text-2xl font-bold justify-center">{`${celebrities.length} célébrités`}</div>
+                        <CelebritiesCardList celebrities={celebrities} />
+                    </>
+                )}
+            </div>
+        </main>
     );
 }

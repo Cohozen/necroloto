@@ -20,7 +20,7 @@ export default function CelebritiesCardList({ celebrities }: CelebritiesCardList
                     .map((celebrity, index) => (
                         <div key={celebrity.id} className="card bg-base-100 shadow-xl">
                             {/*<figure>{celebrity.photo && <img src={celebrity.photo} />}</figure>*/}
-                            <div className="card-body">
+                            <div className="card-body p-4">
                                 <div className="flex flex-col">
                                     <div className="flex flex-row gap-4 items-center">
                                         {celebrity && (

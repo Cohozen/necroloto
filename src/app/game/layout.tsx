@@ -18,27 +18,27 @@ export default async function GameLayout({ children }: { children: React.ReactNo
                 <RedirectToSignIn />
             </SignedOut>
             {/*Desktop layout*/}
-            <div className="mb-auto hidden lg:flex">
-                <div className="drawer lg:drawer-open">
-                    <input id="main-drawer" type="checkbox" className="drawer-toggle" />
-                    <div className="drawer-content flex flex-col">
-                        {/* Navbar */}
-                        <Navbar />
-                        {/* Page content here */}
-                        <div className="px-6">{children}</div>
-                    </div>
-                    <Sidebar />
-                </div>
-            </div>
+            {/*<div className="mb-auto hidden lg:flex">*/}
+            {/*    <div className="drawer lg:drawer-open">*/}
+            {/*        <input id="main-drawer" type="checkbox" className="drawer-toggle" />*/}
+            {/*        <div className="drawer-content flex flex-col">*/}
+            {/*            /!* Navbar *!/*/}
+            {/*            <Navbar />*/}
+            {/*            /!* Page content here *!/*/}
+            {/*            <div className="px-6">{children}</div>*/}
+            {/*        </div>*/}
+            {/*        <Sidebar />*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
             {/*Mobile layout*/}
-            <div className="flex flex-col justify-start lg:hidden h-full">
+            <>
                 <Navbar />
 
                 {children}
 
                 <BottomNav />
-            </div>
+            </>
         </>
     );
 }

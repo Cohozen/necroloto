@@ -5,7 +5,7 @@ export const metadata = {
 
 export default async function IndexPage() {
     return (
-        <div className="mb-auto flex flex-col items-center justify-start">
+        <main className="flex-1 overflow-y-auto flex flex-col items-center justify-center">
             <div className="flex items-center justify-center px-2 py-10 text-center xl:justify-start xl:pe-0 xl:ps-10 xl:text-start">
                 <div>
                     <h1 className="font-title text-center text-[clamp(2rem,6vw,4.2rem)] font-black leading-[1.1] [word-break:auto-phrase] xl:w-[115%] xl:text-start [:root[dir=rtl]_&]:leading-[1.35]">
@@ -39,13 +39,13 @@ export default async function IndexPage() {
                     </p>
                     <div className="h-10"></div>
                     <div className="inline-flex w-full flex-col items-stretch justify-center gap-2 px-4 md:flex-row xl:justify-start xl:px-0 md:mt-20">
-                        <a href="/sign-up" className="btn md:btn-lg md:btn-wide group px-12">
+                        <a href="/sign-up" className="btn btn-primary md:btn-lg md:btn-wide group px-12">
                             {"S'inscrire"}
                         </a>
                         <a className="btn btn-neutral md:btn-lg md:btn-wide group px-12">{"Les règles"}</a>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
