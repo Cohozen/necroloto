@@ -37,6 +37,15 @@ export async function updateCelebrity(celebrity: Celebrity) {
     });
 }
 
+export async function updatePointsCelebrityOnBets(celebrityId: string, points: number) {
+    return prisma.celebritiesOnBet.updateMany({
+        where: { celebrityId: celebrityId },
+        data: {
+            points
+        }
+    });
+}
+
 export async function mergeCelebrities(fromId: string, toId: string) {
     return prisma.$transaction(
         async (tx) => {
