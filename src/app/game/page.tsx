@@ -1,9 +1,8 @@
 import { currentUser, clerkClient } from "@clerk/nextjs";
 import { findUserByClerkId, insertUser, updateUser } from "@/lib/api/user";
 import { User } from "@prisma/client";
-import { BetsWithUser } from "@/lib/types/bet";
-import { listBetsByUser } from "@/lib/api/bet";
-import BetsCardList from "@/components/business/bet/betsCardList";
+import { BetsWithCelebrities } from "@/lib/types/bet";
+import { getBetByUserAndYear } from "@/lib/api/bet";
 import UserAvatar from "@/components/business/user/UserAvatar";
 import React from "react";
 import Link from "next/link";
@@ -64,12 +63,14 @@ export default async function IndexPage() {
         return null;
     };
 
-    let bets: BetsWithUser[] = [];
+    let myBet: BetsWithCelebrities | null = null;
 
     if (user && user?.externalId) {
-        const result = await listBetsByUser(user?.externalId);
-        if (result) bets = result;
+        const result = await getBetByUserAndYear(user?.externalId, 2024);
+        if (result) myBet = result;
     }
+
+    const totalPoints = myBet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
 
     return (
         <main className="flex-1 overflow-auto">
@@ -84,7 +85,7 @@ export default async function IndexPage() {
                             </div>
                         </div>
                     )}
-                    {bets && (
+                    {myBet && (
                         <div className="stats w-full justify-center stats-vertical lg:stats-horizontal bg-primary text-primary-content shadow-lg">
                             <div className="stat">
                                 <div className="stat-figure text-primary-content">
@@ -136,7 +137,7 @@ export default async function IndexPage() {
                                 </div>
                                 <div className="stat-title text-primary-content">Score</div>
                                 <div className="stat-value">
-                                    5 <span className="text-sm">points</span>
+                                    {totalPoints} <span className="text-sm">points</span>
                                 </div>
                                 <div className="stat-desc text-primary-content">
                                     1er au classement
@@ -144,7 +145,7 @@ export default async function IndexPage() {
                             </div>
                         </div>
                     )}
-                    {bets && bets.length > 0 ? (
+                    {myBet ? (
                         <div role="alert" className="alert shadow-lg">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +169,7 @@ export default async function IndexPage() {
                                     {"Le parie pour l'année 2024 est déjà enregistré"}
                                 </div>
                             </div>
-                            <Link href={`/game/bets/${bets[0].id}`}>
+                            <Link href={`/game/bets/${myBet.id}`}>
                                 <button className="btn btn-sm">Voir le pari</button>
                             </Link>
                         </div>
@@ -201,7 +202,6 @@ export default async function IndexPage() {
                             </Link>
                         </div>
                     )}
-                    {/*<BetsCardList bets={bets} />*/}
                 </div>
             </div>
         </main>

@@ -10,11 +10,7 @@ import Link from "next/link";
 export default async function Page() {
     const user = await currentUser();
 
-    // let bets: BetsWithUser[] = [];
     let myBet: BetsWithCelebrities | null = null;
-
-    // const result = await listBetsByYear(2024);
-    // if (result) bets = result;
 
     if (user?.externalId) {
         myBet = await getBetByUserAndYear(user?.externalId, 2024);
@@ -22,8 +18,12 @@ export default async function Page() {
 
     const celebrities = myBet?.CelebritiesOnBet.map((c) => c.celebrity);
 
-    const olderCelebrity = head(sortBy(celebrities?.filter((c) => c.birth && !c.death), (c) => c.birth));
+    const olderCelebrity = head(
+        sortBy(celebrities?.filter((c) => c.birth && !c.death), (c) => c.birth)
+    );
     const youngerCelebrity = last(sortBy(celebrities?.filter((c) => c.birth), (c) => c.birth));
+
+    const totalPoints = myBet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
 
     return (
         <main className="flex-1 overflow-auto">
@@ -113,7 +113,7 @@ export default async function Page() {
                                         ></path>
                                     </svg>
 
-                                    <span className="font-bold">5</span>
+                                    <span className="font-bold">{totalPoints}</span>
                                     <span className="text-sm">points</span>
                                 </div>
                             </div>
@@ -127,10 +127,9 @@ export default async function Page() {
                                         <span>Plus jeune</span>
                                         <span>
                                             {youngerCelebrity.birth
-                                                ? `${dayjs().diff(
-                                                      youngerCelebrity.birth,
-                                                      "year"
-                                                  )} ans`
+                                                ? `${dayjs(
+                                                      youngerCelebrity.death || undefined
+                                                  ).diff(youngerCelebrity.birth, "year")} ans`
                                                 : null}
                                         </span>
                                     </div>
@@ -143,7 +142,7 @@ export default async function Page() {
                                         <span>Plus vieux</span>
                                         <span>
                                             {olderCelebrity.birth
-                                                ? `${dayjs().diff(
+                                                ? `${dayjs(olderCelebrity.death || undefined).diff(
                                                       olderCelebrity.birth,
                                                       "year"
                                                   )} ans`
@@ -158,11 +157,6 @@ export default async function Page() {
                         </Link>
                     </>
                 )}
-
-                {/*<div className="flex flex-col gap-4">*/}
-                {/*    <h1 className="text-5xl">Tous les paris</h1>*/}
-                {/*</div>*/}
-                {/*<BetsCardList bets={bets} />*/}
             </div>
         </main>
     );

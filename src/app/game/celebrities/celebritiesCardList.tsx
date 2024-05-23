@@ -91,7 +91,10 @@ export default function CelebritiesCardList({ celebrities }: CelebritiesCardList
                                             </div>
                                             <div className="timeline-end text-xs">
                                                 {celebrity.birth
-                                                    ? `${dayjs().diff(celebrity.birth, "year")} ans`
+                                                    ? `${dayjs(celebrity.death || undefined).diff(
+                                                          celebrity.birth,
+                                                          "year"
+                                                      )} ans`
                                                     : "-"}
                                             </div>
                                             <hr
