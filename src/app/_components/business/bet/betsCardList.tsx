@@ -1,6 +1,6 @@
 import Link from "next/link";
 import dayjs from "dayjs";
-import Avatar from "@/components/business/user/Avatar";
+import UserAvatar from "@/components/business/user/UserAvatar";
 import { BetsWithUser } from "@/lib/types/bet";
 import { buildUserName } from "@/lib/helpers/user";
 
@@ -20,7 +20,7 @@ export default async function BetsCardList({ bets }: BetsCardListProps) {
                                     <div className="card-body">
                                         <h2 className="card-title flex flex-row">
                                             <span className="grow">{buildUserName(b.user)}</span>
-                                            <Avatar user={b.user} />
+                                            <UserAvatar user={b.user} />
                                         </h2>
                                         <p className="text-lg">{`Pari ${b.year}`}</p>
                                         <p className="text-xs">{`Créé le ${dayjs(b.createdAt).format(

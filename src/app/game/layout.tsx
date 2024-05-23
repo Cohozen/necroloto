@@ -32,7 +32,7 @@ export default async function GameLayout({ children }: { children: React.ReactNo
             </div>
 
             {/*Mobile layout*/}
-            <div className="lg:hidden">
+            <div className="lg:hidden h-full">
                 <Navbar />
 
                 {children}

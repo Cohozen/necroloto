@@ -9,7 +9,7 @@ export default function BottomNav() {
     const pathname = usePathname();
 
     return (
-        <div className="btm-nav bg-base-200">
+        <div className="btm-nav bg-base-200 sticky bottom-0">
             <Link
                 href="/game"
                 className={classNames("text-base-content", {

@@ -4,7 +4,7 @@ import { User } from "@prisma/client";
 import { BetsWithUser } from "@/lib/types/bet";
 import { listBetsByUser } from "@/lib/api/bet";
 import BetsCardList from "@/components/business/bet/betsCardList";
-import Avatar from "@/components/business/user/Avatar";
+import UserAvatar from "@/components/business/user/UserAvatar";
 import React from "react";
 import Link from "next/link";
 
@@ -75,7 +75,7 @@ export default async function IndexPage() {
         <div className="flex flex-col gap-8 p-4 md:p-10 mx-auto">
             {userDb && (
                 <div className="flex flex-row gap-4 justify-center px-2 pt-4">
-                    <Avatar user={userDb} size="w-20" />
+                    <UserAvatar user={userDb} size="w-20" />
                     <div className="flex flex-col justify-center">
                         <span className="text-2xl">{buildUserName()}</span>
                         <span className="text-sm">{userDb?.email}</span>
