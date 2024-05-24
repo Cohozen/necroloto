@@ -51,7 +51,8 @@ export async function mergeCelebrities(fromId: string, toId: string) {
         async (tx) => {
             await tx.celebrity.findUniqueOrThrow({
                 where: {
-                    id: fromId
+                    id: fromId,
+                    death: null
                 },
                 include: {
                     CelebritiesOnBet: true

@@ -51,7 +51,8 @@ export async function listBetsByYear(year: number) {
             year
         },
         include: {
-            user: true
+            user: true,
+            CelebritiesOnBet: true
         }
     });
 }

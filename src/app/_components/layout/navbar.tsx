@@ -58,6 +58,7 @@ export default function Navbar() {
                         {pathname.split("/").length === 2 && "Home"}
                         {pathname.split("/")[2] === "bets" && "Les paris"}
                         {pathname.split("/")[2] === "celebrities" && "Les Célébrités"}
+                        {pathname.split("/")[2] === "rank" && "Classement"}
                         {pathname.split("/")[2] === "settings" && "Paramètres"}
                     </div>
                 </div>
