@@ -1,13 +1,21 @@
 import React from "react";
 import { BetsWithUserAndCelebritiesOnBet } from "@/lib/types/bet";
 import { listBetsByYear } from "@/lib/api/bet";
+import { head, last, sortBy } from "lodash";
+import UserAvatar from "@/components/business/user/UserAvatar";
 
 export default async function Page() {
-    let bets: BetsWithUserAndCelebritiesOnBet[] = [];
+    const bets = await listBetsByYear(2024);
 
-    bets = await listBetsByYear(2024);
+    const totals = bets?.map((b) => {
+        const total = b.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
+        return {
+            ...b,
+            total
+        };
+    });
 
-    console.log(bets);
+    const ordered = sortBy(totals, (b) => b.total && b.user.firstname);
 
     return (
         <main className="flex-1 flex flex-col gap-6 overflow-auto">
@@ -17,16 +25,12 @@ export default async function Page() {
 
             <div className="flex flex-row justify-center items-end">
                 <div className="flex flex-col items-center gap-2">
-                    <div className="avatar">
-                        <div className="w-8 rounded-full">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                        </div>
-                    </div>
-                    <div className="flex justify-center items-start py-4 bg-primary/30 h-16 w-20 rounded-tl-xl">
+                    {ordered[2]?.user && <UserAvatar user={ordered[2].user} />}
+                    <div className="flex justify-center items-start py-4 bg-primary/40 h-16 w-20 rounded-tl-xl">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            className="w-8 h-8 text-primary-content"
+                            className="w-8 h-8 text-orange-900/50 hover:animate-bounce"
                         >
                             <path
                                 fill="currentColor"
@@ -44,16 +48,12 @@ export default async function Page() {
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                    <div className="avatar">
-                        <div className="w-8 rounded-full">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                        </div>
-                    </div>
-                    <div className="flex justify-center items-start py-4 bg-primary h-44 w-20 rounded-t-xl">
+                    {ordered[0].user && <UserAvatar user={ordered[0].user} />}
+                    <div className="flex justify-center items-start py-4 bg-primary/80 h-44 w-20 rounded-t-xl">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            className="w-12 h-12 text-primary-content"
+                            className="w-12 h-12 text-amber-300/80 hover:animate-bounce"
                         >
                             <path
                                 fill="currentColor"
@@ -90,16 +90,12 @@ export default async function Page() {
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                    <div className="avatar">
-                        <div className="w-8 rounded-full">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                        </div>
-                    </div>
-                    <div className="flex justify-center items-start py-4 bg-primary/70 h-28 w-20 rounded-tr-xl">
+                    {ordered[1]?.user && <UserAvatar user={ordered[1].user} />}
+                    <div className="flex justify-center items-start py-4 bg-primary/60 h-28 w-20 rounded-tr-xl">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            className="w-10 h-10 text-primary-content"
+                            className="w-10 h-10 text-gray-500 hover:animate-bounce"
                         >
                             <path
                                 fill="currentColor"
