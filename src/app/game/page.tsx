@@ -7,6 +7,10 @@ import UserAvatar from "@/components/business/user/UserAvatar";
 import React from "react";
 import Link from "next/link";
 import { buildUserName } from "@/lib/helpers/user";
+import { CalendarIcon } from "@/ui/icons/CalendarIcon";
+import { UserHeartIcon } from "@/ui/icons/UserHeartIcon";
+import { RankingIcon } from "@/ui/icons/RankingIcon";
+import { InfoIcon } from "@/ui/icons/InfoIcon";
 
 export const metadata = {
     title: "Necroloto | Dashboard"
@@ -82,25 +86,7 @@ export default async function IndexPage() {
                         <div className="stats w-full justify-center stats-vertical lg:stats-horizontal bg-primary text-primary-content shadow-lg">
                             <div className="stat">
                                 <div className="stat-figure text-primary-content">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        className="h-10 w-10 text-secondary"
-                                    >
-                                        <path
-                                            fill="currentColor"
-                                            d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"
-                                        ></path>
-                                        <path
-                                            fill="currentColor"
-                                            d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14"
-                                            opacity=".5"
-                                        ></path>
-                                        <path
-                                            fill="currentColor"
-                                            d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"
-                                        ></path>
-                                    </svg>
+                                    <CalendarIcon className="h-10 w-10 text-secondary" />
                                 </div>
                                 <div className="stat-title text-primary-content">Année</div>
                                 <div className="stat-value">2024</div>
@@ -108,24 +94,7 @@ export default async function IndexPage() {
                             </div>
                             <div className="stat border-t-primary-content">
                                 <div className="stat-figure text-primary-content">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        className="h-10 w-10 text-secondary"
-                                    >
-                                        <circle cx="11" cy="6" r="4" fill="currentColor"></circle>
-                                        <path
-                                            fill="currentColor"
-                                            fillRule="evenodd"
-                                            d="M14.513 21.487C15.025 22 15.85 22 17.5 22c1.65 0 2.475 0 2.987-.513C21 20.975 21 20.15 21 18.5c0-1.65 0-2.475-.513-2.987C19.975 15 19.15 15 17.5 15c-1.65 0-2.475 0-2.987.513C14 16.025 14 16.85 14 18.5c0 1.65 0 2.475.513 2.987m2.014-1.51C15.824 19.474 15 18.883 15 17.86c0-1.13 1.375-1.931 2.5-.845c1.125-1.087 2.5-.285 2.5.845c0 1.023-.825 1.614-1.527 2.117l-.213.154c-.26.19-.51.369-.76.369s-.5-.18-.76-.37z"
-                                            clipRule="evenodd"
-                                        ></path>
-                                        <path
-                                            fill="currentColor"
-                                            d="M14.594 21.563a1.28 1.28 0 0 1-.081-.076C14 20.975 14 20.15 14 18.5c0-1.65 0-2.475.513-2.987C15.025 15 15.85 15 17.5 15h.43c-1.383-1.345-3.969-2.25-6.93-2.25c-4.418 0-8 2.015-8 4.5s0 4.5 8 4.5c1.443 0 2.625-.066 3.594-.187"
-                                            opacity=".5"
-                                        ></path>
-                                    </svg>
+                                    <UserHeartIcon className="h-10 w-10 text-secondary" />
                                 </div>
                                 <div className="stat-title text-primary-content">Encore en vie</div>
                                 <div className="stat-value">
@@ -142,21 +111,7 @@ export default async function IndexPage() {
 
                             <div className="stat border-t-primary-content">
                                 <div className="stat-figure text-primary-content">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        className="h-10 w-10 text-secondary"
-                                    >
-                                        <path
-                                            fill="currentColor"
-                                            d="M11.146 3.023C11.526 2.34 11.716 2 12 2c.284 0 .474.34.854 1.023l.098.176c.108.194.162.29.246.354c.085.064.19.088.4.135l.19.044c.738.167 1.107.25 1.195.532c.088.283-.164.577-.667 1.165l-.13.152c-.143.167-.215.25-.247.354c-.032.104-.021.215 0 .438l.02.203c.076.785.114 1.178-.115 1.352c-.23.175-.576.015-1.267-.303l-.178-.082c-.197-.09-.295-.136-.399-.136c-.104 0-.202.046-.399.136l-.178.082c-.691.318-1.037.478-1.267.303c-.23-.174-.191-.567-.115-1.352l.02-.203c.021-.223.032-.334 0-.438c-.032-.103-.104-.187-.247-.354l-.13-.152c-.503-.588-.755-.882-.667-1.165c.088-.282.457-.365 1.195-.532l.19-.044c.21-.047.315-.07.4-.135c.084-.064.138-.16.246-.354zM13 10h-2c-1.414 0-2.121 0-2.56.44C8 10.878 8 11.585 8 13v9h8v-9c0-1.414 0-2.121-.44-2.56C15.122 10 14.415 10 13 10"
-                                        />
-                                        <path
-                                            fill="currentColor"
-                                            d="M7.56 19.44C7.122 19 6.415 19 5 19c-1.414 0-2.121 0-2.56.44C2 19.878 2 20.585 2 22h6c0-1.414 0-2.121-.44-2.56M16 19v3h6v-3c0-1.414 0-2.121-.44-2.56C21.122 16 20.415 16 19 16c-1.414 0-2.121 0-2.56.44C16 16.878 16 17.585 16 19"
-                                            opacity=".5"
-                                        />
-                                    </svg>
+                                    <RankingIcon className="h-10 w-10 text-secondary" />
                                 </div>
                                 <div className="stat-title text-primary-content">Score</div>
                                 <div className="stat-value">
@@ -171,22 +126,7 @@ export default async function IndexPage() {
                     )}
                     {myBet ? (
                         <div role="alert" className="alert shadow-lg">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                className="h-6 w-6"
-                            >
-                                <path
-                                    fill="currentColor"
-                                    d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"
-                                    opacity=".5"
-                                ></path>
-                                <path
-                                    fill="currentColor"
-                                    d="M12 17.75a.75.75 0 0 0 .75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75M12 7a1 1 0 1 1 0 2a1 1 0 0 1 0-2"
-                                ></path>
-                            </svg>
-
+                            <InfoIcon className="h-6 w-6" />
                             <div>
                                 <h3 className="font-bold">{"Vous avez déjà parier pour 2024"}</h3>
                                 <div className="text-xs">
@@ -199,22 +139,7 @@ export default async function IndexPage() {
                         </div>
                     ) : (
                         <div role="alert" className="alert shadow-lg">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                className="h-6 w-6"
-                            >
-                                <path
-                                    fill="currentColor"
-                                    d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10"
-                                    opacity=".5"
-                                ></path>
-                                <path
-                                    fill="currentColor"
-                                    d="M12 17.75a.75.75 0 0 0 .75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75M12 7a1 1 0 1 1 0 2a1 1 0 0 1 0-2"
-                                ></path>
-                            </svg>
-
+                            <InfoIcon className="h-6 w-6" />
                             <div>
                                 <h3 className="font-bold">Aucun pari pour 2024</h3>
                                 <div className="text-xs">
