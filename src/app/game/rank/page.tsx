@@ -1,11 +1,8 @@
 import React from "react";
-import { BetsWithUserAndCelebritiesOnBet } from "@/lib/types/bet";
 import { listBetsByYear } from "@/lib/api/bet";
-import { head, last, sortBy } from "lodash";
+import { sortBy } from "lodash";
 import Link from "next/link";
 import UserAvatar from "@/components/business/user/UserAvatar";
-import CelebrityAvatar from "@/components/business/user/CelebrityAvatar";
-import dayjs from "dayjs";
 import { buildUserName } from "@/lib/helpers/user";
 
 export default async function Page() {

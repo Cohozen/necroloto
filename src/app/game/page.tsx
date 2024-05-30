@@ -6,6 +6,7 @@ import { getBetByUserAndYear } from "@/lib/api/bet";
 import UserAvatar from "@/components/business/user/UserAvatar";
 import React from "react";
 import Link from "next/link";
+import { buildUserName } from "@/lib/helpers/user";
 
 export const metadata = {
     title: "Necroloto | Dashboard"
@@ -55,14 +56,6 @@ export default async function IndexPage() {
         }
     }
 
-    const buildUserName = () => {
-        if (!user?.firstName && !user?.lastName) return user?.emailAddresses[0]?.emailAddress;
-        if (user?.firstName && !user?.lastName) return user?.firstName;
-        if (!user?.firstName && user?.lastName) return user?.lastName;
-        if (user?.firstName && user?.lastName) return `${user?.firstName} ${user?.lastName}`;
-        return null;
-    };
-
     let myBet: BetsWithCelebrities | null = null;
 
     if (user && user?.externalId) {
@@ -80,7 +73,7 @@ export default async function IndexPage() {
                         <div className="flex flex-row gap-4 justify-center px-2 pt-4">
                             <UserAvatar user={userDb} size="w-20" />
                             <div className="flex flex-col justify-center">
-                                <span className="text-2xl">{buildUserName()}</span>
+                                <span className="text-2xl">{buildUserName(userDb)}</span>
                                 <span className="text-sm">{userDb?.email}</span>
                             </div>
                         </div>
@@ -92,7 +85,33 @@ export default async function IndexPage() {
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
-                                        className="h-10 w-10 text-secondary/80"
+                                        className="h-10 w-10 text-secondary"
+                                    >
+                                        <path
+                                            fill="currentColor"
+                                            d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"
+                                        ></path>
+                                        <path
+                                            fill="currentColor"
+                                            d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14"
+                                            opacity=".5"
+                                        ></path>
+                                        <path
+                                            fill="currentColor"
+                                            d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"
+                                        ></path>
+                                    </svg>
+                                </div>
+                                <div className="stat-title text-primary-content">Année</div>
+                                <div className="stat-value">2024</div>
+                                <div className="stat-desc text-primary-content">En cours</div>
+                            </div>
+                            <div className="stat border-t-primary-content">
+                                <div className="stat-figure text-primary-content">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        className="h-10 w-10 text-secondary"
                                     >
                                         <circle cx="11" cy="6" r="4" fill="currentColor"></circle>
                                         <path
@@ -110,7 +129,11 @@ export default async function IndexPage() {
                                 </div>
                                 <div className="stat-title text-primary-content">Encore en vie</div>
                                 <div className="stat-value">
-                                    28 <span className="text-sm">célébrités</span>
+                                    {
+                                        myBet.CelebritiesOnBet.filter((cb) => !cb.celebrity.death)
+                                            .length
+                                    }
+                                    <span className="text-sm pl-1">célébrités</span>
                                 </div>
                                 <div className="stat-desc text-primary-content">
                                     18% de plus que la moyenne
@@ -122,7 +145,7 @@ export default async function IndexPage() {
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
-                                        className="h-10 w-10 text-secondary/80"
+                                        className="h-10 w-10 text-secondary"
                                     >
                                         <path
                                             fill="currentColor"
@@ -137,7 +160,8 @@ export default async function IndexPage() {
                                 </div>
                                 <div className="stat-title text-primary-content">Score</div>
                                 <div className="stat-value">
-                                    {totalPoints} <span className="text-sm">points</span>
+                                    {totalPoints}
+                                    <span className="text-sm pl-1">points</span>
                                 </div>
                                 <div className="stat-desc text-primary-content">
                                     1er au classement
