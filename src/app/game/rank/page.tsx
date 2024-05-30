@@ -2,7 +2,11 @@ import React from "react";
 import { BetsWithUserAndCelebritiesOnBet } from "@/lib/types/bet";
 import { listBetsByYear } from "@/lib/api/bet";
 import { head, last, sortBy } from "lodash";
+import Link from "next/link";
 import UserAvatar from "@/components/business/user/UserAvatar";
+import CelebrityAvatar from "@/components/business/user/CelebrityAvatar";
+import dayjs from "dayjs";
+import { buildUserName } from "@/lib/helpers/user";
 
 export default async function Page() {
     const bets = await listBetsByYear(2024);
@@ -18,14 +22,18 @@ export default async function Page() {
     const ordered = sortBy(totals, (b) => b.total && b.user.firstname);
 
     return (
-        <main className="flex-1 flex flex-col gap-6 overflow-auto">
+        <main className="flex-1 flex flex-col gap-8 overflow-auto">
             <div className="flex flex-col items-center gap-6 p-4">
                 <div className="flex text-2xl font-bold">Classement 2024</div>
             </div>
 
             <div className="flex flex-row justify-center items-end">
                 <div className="flex flex-col items-center gap-2">
-                    {ordered[2]?.user && <UserAvatar user={ordered[2].user} />}
+                    {ordered[2]?.user && (
+                        <Link href={`/game/bets/${ordered[2].id}`}>
+                            <UserAvatar user={ordered[2].user} />
+                        </Link>
+                    )}
                     <div className="flex justify-center items-start py-4 bg-primary/40 h-16 w-20 rounded-tl-xl">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +56,11 @@ export default async function Page() {
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                    {ordered[0].user && <UserAvatar user={ordered[0].user} />}
+                    {ordered[0].user && (
+                        <Link href={`/game/bets/${ordered[0].id}`}>
+                            <UserAvatar user={ordered[0].user} />{" "}
+                        </Link>
+                    )}
                     <div className="flex justify-center items-start py-4 bg-primary/80 h-44 w-20 rounded-t-xl">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +102,11 @@ export default async function Page() {
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                    {ordered[1]?.user && <UserAvatar user={ordered[1].user} />}
+                    {ordered[1]?.user && (
+                        <Link href={`/game/bets/${ordered[1].id}`}>
+                            <UserAvatar user={ordered[1].user} />
+                        </Link>
+                    )}
                     <div className="flex justify-center items-start py-4 bg-primary/60 h-28 w-20 rounded-tr-xl">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -112,6 +128,34 @@ export default async function Page() {
                     </div>
                 </div>
             </div>
+
+            <table className="table text-base-content w-full">
+                <tbody>
+                    {ordered &&
+                        ordered.map((bet, index) => {
+                            return (
+                                <tr key={bet.id}>
+                                    <td>
+                                        <div className="w-8 h-8 rounded-full text-base-content border border-primary-content flex justify-center items-center">
+                                            <span>{index + 1}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className="flex items-center gap-3">
+                                            <UserAvatar user={bet.user} size="w-12" />
+                                            <div className="flex flex-col">
+                                                <div className="font-bold">
+                                                    {buildUserName(bet.user)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{bet.total ? `${bet.total} pts` : "-"}</td>
+                                </tr>
+                            );
+                        })}
+                </tbody>
+            </table>
         </main>
     );
 }

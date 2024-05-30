@@ -16,8 +16,8 @@ export default async function Page({ params }: { params: { id: string } }) {
             <div className="flex flex-col p-4 gap-4 items-center">
                 <div className="flex text-2xl font-bold">
                     {user?.externalId === bet?.userId
-                        ? `Détails de votre pari ${bet?.year}`
-                        : `Détails du pari ${bet?.year}`}
+                        ? `Détail de votre pari ${bet?.year}`
+                        : `Détail du pari ${bet?.year}`}
                 </div>
 
                 <table className="table">
