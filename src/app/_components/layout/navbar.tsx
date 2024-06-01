@@ -65,7 +65,18 @@ export default function Navbar() {
 
                 <div className="navbar-end">
                     <div className="flex-none items-center block mx-2">
-                        <UserButton afterSignOutUrl="/" />
+                        <UserButton
+                            afterSignOutUrl="/"
+                            appearance={{
+                                elements: {
+                                    userButtonPopoverCard: "bg-base-100",
+                                    userPreviewMainIdentifier: "text-base-content",
+                                    userPreviewSecondaryIdentifier: "text-base-content",
+                                    userButtonPopoverActionButtonText: "text-base-content",
+                                    userButtonPopoverActionButtonIcon: "text-base-content"
+                                }
+                            }}
+                        />
                     </div>
                     <div className="hidden lg:flex">
                         <ToggleTheme />
