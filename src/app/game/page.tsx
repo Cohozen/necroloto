@@ -1,5 +1,4 @@
-import { currentUser, clerkClient } from "@clerk/nextjs";
-import { findUserByClerkId, insertUser, updateUser } from "@/lib/api/user";
+import { currentUser } from "@clerk/nextjs";
 import { User } from "@prisma/client";
 import { BetsWithCelebrities } from "@/lib/types/bet";
 import { getBetByUserAndYear } from "@/lib/api/bet";
@@ -11,6 +10,7 @@ import { CalendarIcon } from "@/ui/icons/CalendarIcon";
 import { UserHeartIcon } from "@/ui/icons/UserHeartIcon";
 import { RankingIcon } from "@/ui/icons/RankingIcon";
 import { InfoIcon } from "@/ui/icons/InfoIcon";
+import { CreateOrUpdateUserByClerkAuth } from "@/lib/actions/user";
 
 export const metadata = {
     title: "Necroloto | Dashboard"
@@ -22,42 +22,7 @@ export default async function IndexPage() {
     let userDb: User | null = null;
 
     if (user) {
-        userDb = await findUserByClerkId(user.id);
-
-        if (!userDb) {
-            const email = user.emailAddresses.find((e) => e.id === user.primaryEmailAddressId);
-
-            const newUserDb: User = {
-                id: "",
-                clerkId: user.id,
-                email: email?.emailAddress || null,
-                image: user.imageUrl,
-                username: user.username,
-                firstname: user.firstName,
-                lastname: user.lastName,
-                clerkUpdatedAt: new Date(user.updatedAt),
-                clerkCreatedAt: new Date(user.createdAt),
-                updatedAt: new Date(),
-                createdAt: new Date()
-            };
-            const insertResult = await insertUser(newUserDb);
-            userDb = insertResult;
-            await clerkClient.users.updateUser(user.id, { externalId: insertResult.id });
-        } else {
-            if (userDb.clerkUpdatedAt && new Date(user.updatedAt) > userDb.clerkUpdatedAt) {
-                const userToUpdate = {
-                    ...userDb,
-                    image: user.imageUrl,
-                    username: user.username,
-                    firstname: user.firstName,
-                    lastname: user.lastName,
-                    clerkUpdatedAt: new Date(user.updatedAt),
-                    clerkCreatedAt: new Date(user.createdAt)
-                };
-
-                await updateUser(userToUpdate);
-            }
-        }
+        userDb = await CreateOrUpdateUserByClerkAuth(user);
     }
 
     let myBet: BetsWithCelebrities | null = null;

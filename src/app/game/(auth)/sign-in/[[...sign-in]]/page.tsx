@@ -12,6 +12,7 @@ export default function Page() {
                         socialButtonsIconButton: "border-base-content hover:bg-base-200",
                         formFieldLabel: "text-base-content",
                         formFieldInput: "text-base-content bg-base-100 border-base-content",
+                        formFieldAction: "text-base-content italic text-xs",
                         formFieldInputShowPasswordButton:
                             "text-base-content hover:text-base-content/70",
                         formButtonPrimary:
@@ -19,7 +20,10 @@ export default function Page() {
                         footerActionLink: "text-base-content font-bold",
                         footerActionText: "text-base-content",
                         dividerLine: "bg-base-content",
-                        dividerText: "text-base-content"
+                        dividerText: "text-base-content",
+                        identityPreview: "border-base-content",
+                        identityPreviewText: "text-base-content",
+                        identityPreviewEditButtonIcon: "text-base-content"
                     }
                 }}
             />

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SignedOut, RedirectToSignIn } from "@clerk/nextjs";
+import { ClerkProvider, SignedOut, SignedIn, RedirectToSignIn } from "@clerk/nextjs";
 
 import Navbar from "@/components/layout/navbar";
 import Sidebar from "@/components/layout/sidebar";
@@ -8,12 +8,12 @@ import BottomNav from "@/components/layout/bottomNav";
 
 export const metadata = {
     title: "Necroloto",
-    description: "Necroloto Application."
+    description: "Necroloto App"
 };
 
 export default async function GameLayout({ children }: { children: React.ReactNode }) {
     return (
-        <>
+        <ClerkProvider>
             <SignedOut>
                 <RedirectToSignIn />
             </SignedOut>
@@ -32,13 +32,15 @@ export default async function GameLayout({ children }: { children: React.ReactNo
             {/*</div>*/}
 
             {/*Mobile layout*/}
-            <>
+            <SignedIn>
                 <Navbar />
+            </SignedIn>
 
-                {children}
+            {children}
 
+            <SignedIn>
                 <BottomNav />
-            </>
-        </>
+            </SignedIn>
+        </ClerkProvider>
     );
 }
