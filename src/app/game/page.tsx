@@ -11,6 +11,7 @@ import { UserHeartIcon } from "@/ui/icons/UserHeartIcon";
 import { RankingIcon } from "@/ui/icons/RankingIcon";
 import { InfoIcon } from "@/ui/icons/InfoIcon";
 import { CreateOrUpdateUserByClerkAuth } from "@/lib/actions/user";
+import { GetCelebritiesAliveStats, GetPositionOfUserForYear } from "@/lib/actions/bet";
 
 export const metadata = {
     title: "Necroloto | Dashboard"
@@ -19,6 +20,10 @@ export const metadata = {
 export default async function IndexPage() {
     const user = await currentUser();
 
+    const year = 2024;
+
+    let position: number = 0;
+    let aliveStats: number | null = null;
     let userDb: User | null = null;
 
     if (user) {
@@ -27,9 +32,15 @@ export default async function IndexPage() {
 
     let myBet: BetsWithCelebrities | null = null;
 
-    if (user && user?.externalId) {
-        const result = await getBetByUserAndYear(user?.externalId, 2024);
+    if (userDb) {
+        const result = await getBetByUserAndYear(userDb.id, year);
         if (result) myBet = result;
+
+        const positionResult = await GetPositionOfUserForYear(userDb.id, year);
+        if (position) position = positionResult;
+
+        const aliveStatsResult = await GetCelebritiesAliveStats(userDb.id, year);
+        if (aliveStatsResult) aliveStats = aliveStatsResult;
     }
 
     const totalPoints = myBet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
@@ -70,7 +81,15 @@ export default async function IndexPage() {
                                     <span className="text-sm pl-1">célébrités</span>
                                 </div>
                                 <div className="stat-desc text-primary-content">
-                                    18% de plus que la moyenne
+                                    {aliveStats ? (
+                                        <>
+                                            {aliveStats === 0 && "Autant que la moyenne"}
+                                            {aliveStats > 0 &&
+                                                `${aliveStats}% de plus que la moyenne`}
+                                            {aliveStats < 0 &&
+                                                `${aliveStats}% de moins que la moyenne`}
+                                        </>
+                                    ) : null}
                                 </div>
                             </div>
 
@@ -84,7 +103,13 @@ export default async function IndexPage() {
                                     <span className="text-sm pl-1">points</span>
                                 </div>
                                 <div className="stat-desc text-primary-content">
-                                    1er au classement
+                                    {position > 0 ? (
+                                        <>
+                                            {position === 1
+                                                ? `${position}er au classement`
+                                                : `${position}ème au classement`}
+                                        </>
+                                    ) : null}
                                 </div>
                             </div>
                         </div>

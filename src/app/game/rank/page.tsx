@@ -1,25 +1,14 @@
 import React from "react";
-import { listBetsByYear } from "@/lib/api/bet";
-import { sortBy } from "lodash";
 import Link from "next/link";
 import UserAvatar from "@/components/business/user/UserAvatar";
 import { buildUserName } from "@/lib/helpers/user";
 import { MedalStarIcon } from "@/ui/icons/MedalStarIcon";
 import { CupFirstIcon } from "@/ui/icons/CupFirstIcon";
 import { MedalRibbonsIcon } from "@/ui/icons/MedalRibbonsIcon";
+import { RankBetsByYearWithTotalPoints } from "@/lib/actions/bet";
 
 export default async function Page() {
-    const bets = await listBetsByYear(2024);
-
-    const totals = bets?.map((b) => {
-        const total = b.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
-        return {
-            ...b,
-            total
-        };
-    });
-
-    const ordered = sortBy(totals, (b) => b.total && b.user.firstname);
+    const bets = await RankBetsByYearWithTotalPoints(2024);
 
     return (
         <main className="flex-1 flex flex-col gap-8 overflow-auto">
@@ -29,9 +18,9 @@ export default async function Page() {
 
             <div className="flex flex-row justify-center items-end">
                 <div className="flex flex-col items-center gap-2">
-                    {ordered[2]?.user && (
-                        <Link href={`/game/bets/${ordered[2].id}`}>
-                            <UserAvatar user={ordered[2].user} />
+                    {bets[2]?.user && (
+                        <Link href={`/game/bets/${bets[2].id}`}>
+                            <UserAvatar user={bets[2].user} />
                         </Link>
                     )}
                     <div className="flex justify-center items-start py-4 bg-primary/40 h-16 w-20 rounded-tl-xl">
@@ -40,9 +29,9 @@ export default async function Page() {
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                    {ordered[0].user && (
-                        <Link href={`/game/bets/${ordered[0].id}`}>
-                            <UserAvatar user={ordered[0].user} />{" "}
+                    {bets[0].user && (
+                        <Link href={`/game/bets/${bets[0].id}`}>
+                            <UserAvatar user={bets[0].user} />{" "}
                         </Link>
                     )}
                     <div className="flex justify-center items-start py-4 bg-primary/80 h-44 w-20 rounded-t-xl">
@@ -51,9 +40,9 @@ export default async function Page() {
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                    {ordered[1]?.user && (
-                        <Link href={`/game/bets/${ordered[1].id}`}>
-                            <UserAvatar user={ordered[1].user} />
+                    {bets[1]?.user && (
+                        <Link href={`/game/bets/${bets[1].id}`}>
+                            <UserAvatar user={bets[1].user} />
                         </Link>
                     )}
                     <div className="flex justify-center items-start py-4 bg-primary/60 h-28 w-20 rounded-tr-xl">
@@ -64,8 +53,8 @@ export default async function Page() {
 
             <table className="table text-base-content w-full">
                 <tbody>
-                    {ordered &&
-                        ordered.map((bet, index) => {
+                    {bets &&
+                        bets.map((bet, index) => {
                             return (
                                 <tr key={bet.id}>
                                     <td>
