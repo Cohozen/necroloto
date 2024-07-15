@@ -33,7 +33,7 @@ export default function CelebritiesCardList({ celebrities }: CelebritiesCardList
                                         {celebrity.death ? (
                                             <div className="badge badge-error">Décédé</div>
                                         ) : (
-                                            <div className="badge badge-primary">En vie</div>
+                                            <div className="badge badge-info">En vie</div>
                                         )}
                                     </div>
                                 </div>

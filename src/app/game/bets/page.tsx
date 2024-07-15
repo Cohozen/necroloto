@@ -48,7 +48,7 @@ export default async function Page() {
                                 role="progressbar"
                             >
                                 <div className="flex flex-col items-center text-base-content">
-                                    <UserHeartIcon className="h-8 w-8 text-secondary/80" />
+                                    <UserHeartIcon className="h-8 w-8 text-accent" />
                                     <span className="font-bold">
                                         {celebrities.filter((c) => !c.death).length} /{" "}
                                         {celebrities.length}
@@ -67,7 +67,7 @@ export default async function Page() {
                                 role="progressbar"
                             >
                                 <div className="flex flex-col items-center text-base-content">
-                                    <CupStarIcon className="h-8 w-8 text-secondary/80" />
+                                    <CupStarIcon className="h-8 w-8 text-accent" />
                                     <span className="font-bold">{totalPoints}</span>
                                     <span className="text-sm">points</span>
                                 </div>
@@ -108,7 +108,7 @@ export default async function Page() {
                             </div>
                         </div>
                         <Link href={`/game/bets/${myBet.id}`} className="btn btn-primary btn-wide">
-                            Détail
+                            Détail du pari
                         </Link>
                     </>
                 )}

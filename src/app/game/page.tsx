@@ -62,7 +62,7 @@ export default async function IndexPage() {
                         <div className="stats w-full justify-center stats-vertical lg:stats-horizontal bg-primary text-primary-content shadow-lg">
                             <div className="stat">
                                 <div className="stat-figure text-primary-content">
-                                    <CalendarIcon className="h-10 w-10 text-secondary" />
+                                    <CalendarIcon className="h-10 w-10 text-accent" />
                                 </div>
                                 <div className="stat-title text-primary-content">Année</div>
                                 <div className="stat-value">2024</div>
@@ -70,7 +70,7 @@ export default async function IndexPage() {
                             </div>
                             <div className="stat border-t-primary-content">
                                 <div className="stat-figure text-primary-content">
-                                    <UserHeartIcon className="h-10 w-10 text-secondary" />
+                                    <UserHeartIcon className="h-10 w-10 text-accent" />
                                 </div>
                                 <div className="stat-title text-primary-content">Encore en vie</div>
                                 <div className="stat-value">
@@ -95,7 +95,7 @@ export default async function IndexPage() {
 
                             <div className="stat border-t-primary-content">
                                 <div className="stat-figure text-primary-content">
-                                    <RankingIcon className="h-10 w-10 text-secondary" />
+                                    <RankingIcon className="h-10 w-10 text-accent" />
                                 </div>
                                 <div className="stat-title text-primary-content">Score</div>
                                 <div className="stat-value">

@@ -24,7 +24,7 @@ export default async function Page() {
                         </Link>
                     )}
                     <div className="flex justify-center items-start py-4 bg-primary/40 h-16 w-20 rounded-tl-xl">
-                        <MedalStarIcon className="w-8 h-8 text-orange-900/50 hover:animate-bounce" />
+                        <MedalStarIcon className="w-8 h-8 text-orange-800 hover:animate-bounce" />
                     </div>
                 </div>
 
