@@ -7,8 +7,8 @@ import { SunIcon } from "@/ui/icons/SunIcon";
 export default function ToggleTheme() {
     const [theme, setTheme] = useState("");
 
-    const toggleTheme = (evt: any) => {
-        const newTheme = theme === "dim" ? "emerald" : "dim";
+    const toggleTheme = (_evt: any) => {
+        const newTheme = theme === "necroloto-light" ? "necroloto-dark" : "necroloto-light";
 
         document.documentElement.setAttribute("data-theme", newTheme);
         setTheme(newTheme);
@@ -29,9 +29,8 @@ export default function ToggleTheme() {
 
             <input
                 type="checkbox"
-                data-toggle-theme="dim,emerald"
                 className="toggle theme-controller"
-                checked={theme === "emerald"}
+                checked={theme === "necroloto-light"}
                 onChange={(e) => toggleTheme(e)}
             />
 
