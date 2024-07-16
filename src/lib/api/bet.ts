@@ -17,7 +17,8 @@ export async function getBetWithCelebrities(id: string) {
             id
         },
         include: {
-            CelebritiesOnBet: { include: { celebrity: true } }
+            CelebritiesOnBet: { include: { celebrity: true } },
+            user: true
         }
     });
 }
