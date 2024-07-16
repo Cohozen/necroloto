@@ -29,7 +29,7 @@ export async function GetCelebritiesAliveStats(userId: string, year: number) {
         0
     );
 
-    const aliveAverage = Math.round(alive / 30);
+    const aliveAverage = Math.round(alive / bets.length);
 
     const userBet = bets.find((b) => b.userId === userId);
     if (!userBet) return null;

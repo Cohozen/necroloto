@@ -17,6 +17,7 @@ export default async function GameLayout({ children }: { children: React.ReactNo
             <SignedOut>
                 <RedirectToSignIn />
             </SignedOut>
+
             {/*Desktop layout*/}
             {/*<div className="mb-auto hidden lg:flex">*/}
             {/*    <div className="drawer lg:drawer-open">*/}

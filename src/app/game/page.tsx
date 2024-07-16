@@ -36,11 +36,8 @@ export default async function IndexPage() {
         const result = await getBetByUserAndYear(userDb.id, year);
         if (result) myBet = result;
 
-        const positionResult = await GetPositionOfUserForYear(userDb.id, year);
-        if (position) position = positionResult;
-
-        const aliveStatsResult = await GetCelebritiesAliveStats(userDb.id, year);
-        if (aliveStatsResult) aliveStats = aliveStatsResult;
+        position = await GetPositionOfUserForYear(userDb.id, year);
+        aliveStats = await GetCelebritiesAliveStats(userDb.id, year);
     }
 
     const totalPoints = myBet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
@@ -82,7 +79,7 @@ export default async function IndexPage() {
                                     <span className="text-sm pl-1">célébrités</span>
                                 </div>
                                 <div className="stat-desc text-primary-content">
-                                    {aliveStats ? (
+                                    {aliveStats !== null ? (
                                         <>
                                             {aliveStats === 0 && "Autant que la moyenne"}
                                             {aliveStats > 0 &&

@@ -13,7 +13,7 @@ export default async function Page() {
     return (
         <main className="flex-1 flex flex-col gap-8 overflow-auto">
             <div className="flex flex-col items-center gap-6 p-4">
-                <div className="flex text-2xl font-bold">Classement 2024</div>
+                <div className="flex text-2xl font-bold">2024</div>
             </div>
 
             <div className="flex flex-row justify-center items-end">

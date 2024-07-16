@@ -22,6 +22,7 @@ export default function BottomNav() {
                 })}
             >
                 <HomeIcon className="h-6 w-6" />
+                <span className="btm-nav-label text-xs">Accueil</span>
             </Link>
             <Link
                 href="/game/rank"
@@ -30,6 +31,7 @@ export default function BottomNav() {
                 })}
             >
                 <RankingIcon className="h-6 w-6" />
+                <span className="btm-nav-label text-xs">Classement</span>
             </Link>
             <Link
                 href="/game/bets"
@@ -37,7 +39,8 @@ export default function BottomNav() {
                     active: pathname.split("/")[2] === "bets"
                 })}
             >
-                <NoteListIcon className="h-12 w-12 my-2.5" />
+                <NoteListIcon className="h-6 w-6" />
+                <span className="btm-nav-label text-xs">Pari</span>
             </Link>
             <Link
                 href="/game/celebrities"
@@ -46,6 +49,7 @@ export default function BottomNav() {
                 })}
             >
                 <PeopleIcon className="h-6 w-6" />
+                <span className="btm-nav-label text-xs">Célébrités</span>
             </Link>
             <Link
                 href="/game/settings"
@@ -54,6 +58,7 @@ export default function BottomNav() {
                 })}
             >
                 <SettingsIcon className="h-6 w-6" />
+                <span className="btm-nav-label text-xs">Paramètres</span>
             </Link>
         </div>
     );

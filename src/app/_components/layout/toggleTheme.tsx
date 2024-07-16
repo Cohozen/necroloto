@@ -17,7 +17,7 @@ export default function ToggleTheme() {
 
     useEffect(() => {
         const localTheme = localStorage.getItem("theme");
-        if (localTheme && localTheme !== document.documentElement.getAttribute("data-theme")) {
+        if (localTheme) {
             setTheme(localTheme);
             document.documentElement.setAttribute("data-theme", localTheme);
         }
