@@ -2,8 +2,19 @@ import { Celebrity } from "@prisma/client";
 import { listAllCelebrities } from "@/lib/api/celebrity";
 import CelebritiesCardList from "./celebritiesCardList";
 import React from "react";
+import { currentUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default async function Page({ params }: { params: { id: string } }) {
+    const user = await currentUser();
+
+    let isAdmin = false;
+
+    if (user) {
+        const roles = user.publicMetadata?.roles as string[];
+        if (roles) isAdmin = roles.some((r) => r === "admin");
+    }
+
     const celebrities: Celebrity[] = await listAllCelebrities();
 
     return (
@@ -12,7 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 {celebrities && (
                     <>
                         <div className="flex text-2xl font-bold justify-center">{`${celebrities.length} célébrités`}</div>
-                        <CelebritiesCardList celebrities={celebrities} />
+                        <CelebritiesCardList celebrities={celebrities} isAdmin={isAdmin} />
                     </>
                 )}
             </div>

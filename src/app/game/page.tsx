@@ -68,6 +68,7 @@ export default async function IndexPage() {
                                 <div className="stat-value">2024</div>
                                 <div className="stat-desc text-primary-content">En cours</div>
                             </div>
+
                             <div className="stat border-t-primary-content">
                                 <div className="stat-figure text-primary-content">
                                     <UserHeartIcon className="h-10 w-10 text-accent" />

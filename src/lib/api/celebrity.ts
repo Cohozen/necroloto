@@ -15,6 +15,17 @@ export async function listIncompleteCelebrities() {
     });
 }
 
+export async function getCelebrityWithBets(id: string) {
+    return prisma.celebrity.findUnique({
+        where: {
+            id
+        },
+        include: {
+            CelebritiesOnBet: { include: { bet: { include: { user: true } } } }
+        }
+    });
+}
+
 export async function insertCelebrity(celebrity: CreatedCelebrity) {
     return prisma.celebrity.create({
         data: {
