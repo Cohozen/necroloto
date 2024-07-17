@@ -30,7 +30,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     </div>
                 )}
 
-                <div className="flex flex-row px-2 text-2xl">{`Pari pour l'année 2024`}</div>
+                <div className="flex flex-row px-2 text-2xl font-bold">{`Pari pour l'année 2024`}</div>
 
                 {bet && (
                     <div className="flex w-full flex-row px-2 gap-2">
