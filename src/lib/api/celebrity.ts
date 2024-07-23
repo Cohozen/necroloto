@@ -1,4 +1,4 @@
-import { CelebritiesOnBet, Celebrity } from "@prisma/client";
+import { Celebrity } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
 type CreatedCelebrity = Pick<Celebrity, "name" | "birth" | "death" | "photo">;
@@ -41,6 +41,7 @@ export async function updateCelebrity(celebrity: Celebrity) {
     return prisma.celebrity.update({
         where: { id: celebrity.id },
         data: {
+            name: celebrity.name,
             birth: celebrity.birth,
             death: celebrity.death,
             photo: celebrity.photo

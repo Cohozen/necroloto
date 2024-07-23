@@ -11,10 +11,9 @@ import { CrossIcon } from "@/ui/icons/CrossIcon";
 
 interface CelebritiesCardListProps {
     celebrities: Celebrity[];
-    isAdmin: boolean;
 }
 
-export default function CelebritiesCardList({ celebrities, isAdmin }: CelebritiesCardListProps) {
+export default function CelebritiesCardList({ celebrities }: CelebritiesCardListProps) {
     return (
         <div className="flex flex-col gap-4">
             {celebrities &&
@@ -25,7 +24,6 @@ export default function CelebritiesCardList({ celebrities, isAdmin }: Celebritie
                     .map((celebrity, index) => (
                         <Link key={celebrity.id} href={`/game/celebrities/${celebrity.id}`}>
                             <div key={celebrity.id} className="card bg-base-100 shadow-xl">
-                                {/*<figure>{celebrity.photo && <img src={celebrity.photo} />}</figure>*/}
                                 <div className="card-body p-4">
                                     <div className="flex flex-col">
                                         <div className="flex flex-row gap-4 items-center">

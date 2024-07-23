@@ -14,11 +14,12 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         photo: body.photo
     };
 
-    if (body.death) {
+    if (body.birth && body.death) {
         const points = calculPointByCelebrity(body.birth, body.death);
         await updatePointsCelebrityOnBets(id, points);
     }
 
     const updateResult = await updateCelebrity(celebrity);
+
     return Response.json(updateResult);
 }
