@@ -1,6 +1,10 @@
-import { listAllCelebrities } from "@/lib/api/celebrity";
+import { listAllCelebrities, SearchCelebrities } from "@/lib/api/celebrity";
 
 export async function GET(request: Request) {
-    const result = await listAllCelebrities();
-    return Response.json(result);
+    const { searchParams } = new URL(request.url);
+    const name = searchParams.get("name");
+
+    if (!name) return Response.json(await listAllCelebrities());
+
+    return Response.json(await SearchCelebrities(name));
 }

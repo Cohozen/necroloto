@@ -7,6 +7,17 @@ export async function listAllCelebrities() {
     return prisma.celebrity.findMany();
 }
 
+export async function SearchCelebrities(name: string) {
+    return prisma.celebrity.findMany({
+        where: {
+            name: {
+                contains: name,
+                mode: "insensitive"
+            }
+        }
+    });
+}
+
 export async function listIncompleteCelebrities() {
     return prisma.celebrity.findMany({
         where: {
