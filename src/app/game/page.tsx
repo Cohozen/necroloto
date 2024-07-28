@@ -14,7 +14,7 @@ import { CreateOrUpdateUserByClerkAuth } from "@/lib/actions/user";
 import { GetCelebritiesAliveStats, GetPositionOfUserForYear } from "@/lib/actions/bet";
 
 export const metadata = {
-    title: "Necroloto | Dashboard"
+    title: "Necroloto | Accueil"
 };
 
 export default async function IndexPage() {
@@ -45,7 +45,7 @@ export default async function IndexPage() {
     return (
         <main className="flex-1 overflow-auto">
             <div className="flex flex-col items-center">
-                <div className="flex flex-col gap-8 p-4">
+                <div className="flex flex-col gap-8 lg:gap-16 p-4">
                     {userDb && (
                         <div className="flex flex-row gap-4 justify-center px-2 pt-4">
                             <UserAvatar user={userDb} size="w-20" />

@@ -21,17 +21,19 @@ export default function CelebritiesCardList() {
 
     return (
         <>
-            <div className="flex flex-row text-lg font-bold gap-2 justify-between items-center">
+            <div className="flex flex-row text-lg font-bold gap-4 justify-between items-center">
                 <input
                     type="text"
                     placeholder="Recherche"
-                    className="input input-bordered"
+                    className="input input-bordered w-full"
                     value={searchName}
                     onChange={(v) => setSearchName(v.target.value)}
                 />
-                {`${celebrities?.length ?? 0} célébrité${
-                    celebrities && celebrities?.length > 1 ? "s" : ""
-                }`}
+                <span className="shrink-0">
+                    {`${celebrities?.length ?? 0} célébrité${
+                        celebrities && celebrities?.length > 1 ? "s" : ""
+                    }`}
+                </span>
             </div>
             <div className="flex flex-col gap-4">
                 {celebrities &&

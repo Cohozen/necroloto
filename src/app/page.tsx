@@ -3,8 +3,7 @@ import React from "react";
 import Image from "next/image";
 
 export const metadata = {
-    title: "Necroloto",
-    description: "Necroloto Application."
+    title: "Necroloto"
 };
 
 export default async function IndexPage() {

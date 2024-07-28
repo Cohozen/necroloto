@@ -9,6 +9,10 @@ import Link from "next/link";
 import { UserHeartIcon } from "@/ui/icons/UserHeartIcon";
 import { CupStarIcon } from "@/ui/icons/CupStarIcon";
 
+export const metadata = {
+    title: "Necroloto | Paris"
+};
+
 export default async function Page() {
     const user = await currentUser();
 
@@ -33,7 +37,7 @@ export default async function Page() {
                 <div className="flex text-2xl font-bold">Mon pari 2024</div>
                 {myBet && celebrities && (
                     <>
-                        <div className="flex flex-row gap-8 justify-center px-2 py-4">
+                        <div className="flex flex-row gap-8 md:gap-24 justify-center px-2 py-4 md:pb-16">
                             <div
                                 className="radial-progress text-primary"
                                 style={{
@@ -74,7 +78,7 @@ export default async function Page() {
                             </div>
                         </div>
                         <div className="flex text-2xl font-bold">Aperçu des vivants</div>
-                        <div className="flex flex-row gap-8 justify-center px-2">
+                        <div className="flex flex-row gap-8 md:gap-24 justify-center px-2">
                             <div>
                                 {youngerCelebrity && (
                                     <div className="flex flex-col items-center">

@@ -1,6 +1,10 @@
 import React from "react";
 import ToggleTheme from "@/components/layout/toggleTheme";
 
+export const metadata = {
+    title: "Necroloto | Paramètres"
+};
+
 export default async function Page() {
     return (
         <main className="flex-1 overflow-auto">

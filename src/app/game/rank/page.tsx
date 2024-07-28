@@ -7,16 +7,20 @@ import { CupFirstIcon } from "@/ui/icons/CupFirstIcon";
 import { MedalRibbonsIcon } from "@/ui/icons/MedalRibbonsIcon";
 import { RankBetsByYearWithTotalPoints } from "@/lib/actions/bet";
 
+export const metadata = {
+    title: "Necroloto | Classement"
+};
+
 export default async function Page() {
     const bets = await RankBetsByYearWithTotalPoints(2024);
 
     return (
-        <main className="flex-1 flex flex-col gap-8 overflow-auto">
+        <main className="flex-1 flex flex-col gap-8 overflow-auto md:px-[20%]">
             <div className="flex flex-col items-center gap-6 p-4">
                 <div className="flex text-2xl font-bold">2024</div>
             </div>
 
-            <div className="flex flex-row justify-center items-end">
+            <div className="flex flex-row justify-center items-end md:pb-4">
                 <div className="flex flex-col items-center gap-2">
                     {bets[2]?.user && (
                         <Link href={`/game/bets/${bets[2].id}`}>
@@ -51,7 +55,7 @@ export default async function Page() {
                 </div>
             </div>
 
-            <table className="table text-base-content w-full">
+            <table className="table table-zebra text-base-content w-full">
                 <tbody>
                     {bets &&
                         bets.map((bet, index) => {
