@@ -121,8 +121,8 @@ export default async function IndexPage() {
                                     {"Le parie pour l'année 2024 est déjà enregistré"}
                                 </div>
                             </div>
-                            <Link href={`/game/bets/${myBet.id}`}>
-                                <button className="btn btn-sm">Voir le pari</button>
+                            <Link href={`/game/bets/${myBet.id}`} className="btn btn-sm">
+                                Voir le pari
                             </Link>
                         </div>
                     ) : (
@@ -131,12 +131,13 @@ export default async function IndexPage() {
                             <div>
                                 <h3 className="font-bold">Aucun pari pour 2024</h3>
                                 <div className="text-xs">
-                                    {"Vous pouvez parier dès maintenant pour l'année 2024"}
+                                    {/*{"Vous pouvez parier dès maintenant pour l'année 2024"}*/}
+                                    {"Malheureusement, il est trop tard pour faire votre pari pour l'année 2024, revenez plus tard !"}
                                 </div>
                             </div>
-                            <Link href="/game/bet">
-                                <button className="btn btn-sm">Parier</button>
-                            </Link>
+                            {/*<Link href="/game/bet">*/}
+                            {/*    <button className="btn btn-sm">Parier</button>*/}
+                            {/*</Link>*/}
                         </div>
                     )}
                 </div>
