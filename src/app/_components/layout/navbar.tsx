@@ -44,8 +44,8 @@ export default function Navbar() {
                         <Image
                             src="/icon-192x192.png"
                             alt="necroloto-logo"
-                            width="36"
-                            height="36"
+                            width="40"
+                            height="40"
                         />
                         <div className="font-title inline-flex text-lg md:text-2xl">Necroloto</div>
                     </Link>
