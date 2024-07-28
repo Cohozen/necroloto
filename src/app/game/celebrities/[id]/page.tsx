@@ -18,8 +18,8 @@ export default async function Page({ params }: { params: { id: string } }) {
     const celebrity = await getCelebrityWithBets(params.id);
 
     return (
-        <main className="flex-1 overflow-auto">
-            <div className="flex flex-col gap-4 p-4">
+        <main className="flex-1 overflow-auto p-4 md:px-24 lg:px-48 xl:px-80">
+            <div className="flex flex-col gap-4">
                 {celebrity && <Celebrity celebrity={celebrity} isAdmin={isAdmin} />}
             </div>
         </main>

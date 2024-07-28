@@ -19,7 +19,7 @@ export default function BottomNav() {
 
     return (
         !isInSecondaryPage && (
-            <div className="sticky bottom-0 btm-nav bg-base-300">
+            <div className="sticky bottom-0 btm-nav bg-base-300 xl:hidden">
                 <Link
                     href="/game"
                     className={classNames("text-base-content", {
