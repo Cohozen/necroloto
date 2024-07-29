@@ -42,11 +42,20 @@ export default function Celebrity({ celebrity, isAdmin }: CelebrityProps) {
                             <div className="stat">
                                 <div className="stat-figure text-primary-content">
                                     <div className="avatar-group -space-x-6 rtl:space-x-reverse">
-                                        {usersWhoBetThisCelebrity?.map((user) => {
+                                        {usersWhoBetThisCelebrity?.slice(0, 3).map((user) => {
                                             return (
                                                 <UserAvatar key={user.id} user={user} size="w-12" />
                                             );
                                         })}
+                                        {usersWhoBetThisCelebrity?.length > 3 && (
+                                            <div className="avatar placeholder">
+                                                <div className="bg-neutral text-neutral-content w-12">
+                                                    <span>
+                                                        +{usersWhoBetThisCelebrity?.length - 3}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="stat-title text-primary-content">
