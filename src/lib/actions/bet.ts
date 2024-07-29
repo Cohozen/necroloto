@@ -12,7 +12,7 @@ export async function RankBetsByYearWithTotalPoints(year: number) {
         };
     });
 
-    return sortBy(totals, (b) => b.total || b.user.firstname);
+    return sortBy(totals, (b) => b.total || b.user.firstname).reverse();
 }
 
 export async function GetPositionOfUserForYear(userId: string, year: number) {

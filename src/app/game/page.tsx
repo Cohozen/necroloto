@@ -85,7 +85,7 @@ export default async function IndexPage() {
                                             {aliveStats > 0 &&
                                                 `${aliveStats}% de plus que la moyenne`}
                                             {aliveStats < 0 &&
-                                                `${aliveStats}% de moins que la moyenne`}
+                                                `${Math.abs(aliveStats)}% de moins que la moyenne`}
                                         </>
                                     ) : null}
                                 </div>
@@ -132,7 +132,9 @@ export default async function IndexPage() {
                                 <h3 className="font-bold">Aucun pari pour 2024</h3>
                                 <div className="text-xs">
                                     {/*{"Vous pouvez parier dès maintenant pour l'année 2024"}*/}
-                                    {"Malheureusement, il est trop tard pour faire votre pari pour l'année 2024, revenez plus tard !"}
+                                    {
+                                        "Malheureusement, il est trop tard pour faire votre pari pour l'année 2024, revenez plus tard !"
+                                    }
                                 </div>
                             </div>
                             {/*<Link href="/game/bet">*/}
