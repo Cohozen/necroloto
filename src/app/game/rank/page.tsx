@@ -28,7 +28,7 @@ export default async function Page() {
                         </Link>
                     )}
                     <div className="flex justify-center items-start py-4 bg-primary/40 h-16 w-20 rounded-tl-xl">
-                        <MedalStarIcon className="w-8 h-8 text-orange-800 hover:animate-bounce" />
+                        <MedalStarIcon className="w-8 h-8 text-orange-800" />
                     </div>
                 </div>
 
@@ -39,7 +39,7 @@ export default async function Page() {
                         </Link>
                     )}
                     <div className="flex justify-center items-start py-4 bg-primary/80 h-44 w-20 rounded-t-xl">
-                        <CupFirstIcon className="w-12 h-12 text-amber-300/80 hover:animate-bounce" />
+                        <CupFirstIcon className="w-12 h-12 text-amber-300/80" />
                     </div>
                 </div>
 
@@ -50,7 +50,7 @@ export default async function Page() {
                         </Link>
                     )}
                     <div className="flex justify-center items-start py-4 bg-primary/60 h-28 w-20 rounded-tr-xl">
-                        <MedalRibbonsIcon className="w-10 h-10 text-gray-500 hover:animate-bounce" />
+                        <MedalRibbonsIcon className="w-10 h-10 text-gray-500" />
                     </div>
                 </div>
             </div>

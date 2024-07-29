@@ -8,6 +8,7 @@ import CelebrityAvatar from "@/components/business/user/CelebrityAvatar";
 import Link from "next/link";
 import { UserHeartIcon } from "@/ui/icons/UserHeartIcon";
 import { CupStarIcon } from "@/ui/icons/CupStarIcon";
+import { InfoIcon } from "@/ui/icons/InfoIcon";
 
 export const metadata = {
     title: "Necroloto | Paris"
@@ -35,7 +36,7 @@ export default async function Page() {
         <main className="flex-1 overflow-auto">
             <div className="flex flex-col items-center gap-6 p-4">
                 <div className="flex text-2xl font-bold">Mon pari 2024</div>
-                {myBet && celebrities && (
+                {(myBet && celebrities && (
                     <>
                         <div className="flex flex-row gap-8 md:gap-24 justify-center px-2 py-4 md:pb-16">
                             <div
@@ -115,6 +116,18 @@ export default async function Page() {
                             Détail du pari
                         </Link>
                     </>
+                )) || (
+                    <div role="alert" className="alert shadow-lg">
+                        <InfoIcon className="h-6 w-6" />
+                        <div>
+                            <h3 className="font-bold">Aucun pari pour 2024</h3>
+                            <div className="text-xs">
+                                {
+                                    "Malheureusement, il est trop tard pour faire votre pari pour l'année 2024, revenez plus tard !"
+                                }
+                            </div>
+                        </div>
+                    </div>
                 )}
             </div>
         </main>
