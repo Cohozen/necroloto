@@ -27,7 +27,7 @@ export default async function BetPage() {
     return (
         <main className="flex-1 overflow-auto p-4 md:px-24 lg:px-48 xl:px-80">
             <div className="flex flex-col pb-4 gap-1">
-                <div className="text-xl">Mes prédictions pour l'année</div>
+                <div className="text-xl">{`Mes prédictions pour l'année`}</div>
                 <p className="text-xs">{`Saisir 30 noms de célébrités.`}</p>
             </div>
             <InsertForm />
