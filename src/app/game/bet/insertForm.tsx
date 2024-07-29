@@ -17,7 +17,9 @@ export default function InsertForm() {
     const [errorForm, setErrorForm] = useState("");
     const [successForm, setSuccessForm] = useState(false);
 
-    const { trigger: insertBet, isMutating } = useClerkSWRMutation(`/api/users/${user?.externalId}/bet`);
+    const { trigger: insertBet, isMutating } = useClerkSWRMutation(
+        `/api/users/${user?.externalId}/bet`
+    );
 
     return (
         <div className="flex flex-col gap-4">
@@ -59,7 +61,7 @@ export default function InsertForm() {
             )}
             <label className="form-control">
                 <textarea
-                    className="textarea textarea-bordered h-24"
+                    className="textarea textarea-bordered h-36"
                     placeholder="Paris"
                     disabled={isMutating}
                     onChange={(e) => setValues(e.target.value)}
@@ -69,17 +71,19 @@ export default function InsertForm() {
                 </div>
             </label>
             <button
-                className="btn btn-outline btn-primary"
+                className="btn btn-primary"
                 disabled={isMutating}
                 onClick={async () => {
                     setErrorForm("");
 
                     const celebrities = uniq(values.split(";").filter((v) => v.trim()));
-                    console.log(celebrities);
+
                     const someEmpty = celebrities.some((c) => !c.trim());
 
                     if (celebrities.length < 30) {
-                        setErrorForm(`Il te manque des noms ! ${30 - celebrities.length} manquant.`);
+                        setErrorForm(
+                            `Il te manque des noms ! ${30 - celebrities.length - 1} manquant.`
+                        );
                         return;
                     }
 
@@ -98,8 +102,8 @@ export default function InsertForm() {
                             year,
                             celebrities
                         });
+
                         if (createResult) {
-                            console.log("createBetResult : ", createResult);
                             setSuccessForm(true);
                             router.push(`/game/bets/${createResult.id}`);
                         }

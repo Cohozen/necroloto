@@ -17,7 +17,8 @@ export async function getBetWithCelebrities(id: string) {
             id
         },
         include: {
-            CelebritiesOnBet: { include: { celebrity: true } }
+            CelebritiesOnBet: { include: { celebrity: true } },
+            user: true
         }
     });
 }
@@ -27,6 +28,9 @@ export async function getBetByUserAndYear(userId: string, year: number) {
         where: {
             userId,
             year
+        },
+        include: {
+            CelebritiesOnBet: { include: { celebrity: true } }
         }
     });
 }
@@ -48,7 +52,8 @@ export async function listBetsByYear(year: number) {
             year
         },
         include: {
-            user: true
+            user: true,
+            CelebritiesOnBet: { include: { celebrity: true } }
         }
     });
 }

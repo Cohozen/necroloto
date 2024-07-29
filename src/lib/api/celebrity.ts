@@ -1,4 +1,4 @@
-import { CelebritiesOnBet, Celebrity } from "@prisma/client";
+import { Celebrity } from "@prisma/client";
 import prisma from "@/lib/prisma";
 
 type CreatedCelebrity = Pick<Celebrity, "name" | "birth" | "death" | "photo">;
@@ -7,10 +7,32 @@ export async function listAllCelebrities() {
     return prisma.celebrity.findMany();
 }
 
+export async function SearchCelebrities(name: string) {
+    return prisma.celebrity.findMany({
+        where: {
+            name: {
+                contains: name,
+                mode: "insensitive"
+            }
+        }
+    });
+}
+
 export async function listIncompleteCelebrities() {
     return prisma.celebrity.findMany({
         where: {
             OR: [{ birth: null }, { death: null }]
+        }
+    });
+}
+
+export async function getCelebrityWithBets(id: string) {
+    return prisma.celebrity.findUnique({
+        where: {
+            id
+        },
+        include: {
+            CelebritiesOnBet: { include: { bet: { include: { user: true } } } }
         }
     });
 }
@@ -30,9 +52,19 @@ export async function updateCelebrity(celebrity: Celebrity) {
     return prisma.celebrity.update({
         where: { id: celebrity.id },
         data: {
+            name: celebrity.name,
             birth: celebrity.birth,
             death: celebrity.death,
             photo: celebrity.photo
+        }
+    });
+}
+
+export async function updatePointsCelebrityOnBets(celebrityId: string, points: number) {
+    return prisma.celebritiesOnBet.updateMany({
+        where: { celebrityId: celebrityId },
+        data: {
+            points
         }
     });
 }
@@ -42,7 +74,8 @@ export async function mergeCelebrities(fromId: string, toId: string) {
         async (tx) => {
             await tx.celebrity.findUniqueOrThrow({
                 where: {
-                    id: fromId
+                    id: fromId,
+                    death: null
                 },
                 include: {
                     CelebritiesOnBet: true

@@ -1,5 +1,6 @@
-import { updateCelebrity } from "@/lib/api/celebrity";
+import { updateCelebrity, updatePointsCelebrityOnBets } from "@/lib/api/celebrity";
 import { Celebrity } from "@prisma/client";
+import { calculPointByCelebrity } from "@/lib/helpers/bet";
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
     const { id } = params;
@@ -13,6 +14,12 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         photo: body.photo
     };
 
-    const result = await updateCelebrity(celebrity);
-    return Response.json(result);
+    if (body.birth && body.death) {
+        const points = calculPointByCelebrity(body.birth, body.death);
+        await updatePointsCelebrityOnBets(id, points);
+    }
+
+    const updateResult = await updateCelebrity(celebrity);
+
+    return Response.json(updateResult);
 }

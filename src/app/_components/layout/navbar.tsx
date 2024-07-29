@@ -1,58 +1,122 @@
 "use client";
 
 import { UserButton } from "@clerk/nextjs";
+import { usePathname, useRouter } from "next/navigation";
+
 import ToggleTheme from "@/components/layout/toggleTheme";
-import { usePathname } from "next/navigation";
+import React from "react";
+import { ArrowLeftLineIcon } from "@/ui/icons/ArrowLeftLineIcon";
+import classNames from "classnames";
+import { HomeIcon } from "@/ui/icons/HomeIcon";
+import Link from "next/link";
+import { RankingIcon } from "@/ui/icons/RankingIcon";
+import { NoteListIcon } from "@/ui/icons/NoteListIcon";
+import { PeopleIcon } from "@/ui/icons/PeopleIcon";
+import Image from "next/image";
 
 export default function Navbar() {
     const pathname = usePathname();
+    const router = useRouter();
+
+    const pathnames = pathname.split("/");
+
+    const isInHomePage = pathnames.length === 2;
+    const isInPrimaryPage = pathnames.length === 3;
+    const isInSecondaryPage = pathnames.length === 4;
 
     return (
-        <div className="bg-base-100 text-base-content sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] shadow-sm">
-            <div className="navbar w-full">
-                <div className="flex-none lg:hidden">
-                    <label htmlFor="main-drawer" aria-label="open sidebar" className="btn btn-square btn-ghost">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            className="inline-block w-6 h-6 stroke-current"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M4 6h16M4 12h16M4 18h16"
-                            ></path>
-                        </svg>
-                    </label>
+        <div className="navbar sticky top-0 text-base-content ">
+            <div className="flex navbar-start">
+                <div className="text-xl font-bold xl:hidden">
+                    {isInHomePage && "Accueil"}
+                    {isInPrimaryPage && pathnames[2] === "bets" && "Paris"}
+                    {isInPrimaryPage && pathnames[2] === "celebrities" && "Célébrités"}
+                    {isInPrimaryPage && pathnames[2] === "rank" && "Classement"}
+                    {isInPrimaryPage && pathnames[2] === "settings" && "Paramètres"}
+                    {isInSecondaryPage && (
+                        <button className="btn btn-circle btn-sm" onClick={() => router.back()}>
+                            <ArrowLeftLineIcon className="h-4 w-4" />
+                        </button>
+                    )}
                 </div>
+                <div className="flex-1 md:gap-1 lg:gap-2 hidden xl:flex">
+                    <Link href="/" aria-label="Homepage" className="flex-0 btn btn-ghost px-2">
+                        <Image
+                            src="/icon-192x192.png"
+                            alt="necroloto-logo"
+                            width="40"
+                            height="40"
+                        />
+                        <div className="font-title inline-flex text-lg md:text-2xl">Necroloto</div>
+                    </Link>
+                </div>
+            </div>
 
-                <div className="flex flex-1 md:gap-1 lg:gap-2">
-                    <div className="text-sm breadcrumbs px-2">
-                        <ul>
-                            {pathname.split("/").map((route, index) => {
-                                const isLastRoute = pathname.split("/").length === index + 1;
-                                const href = pathname
-                                    .split("/")
-                                    .slice(0, index + 1)
-                                    .join("/");
-
-                                return (
-                                    <li key={`breadcrumb-${route}`}>
-                                        {!route && <a href="/game">Home</a>}
-                                        {(route && !isLastRoute && <a href={href}>{route}</a>) || route}
-                                    </li>
-                                );
+            <div className="navbar-center hidden xl:flex">
+                <ul className="menu menu-horizontal px-1 gap-2">
+                    <li>
+                        <Link
+                            href="/game"
+                            className={classNames("text-base-content", {
+                                active: pathname === "/game"
                             })}
-                        </ul>
-                    </div>
-                </div>
+                        >
+                            <HomeIcon className="h-6 w-6" />
+                            <span className="btm-nav-label text-xs">Accueil</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            href="/game/rank"
+                            className={classNames("text-base-content", {
+                                active: pathname === "/game/rank"
+                            })}
+                        >
+                            <RankingIcon className="h-6 w-6" />
+                            <span className="btm-nav-label text-xs">Classement</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            href="/game/bets"
+                            className={classNames("text-base-content", {
+                                active: pathname.split("/")[2] === "bets"
+                            })}
+                        >
+                            <NoteListIcon className="h-6 w-6" />
+                            <span className="btm-nav-label text-xs">Pari</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            href="/game/celebrities"
+                            className={classNames("text-base-content", {
+                                active: pathname.split("/")[2] === "celebrities"
+                            })}
+                        >
+                            <PeopleIcon className="h-6 w-6" />
+                            <span className="btm-nav-label text-xs">Célébrités</span>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
 
-                <div className="flex-0">
-                    <div className="flex-none items-center block mx-2">
-                        <UserButton afterSignOutUrl="/" />
-                    </div>
+            <div className="navbar-end">
+                <div className="flex-none items-center block mx-2">
+                    <UserButton
+                        afterSignOutUrl="/"
+                        appearance={{
+                            elements: {
+                                userButtonPopoverCard: "bg-base-100",
+                                userPreviewMainIdentifier: "text-base-content",
+                                userPreviewSecondaryIdentifier: "text-base-content",
+                                userButtonPopoverActionButtonText: "text-base-content",
+                                userButtonPopoverActionButtonIcon: "text-base-content"
+                            }
+                        }}
+                    />
+                </div>
+                <div className="hidden lg:flex">
                     <ToggleTheme />
                 </div>
             </div>

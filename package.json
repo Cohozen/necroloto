@@ -1,54 +1,56 @@
 {
-  "private": true,
-  "license": "MIT",
-  "scripts": {
-    "dev": "next dev",
-    "build": "prisma generate && next build",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
-    "start": "next start",
-    "lint": "next lint",
-    "migrate:dev": "npx prisma migrate dev",
-    "generate": "npx prisma generate"
-  },
-  "prettier": {
-    "arrowParens": "always",
-    "singleQuote": false,
-    "tabWidth": 4,
-    "trailingComma": "none",
-    "printWidth": 120
-  },
-  "dependencies": {
-    "@clerk/nextjs": "^4.29.3",
-    "@headlessui/react": "^1.7.17",
-    "@heroicons/react": "^2.0.18",
-    "@prisma/client": "^5.10.2",
-    "@vercel/analytics": "^1.0.2",
-    "classnames": "^2.3.2",
-    "dayjs": "^1.11.10",
-    "lodash": "^4.17.21",
-    "mongodb": "^6.2.0",
-    "next": "^14.0.3",
-    "prop-types": "^15.8.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-tailwindcss-datepicker": "^1.6.6",
-    "server-only": "^0.0.1",
-    "swr": "^2.2.4"
-  },
-  "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10",
-    "@types/lodash": "^4.14.202",
-    "@types/node": "^20.8.7",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
-    "autoprefixer": "^10.4.15",
-    "daisyui": "^4.4.19",
-    "eslint": "8.48.0",
-    "eslint-config-next": "^14.0.3",
-    "postcss": "^8.4.28",
-    "prettier": "^3.0.2",
-    "prisma": "^5.10.2",
-    "tailwindcss": "^3.3.3",
-    "typescript": "5.2.2"
-  }
+    "private": true,
+    "license": "MIT",
+    "scripts": {
+        "dev": "next dev",
+        "build": "prisma generate && next build",
+        "vercel-build": "prisma generate && prisma migrate deploy && next build",
+        "start": "next start",
+        "lint": "next lint",
+        "migrate:dev": "npx prisma migrate dev",
+        "generate": "npx prisma generate"
+    },
+    "prettier": {
+        "arrowParens": "always",
+        "singleQuote": false,
+        "tabWidth": 4,
+        "trailingComma": "none",
+        "printWidth": 100
+    },
+    "dependencies": {
+        "@clerk/nextjs": "^4.29.3",
+        "@clerk/themes": "^2.1.8",
+        "@headlessui/react": "^1.7.17",
+        "@heroicons/react": "^2.0.18",
+        "@prisma/client": "^5.10.2",
+        "@vercel/analytics": "^1.0.2",
+        "classnames": "^2.3.2",
+        "dayjs": "^1.11.10",
+        "lodash": "^4.17.21",
+        "mongodb": "^6.2.0",
+        "next": "^14.2.5",
+        "next-pwa": "^5.6.0",
+        "prop-types": "^15.8.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-tailwindcss-datepicker": "^1.6.6",
+        "server-only": "^0.0.1",
+        "swr": "^2.2.4"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.202",
+        "@types/node": "^20.8.7",
+        "@types/react": "18.2.21",
+        "@types/react-dom": "18.2.7",
+        "autoprefixer": "^10.4.15",
+        "daisyui": "^4.12.10",
+        "eslint": "8.48.0",
+        "eslint-config-next": "^14.0.3",
+        "postcss": "^8.4.28",
+        "prettier": "^3.0.2",
+        "prisma": "^5.10.2",
+        "tailwind": "^4.0.0",
+        "tailwindcss": "^3.4.5",
+        "typescript": "5.2.2"
+    }
 }
