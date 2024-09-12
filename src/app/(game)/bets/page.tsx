@@ -1,6 +1,6 @@
 import { BetsWithCelebrities } from "@/lib/types/bet";
 import { getBetByUserAndYear } from "@/lib/api/bet";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { head, last, sortBy } from "lodash";
 import React from "react";
 import dayjs from "dayjs";
@@ -112,7 +112,7 @@ export default async function Page() {
                                 )}
                             </div>
                         </div>
-                        <Link href={`/game/bets/${myBet.id}`} className="btn btn-primary btn-wide">
+                        <Link href={`/bets/${myBet.id}`} className="btn btn-primary btn-wide">
                             Détail du pari
                         </Link>
                     </>

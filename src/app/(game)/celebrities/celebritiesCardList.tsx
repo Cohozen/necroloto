@@ -42,7 +42,7 @@ export default function CelebritiesCardList() {
                             return a.name.localeCompare(b.name);
                         })
                         .map((celebrity, index) => (
-                            <Link key={celebrity.id} href={`/game/celebrities/${celebrity.id}`}>
+                            <Link key={celebrity.id} href={`/celebrities/${celebrity.id}`}>
                                 <div key={celebrity.id} className="card bg-base-100 shadow-xl">
                                     <div className="card-body p-4">
                                         <div className="flex flex-col">

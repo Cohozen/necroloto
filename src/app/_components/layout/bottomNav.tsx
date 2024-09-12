@@ -21,25 +21,25 @@ export default function BottomNav() {
         !isInSecondaryPage && (
             <div className="sticky bottom-0 btm-nav bg-base-300 xl:hidden">
                 <Link
-                    href="/game"
+                    href="/home"
                     className={classNames("text-base-content", {
-                        active: pathname === "/game"
+                        active: pathname === "/home"
                     })}
                 >
                     <HomeIcon className="h-6 w-6" />
                     <span className="btm-nav-label text-xs">Accueil</span>
                 </Link>
                 <Link
-                    href="/game/rank"
+                    href="/rank"
                     className={classNames("text-base-content", {
-                        active: pathname === "/game/rank"
+                        active: pathname === "/rank"
                     })}
                 >
                     <RankingIcon className="h-6 w-6" />
                     <span className="btm-nav-label text-xs">Classement</span>
                 </Link>
                 <Link
-                    href="/game/bets"
+                    href="/bets"
                     className={classNames("text-secondary", {
                         active: pathname.split("/")[2] === "bets"
                     })}
@@ -48,7 +48,7 @@ export default function BottomNav() {
                     <span className="btm-nav-label text-xs">Pari</span>
                 </Link>
                 <Link
-                    href="/game/celebrities"
+                    href="/celebrities"
                     className={classNames("text-base-content", {
                         active: pathname.split("/")[2] === "celebrities"
                     })}
@@ -57,9 +57,9 @@ export default function BottomNav() {
                     <span className="btm-nav-label text-xs">Célébrités</span>
                 </Link>
                 <Link
-                    href="/game/settings"
+                    href="/settings"
                     className={classNames("text-base-content", {
-                        active: pathname === "/game/settings"
+                        active: pathname === "/settings"
                     })}
                 >
                     <SettingsIcon className="h-6 w-6" />

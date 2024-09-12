@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { listIncompleteCelebrities } from "@/lib/api/celebrity";
 import { Celebrity } from "@prisma/client";
@@ -15,7 +15,7 @@ export default async function Page() {
                 return (
                     <div className="p-4 md:p-10 mx-auto max-w-7xl prose">
                         <h1>{"Vous n'avez pas les droits d'accès"}</h1>
-                        <Link href={`/game`} className="btn btn-outline btn-primary">
+                        <Link href={`/home`} className="btn btn-outline btn-primary">
                             {"Retour à l'accueil"}
                         </Link>
                     </div>

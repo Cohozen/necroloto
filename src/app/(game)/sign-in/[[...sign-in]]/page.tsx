@@ -17,13 +17,13 @@ export default function Page() {
                             "text-base-content hover:text-base-content/70",
                         formButtonPrimary:
                             "bg-primary hover:bg-primary/70 text-sm text-primary-content normal-case",
-                        footerActionLink: "text-base-content font-bold",
-                        footerActionText: "text-base-content",
+                        footerActionLink: "font-bold",
                         dividerLine: "bg-base-content",
                         dividerText: "text-base-content",
                         identityPreview: "border-base-content",
                         identityPreviewText: "text-base-content",
-                        identityPreviewEditButtonIcon: "text-base-content"
+                        identityPreviewEditButtonIcon: "text-base-content",
+                        socialButtonsBlockButton: "text-base-content"
                     }
                 }}
             />

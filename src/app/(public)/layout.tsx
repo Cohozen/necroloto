@@ -3,7 +3,7 @@ import React from "react";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
 
-import "./globals.css";
+import "../globals.css";
 
 export const metadata = {
     title: "Necroloto",

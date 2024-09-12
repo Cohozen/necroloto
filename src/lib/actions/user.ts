@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import { findUserByClerkId, insertUser, updateUser } from "@/lib/api/user";
-import { clerkClient } from "@clerk/nextjs";
-import { User as UserClerk } from "@clerk/nextjs/api";
+import { clerkClient } from "@clerk/nextjs/server";
+import { User as UserClerk } from "@clerk/nextjs/server";
 
 export async function CreateOrUpdateUserByClerkAuth(clerkUser: UserClerk) {
     let userDb = await findUserByClerkId(clerkUser.id);

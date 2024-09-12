@@ -58,7 +58,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                             ).map((celebritiesOnBet, index) => (
                                 <tr key={celebritiesOnBet.celebrity.id}>
                                     {/*<Link*/}
-                                    {/*    href={`/game/celebrities/${celebritiesOnBet.celebrity.id}`}*/}
+                                    {/*    href={`/celebrities/${celebritiesOnBet.celebrity.id}`}*/}
                                     {/*>*/}
                                         <td>
                                             <div className="flex items-center gap-3">

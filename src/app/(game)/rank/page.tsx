@@ -23,7 +23,7 @@ export default async function Page() {
             <div className="flex flex-row justify-center items-end md:pb-4">
                 <div className="flex flex-col items-center gap-2">
                     {bets[2]?.user && (
-                        <Link href={`/game/bets/${bets[2].id}`}>
+                        <Link href={`/bets/${bets[2].id}`}>
                             <UserAvatar user={bets[2].user} />
                         </Link>
                     )}
@@ -34,7 +34,7 @@ export default async function Page() {
 
                 <div className="flex flex-col items-center gap-2">
                     {bets[0].user && (
-                        <Link href={`/game/bets/${bets[0].id}`}>
+                        <Link href={`/bets/${bets[0].id}`}>
                             <UserAvatar user={bets[0].user} />{" "}
                         </Link>
                     )}
@@ -45,7 +45,7 @@ export default async function Page() {
 
                 <div className="flex flex-col items-center gap-2">
                     {bets[1]?.user && (
-                        <Link href={`/game/bets/${bets[1].id}`}>
+                        <Link href={`/bets/${bets[1].id}`}>
                             <UserAvatar user={bets[1].user} />
                         </Link>
                     )}
@@ -67,7 +67,7 @@ export default async function Page() {
                                         </div>
                                     </td>
                                     <td>
-                                        <Link key={bet.id} href={`/game/bets/${bet.id}`}>
+                                        <Link key={bet.id} href={`/bets/${bet.id}`}>
                                             <div className="flex items-center gap-3">
                                                 <UserAvatar user={bet.user} size="w-12" />
                                                 <div className="flex flex-col">

@@ -108,7 +108,7 @@ export default function CelebrityUpdateModal({ open, onClose, celebrity }: Celeb
                             try {
                                 const updateResult = await updateCelebrity(celebrityToUpdate);
                                 if (updateResult) {
-                                    router.push(`/game/admin/`);
+                                    router.push(`/admin/`);
                                     onClose();
                                 }
                             } catch (e) {

@@ -20,7 +20,8 @@ export default function Page() {
                         footerActionLink: "text-base-content font-bold",
                         footerActionText: "text-base-content",
                         dividerLine: "bg-base-content",
-                        dividerText: "text-base-content"
+                        dividerText: "text-base-content",
+                        socialButtonsBlockButton: "text-base-content"
                     }
                 }}
             />

@@ -1,25 +1,42 @@
-import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
-import { NextResponse } from "next/server";
+// import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
+// import { NextResponse } from "next/server";
+//
+// export default authMiddleware({
+//     afterAuth(auth, req, evt) {
+//         // handle users who aren't authenticated
+//         if (!auth.userId && !auth.isPublicRoute) {
+//             return redirectToSignIn({ returnBackUrl: req.url });
+//         }
+//
+//         // redirect to game page
+//         if (auth.userId && req.nextUrl.pathname === "/") {
+//             const orgSelection = new URL("/home", req.url);
+//             return NextResponse.redirect(orgSelection);
+//         }
+//     },
+//     publicRoutes: ["/"]
+// });
+//
+// export const config = {
+//     matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"]
+// };
 
-// This example protects all routes including api/trpc routes
-// Please edit this to allow other routes to be public as needed.
-// See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
-export default authMiddleware({
-    afterAuth(auth, req, evt) {
-        // handle users who aren't authenticated
-        if (!auth.userId && !auth.isPublicRoute) {
-            return redirectToSignIn({ returnBackUrl: req.url });
-        }
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-        // redirect to game page
-        if (auth.userId && req.nextUrl.pathname === "/") {
-            const orgSelection = new URL("/game", req.url);
-            return NextResponse.redirect(orgSelection);
-        }
-    },
-    publicRoutes: ["/"]
+const isPublicRoute = createRouteMatcher(["/", "/sign-in(.*)", "/sign-up(.*)"]);
+
+export default clerkMiddleware((auth, request) => {
+    if (!isPublicRoute(request)) {
+        auth().protect();
+    }
 });
 
 export const config = {
+    // matcher: [
+    //     // Skip Next.js internals and all static files, unless found in search params
+    //     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    //     // Always run for API routes
+    //     "/(api|trpc)(.*)"
+    // ]
     matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"]
 };

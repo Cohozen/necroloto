@@ -105,7 +105,7 @@ export default function InsertForm() {
 
                         if (createResult) {
                             setSuccessForm(true);
-                            router.push(`/game/bets/${createResult.id}`);
+                            router.push(`/bets/${createResult.id}`);
                         }
                     } catch (e) {
                         // gestion de l'erreur

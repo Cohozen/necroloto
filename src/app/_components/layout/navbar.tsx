@@ -40,7 +40,7 @@ export default function Navbar() {
                     )}
                 </div>
                 <div className="flex-1 md:gap-1 lg:gap-2 hidden xl:flex">
-                    <Link href="/" aria-label="Homepage" className="flex-0 btn btn-ghost px-2">
+                    <Link href="/home" aria-label="Homepage" className="flex-0 btn btn-ghost px-2">
                         <Image
                             src="/icon-192x192.png"
                             alt="necroloto-logo"
@@ -56,9 +56,9 @@ export default function Navbar() {
                 <ul className="menu menu-horizontal px-1 gap-2">
                     <li>
                         <Link
-                            href="/game"
+                            href="/home"
                             className={classNames("text-base-content", {
-                                active: pathname === "/game"
+                                active: pathname === "/home"
                             })}
                         >
                             <HomeIcon className="h-6 w-6" />
@@ -67,9 +67,9 @@ export default function Navbar() {
                     </li>
                     <li>
                         <Link
-                            href="/game/rank"
+                            href="/rank"
                             className={classNames("text-base-content", {
-                                active: pathname === "/game/rank"
+                                active: pathname === "/rank"
                             })}
                         >
                             <RankingIcon className="h-6 w-6" />
@@ -78,7 +78,7 @@ export default function Navbar() {
                     </li>
                     <li>
                         <Link
-                            href="/game/bets"
+                            href="/bets"
                             className={classNames("text-base-content", {
                                 active: pathname.split("/")[2] === "bets"
                             })}
@@ -89,7 +89,7 @@ export default function Navbar() {
                     </li>
                     <li>
                         <Link
-                            href="/game/celebrities"
+                            href="/celebrities"
                             className={classNames("text-base-content", {
                                 active: pathname.split("/")[2] === "celebrities"
                             })}

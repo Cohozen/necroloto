@@ -84,7 +84,7 @@ export default function CelebrityMergeModal({ open, onClose, celebrity }: Celebr
                             try {
                                 const mergeResult = await mergeCelebrity();
                                 if (mergeResult) {
-                                    router.push(`/game/admin/`);
+                                    router.push(`/admin/`);
                                     onClose();
                                 }
                             } catch (e) {

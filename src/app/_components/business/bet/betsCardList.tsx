@@ -27,7 +27,7 @@ export default async function BetsCardList({ bets }: BetsCardListProps) {
                                             "DD/MM/YYYY"
                                         )}`}</p>
                                         <div className="card-actions justify-end">
-                                            <Link href={`/game/bets/${b.id}`} className="btn btn-primary">
+                                            <Link href={`/bets/${b.id}`} className="btn btn-primary">
                                                 Voir le pari
                                             </Link>
                                         </div>
@@ -38,7 +38,7 @@ export default async function BetsCardList({ bets }: BetsCardListProps) {
                     })}
                 </div>
             )) || (
-                <Link href="/game/bet" className="btn btn-primary">
+                <Link href="/bet" className="btn btn-primary">
                     Aller parier
                 </Link>
             )}

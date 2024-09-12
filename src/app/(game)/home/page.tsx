@@ -1,4 +1,4 @@
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { User } from "@prisma/client";
 import { BetsWithCelebrities } from "@/lib/types/bet";
 import { getBetByUserAndYear } from "@/lib/api/bet";
@@ -121,7 +121,7 @@ export default async function IndexPage() {
                                     {"Le parie pour l'année 2024 est déjà enregistré"}
                                 </div>
                             </div>
-                            <Link href={`/game/bets/${myBet.id}`} className="btn btn-sm">
+                            <Link href={`/bets/${myBet.id}`} className="btn btn-sm">
                                 Voir le pari
                             </Link>
                         </div>
@@ -137,7 +137,7 @@ export default async function IndexPage() {
                                     }
                                 </div>
                             </div>
-                            {/*<Link href="/game/bet">*/}
+                            {/*<Link href="/bet">*/}
                             {/*    <button className="btn btn-sm">Parier</button>*/}
                             {/*</Link>*/}
                         </div>
