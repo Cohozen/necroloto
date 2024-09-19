@@ -20,7 +20,7 @@ export default function CelebritiesCardList() {
     );
 
     return (
-        <>
+        <div className="flex flex-col gap-4">
             <div className="flex flex-row text-lg font-bold gap-4 justify-between items-center">
                 <input
                     type="text"
@@ -149,6 +149,6 @@ export default function CelebritiesCardList() {
                             </Link>
                         ))}
             </div>
-        </>
+        </div>
     );
 }

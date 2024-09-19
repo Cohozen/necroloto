@@ -1,9 +1,11 @@
 import React from "react";
 
-import { ClerkProvider, SignedOut, SignedIn, RedirectToSignIn } from "@clerk/nextjs";
+import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 
 import Navbar from "@/components/layout/navbar";
 import BottomNav from "@/components/layout/bottomNav";
+
+import { frFR } from "@clerk/localizations";
 
 import "../globals.css";
 
@@ -25,14 +27,8 @@ export default async function GameLayout({ children }: { children: React.ReactNo
     return (
         <html lang="fr" className="bg-base-100">
             <body className="flex flex-col h-screen">
-                <ClerkProvider>
-                    {/*<SignedOut>*/}
-                    {/*    <RedirectToSignIn />*/}
-                    {/*</SignedOut>*/}
-
-                    <SignedIn>
-                        <Navbar />
-                    </SignedIn>
+                <ClerkProvider afterSignOutUrl="/" localization={frFR}>
+                    <Navbar />
 
                     {children}
 

@@ -6,33 +6,32 @@ module.exports = {
 
     plugins: [require("daisyui")],
 
-    // daisyUI config (optional - here are the default values)
     daisyui: {
         themes: [
             {
                 "necroloto-light": {
-                    primary: "#4b5563", // Un gris moyen pour un aspect neutre et sérieux
-                    secondary: "#ef4444", // Un rouge pour ajouter une touche de suspense et de danger
-                    accent: "#f97316", // Un orange pour un contraste vif et attirer l'attention
-                    neutral: "#d1d5db", // Un gris clair pour une base neutre
-                    "base-100": "#ffffff", // Blanc pour une base de fond claire
-                    info: "#3b82f6", // Un bleu pour des informations et des messages
-                    success: "#10b981", // Un vert pour des succès et des notifications positives
-                    warning: "#f59e0b", // Un jaune pour des avertissements et des alertes
-                    error: "#dc2626" // Un rouge foncé pour des erreurs et des échecs
+                    primary: "#5a7184", // Bleu-gris pour une bonne lisibilité
+                    secondary: "#849cae", // Bleu clair-gris pour un contraste modéré
+                    accent: "#f28c52", // Orange doux et terreux pour un contraste agréable
+                    neutral: "#d1d8de", // Gris doux et neutre pour une base discrète
+                    "base-100": "#f4f7fa", // Blanc légèrement bleuté pour un fond lisible
+                    info: "#4fa3f7", // Bleu vif pour les informations
+                    success: "#34d399", // Vert plus saturé pour les succès
+                    warning: "#facc15", // Jaune doux mais bien visible pour les avertissements
+                    error: "#f87171" // Rouge pastel mais plus saturé pour les erreurs
                 }
             },
             {
                 "necroloto-dark": {
-                    primary: "#6b7280", // Un gris moyen pour un aspect neutre et sérieux
-                    secondary: "#ef4444", // Un rouge pour ajouter une touche de suspense et de danger
-                    accent: "#f97316", // Un orange pour un contraste vif et attirer l'attention
-                    neutral: "#111827", // Un noir profond pour une base sombre
-                    "base-100": "#1f2937", // Un gris foncé pour une base de fond
-                    info: "#3b82f6", // Un bleu pour des informations et des messages
-                    success: "#10b981", // Un vert pour des succès et des notifications positives
-                    warning: "#f59e0b", // Un jaune pour des avertissements et des alertes
-                    error: "#dc2626" // Un rouge foncé pour des erreurs et des échecs
+                    primary: "#4b5563", // Gris anthracite doux pour une ambiance reposante
+                    secondary: "#6b7280", // Gris moyen pour plus de contraste sans être trop sombre
+                    accent: "#eab308", // Jaune doux et légèrement doré pour accentuer
+                    neutral: "#374151", // Gris foncé apaisant pour une base calme
+                    "base-100": "#1e293b", // Bleu nuit pour un fond relaxant et sombre
+                    info: "#93c5fd", // Bleu doux pour les informations
+                    success: "#4ade80", // Vert pastel pour les succès
+                    warning: "#fde047", // Jaune pâle pour les avertissements
+                    error: "#f87171" // Rouge doux pour les erreurs
                 }
             }
         ],
