@@ -9,3 +9,7 @@ export type BetsWithCelebrities = Prisma.BetGetPayload<{
 export type BetsWithUserAndCelebritiesOnBet = Prisma.BetGetPayload<{
     include: { user: true; CelebritiesOnBet: true };
 }>;
+
+export type RankedBets = BetsWithCelebrities & {
+    total: number;
+};

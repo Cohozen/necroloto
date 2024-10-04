@@ -1,74 +1,108 @@
-import { Bet, CelebritiesOnBet } from "@prisma/client";
+import { Bet, CelebritiesOnBet, Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
+import { unstable_cache, revalidateTag } from "next/cache";
 
 type CreatedBet = Pick<Bet, "userId" | "year">;
 
-export async function getBet(id: string) {
-    return prisma.bet.findUnique({
-        where: {
-            id
-        }
-    });
-}
+export const getBet = unstable_cache(
+    async (id: string) => {
+        return prisma.bet.findUnique({
+            where: {
+                id
+            }
+        });
+    },
+    ["bet-by-id"],
+    { tags: ["bets"] }
+);
 
-export async function getBetWithCelebrities(id: string) {
-    return prisma.bet.findUnique({
-        where: {
-            id
-        },
-        include: {
-            CelebritiesOnBet: { include: { celebrity: true } },
-            user: true
-        }
-    });
-}
+export const getBetWithCelebrities = unstable_cache(
+    async (id: string) => {
+        return prisma.bet.findUnique({
+            where: {
+                id
+            },
+            include: {
+                CelebritiesOnBet: { include: { celebrity: true } },
+                user: true
+            }
+        });
+    },
+    ["bet-with-celebrities"],
+    { tags: ["bets", "celebrities"] }
+);
 
-export async function getBetByUserAndYear(userId: string, year: number) {
-    return prisma.bet.findFirst({
-        where: {
-            userId,
-            year
-        },
-        include: {
-            CelebritiesOnBet: { include: { celebrity: true } }
-        }
-    });
-}
+export const getBetByUserAndYear = unstable_cache(
+    async (userId: string, year: number) => {
+        return prisma.bet.findFirst({
+            where: {
+                userId,
+                year
+            },
+            include: {
+                CelebritiesOnBet: { include: { celebrity: true } }
+            }
+        });
+    },
+    ["bet-by-user-and-year-with-celebrities"],
+    { tags: ["bets", "celebrities"] }
+);
 
-export async function listBetsByUser(userId: string) {
-    return prisma.bet.findMany({
-        where: {
-            userId
-        },
-        include: {
-            user: true
-        }
-    });
-}
+export const listBets = unstable_cache(
+    async <T>(params: {
+        skip?: number;
+        take?: number;
+        cursor?: Prisma.BetWhereUniqueInput;
+        where?: Prisma.BetWhereInput;
+        orderBy?: Prisma.BetOrderByWithRelationInput;
+        include?: Prisma.BetInclude;
+    }): Promise<T[]> => {
+        const { skip, take, cursor, where, orderBy, include } = params;
 
-export async function listBetsByYear(year: number) {
-    return prisma.bet.findMany({
-        where: {
-            year
-        },
-        include: {
-            user: true,
-            CelebritiesOnBet: { include: { celebrity: true } }
-        }
-    });
-}
+        return prisma.bet.findMany({
+            skip,
+            take,
+            cursor,
+            where,
+            orderBy,
+            include
+        }) as Prisma.PrismaPromise<T[]>;
+    },
+    ["bets"],
+    { tags: ["bets"] }
+);
 
-export async function insertBet(bet: CreatedBet) {
-    return prisma.bet.create({
+export const listBetsByYear = unstable_cache(
+    async (year: number) => {
+        return prisma.bet.findMany({
+            where: {
+                year
+            },
+            include: {
+                user: true,
+                CelebritiesOnBet: { include: { celebrity: true } }
+            }
+        });
+    },
+    ["bets-by-year-with-user-and-celebrities"],
+    { tags: ["bets", "celebrities", "users"] }
+);
+
+export const insertBet = async (bet: CreatedBet) => {
+    const result = prisma.bet.create({
         data: {
             userId: bet.userId,
             year: bet.year
         }
     });
-}
 
-export async function insertBetWithCelebrities(bet: CreatedBet, celebrities: string[]) {
-    return prisma.$transaction(
+    revalidateTag("bets");
+
+    return result;
+};
+
+export const insertBetWithCelebrities = async (bet: CreatedBet, celebrities: string[]) => {
+    const result = prisma.$transaction(
         async (tx) => {
             const createdBet = await tx.bet.create({
                 data: {
@@ -117,4 +151,8 @@ export async function insertBetWithCelebrities(bet: CreatedBet, celebrities: str
         },
         { timeout: 30000 }
     );
-}
+
+    revalidateTag("bets");
+
+    return result;
+};

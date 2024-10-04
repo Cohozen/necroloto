@@ -1,44 +1,48 @@
 import { Celebrity } from "@prisma/client";
 import prisma from "@/lib/prisma";
+import { unstable_cache, revalidateTag } from "next/cache";
 
 type CreatedCelebrity = Pick<Celebrity, "name" | "birth" | "death" | "photo">;
 
-export async function listAllCelebrities() {
-    return prisma.celebrity.findMany();
-}
+export const listAllCelebrities = unstable_cache(
+    async () => {
+        return prisma.celebrity.findMany();
+    },
+    ["all-celebrities"],
+    { tags: ["celebrities"] }
+);
 
-export async function SearchCelebrities(name: string) {
-    return prisma.celebrity.findMany({
-        where: {
-            name: {
-                contains: name,
-                mode: "insensitive"
+export const SearchCelebrities = unstable_cache(
+    async (name: string, living: boolean, deceased: boolean) => {
+        return prisma.celebrity.findMany({
+            where: {
+                name: {
+                    contains: name,
+                    mode: "insensitive"
+                }
+                // ...(living && !deceased ? { death: null } : {}),
+                // ...(deceased && !living ? { death: { not: null } } : {})
             }
-        }
-    });
-}
+        });
+    },
+    ["search-celebrities"],
+    { tags: ["celebrities"] }
+);
 
-export async function listIncompleteCelebrities() {
-    return prisma.celebrity.findMany({
-        where: {
-            OR: [{ birth: null }, { death: null }]
-        }
-    });
-}
+export const getCelebrity = unstable_cache(
+    async (id: string) => {
+        return prisma.celebrity.findUnique({
+            where: {
+                id
+            }
+        });
+    },
+    ["celebrity"],
+    { tags: ["celebrities"] }
+);
 
-export async function getCelebrityWithBets(id: string) {
-    return prisma.celebrity.findUnique({
-        where: {
-            id
-        },
-        include: {
-            CelebritiesOnBet: { include: { bet: { include: { user: true } } } }
-        }
-    });
-}
-
-export async function insertCelebrity(celebrity: CreatedCelebrity) {
-    return prisma.celebrity.create({
+export const insertCelebrity = async (celebrity: CreatedCelebrity) => {
+    const result = prisma.celebrity.create({
         data: {
             name: celebrity.name,
             birth: celebrity.birth,
@@ -46,10 +50,14 @@ export async function insertCelebrity(celebrity: CreatedCelebrity) {
             photo: celebrity.photo
         }
     });
-}
 
-export async function updateCelebrity(celebrity: Celebrity) {
-    return prisma.celebrity.update({
+    revalidateTag("celebrities");
+
+    return result;
+};
+
+export const updateCelebrity = async (celebrity: Celebrity) => {
+    const result = prisma.celebrity.update({
         where: { id: celebrity.id },
         data: {
             name: celebrity.name,
@@ -58,7 +66,11 @@ export async function updateCelebrity(celebrity: Celebrity) {
             photo: celebrity.photo
         }
     });
-}
+
+    revalidateTag("celebrities");
+
+    return result;
+};
 
 export async function updatePointsCelebrityOnBets(celebrityId: string, points: number) {
     return prisma.celebritiesOnBet.updateMany({
@@ -69,8 +81,8 @@ export async function updatePointsCelebrityOnBets(celebrityId: string, points: n
     });
 }
 
-export async function mergeCelebrities(fromId: string, toId: string) {
-    return prisma.$transaction(
+export const mergeCelebrities = async (fromId: string, toId: string) => {
+    const result = prisma.$transaction(
         async (tx) => {
             await tx.celebrity.findUniqueOrThrow({
                 where: {
@@ -101,4 +113,8 @@ export async function mergeCelebrities(fromId: string, toId: string) {
         },
         { timeout: 30000 }
     );
-}
+
+    revalidateTag("celebrities");
+
+    return result;
+};

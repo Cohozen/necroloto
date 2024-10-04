@@ -19,7 +19,8 @@ export async function PUT(request: Request, { params }: { params: { id: string }
         await updatePointsCelebrityOnBets(id, points);
     }
 
-    const updateResult = await updateCelebrity(celebrity);
+    //const updateResult = await updateCelebrity(celebrity);
 
-    return Response.json(updateResult);
+    return Response.json("");
+    //return Response.json(updateResult);
 }

@@ -1,160 +1,239 @@
 "use client";
 
-import React, { useState } from "react";
-import { CelebrityWithBetsAndUser } from "@/lib/types/celebrity";
-import CelebrityAvatar from "@/components/business/user/CelebrityAvatar";
-import UserAvatar from "@/components/business/user/UserAvatar";
-import { CupStarIcon } from "@/ui/icons/CupStarIcon";
-import { BabyIcon } from "@/ui/icons/BabyIcon";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { CheckIcon } from "@/ui/icons/CheckIcon";
-import { CrossIcon } from "@/ui/icons/CrossIcon";
 import CelebrityUpdate from "./celebrityUpdate";
+import {
+    Avatar,
+    Chip,
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    Card,
+    CardBody,
+    Divider,
+    AvatarGroup,
+    Table,
+    TableHeader,
+    TableColumn,
+    TableBody,
+    TableRow,
+    TableCell,
+    User,
+    Tabs,
+    Tab,
+    Button,
+    Link
+} from "@nextui-org/react";
+import { calculPointByCelebrity } from "@/lib/helpers/bet";
+import { CardHeader } from "@nextui-org/card";
+import { useRouter } from "next/navigation";
+import { Celebrity } from "@prisma/client";
+import { BetsWithUserAndCelebritiesOnBet, RankedBets } from "@/lib/types/bet";
+import { findIndex } from "lodash";
 
 interface CelebrityProps {
-    celebrity: CelebrityWithBetsAndUser;
+    celebrity: Celebrity;
+    bets: BetsWithUserAndCelebritiesOnBet[];
+    rankedBets: RankedBets[];
     isAdmin: boolean;
 }
 
-export default function Celebrity({ celebrity, isAdmin }: CelebrityProps) {
-    const [mode, setMode] = useState<string>("consultation");
+export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: CelebrityProps) {
+    const router = useRouter();
 
-    const usersWhoBetThisCelebrity = celebrity?.CelebritiesOnBet.map((b) => b.bet.user);
+    const [selectedTab, setSelectedTab] = useState("2024");
+    const [mode, setMode] = useState("consultation");
 
-    const points = celebrity?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
+    const tabs = [
+        {
+            id: "2024",
+            label: "2024"
+        },
+        {
+            id: "2025",
+            label: "2025"
+        }
+    ];
+
+    const usersWhoBetThisCelebrity = bets.map((b) => b.user);
+
+    const points = celebrity.birth
+        ? calculPointByCelebrity(celebrity.birth, celebrity.death ?? new Date())
+        : 0;
+
+    useEffect(() => {
+        router.replace(`/celebrities/${celebrity.id}/?year=${encodeURIComponent(selectedTab)}`);
+    }, [selectedTab]);
 
     return (
         <>
             {mode === "consultation" && (
                 <>
-                    <div className="flex flex-col gap-4 p-4 items-center">
-                        <CelebrityAvatar celebrity={celebrity} size="w-48" />
-                        <div className="text-4xl">{celebrity.name}</div>
-                        {celebrity.death ? (
-                            <div className="badge badge-error">Décédé</div>
-                        ) : (
-                            <div className="badge badge-info">En vie</div>
-                        )}
-                    </div>
+                    <div className="flex flex-col gap-4">
+                        <Avatar
+                            isBordered
+                            src={celebrity.photo ?? undefined}
+                            name={celebrity.name}
+                            radius="md"
+                            className="w-full h-56 text-large"
+                        />
 
-                    <div className="px-4">
-                        <div className="stats w-full justify-center stats-vertical lg:stats-horizontal bg-primary text-primary-content shadow-lg">
-                            <div className="stat">
-                                <div className="stat-figure text-primary-content">
-                                    <div className="avatar-group -space-x-6 rtl:space-x-reverse">
-                                        {usersWhoBetThisCelebrity?.slice(0, 3).map((user) => {
-                                            return (
-                                                <UserAvatar key={user.id} user={user} size="w-12" />
-                                            );
-                                        })}
-                                        {usersWhoBetThisCelebrity?.length > 3 && (
-                                            <div className="avatar placeholder">
-                                                <div className="bg-neutral text-neutral-content w-12">
-                                                    <span>
-                                                        +{usersWhoBetThisCelebrity?.length - 3}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                                <div className="stat-title text-primary-content">
-                                    Pari(s) en cours
-                                </div>
-                                <div className="stat-value">{usersWhoBetThisCelebrity?.length}</div>
-                                <div className="stat-desc text-primary-content">
-                                    Pour cette personne
-                                </div>
-                            </div>
+                        <div className="text-3xl font-bold">{celebrity.name}</div>
 
-                            {points ? (
-                                <div className="stat border-t-primary-content">
-                                    <div className="stat-figure text-primary-content">
-                                        <CupStarIcon className="h-10 w-10 text-accent" />
-                                    </div>
-                                    <div className="stat-title text-primary-content">
-                                        Points distribués
-                                    </div>
-                                    <div className="stat-value">
-                                        {points}
-                                        <span className="text-sm pl-1">pts</span>
-                                    </div>
-                                    <div className="stat-desc text-primary-content">
-                                        {`${
-                                            points / (usersWhoBetThisCelebrity?.length || 1)
-                                        }pts par pari`}
-                                    </div>
-                                </div>
-                            ) : null}
+                        <div className="flex flex-row items-center gap-2">
+                            <Chip
+                                className="capitalize"
+                                color={celebrity.death ? "danger" : "success"}
+                                variant="flat"
+                            >
+                                {celebrity.death ? "Décédé" : "En vie"}
+                            </Chip>
+
+                            <Popover placement="bottom" backdrop="blur">
+                                <PopoverTrigger>
+                                    <Chip className="capitalize" color="secondary" variant="flat">
+                                        {`${dayjs(celebrity.death || undefined).diff(
+                                            celebrity.birth,
+                                            "year"
+                                        )} ans`}
+                                    </Chip>
+                                </PopoverTrigger>
+                                <PopoverContent className="p-1">
+                                    <Card
+                                        shadow="none"
+                                        className="max-w-[250px] border-none bg-transparent"
+                                    >
+                                        <CardBody>
+                                            <p className="flex flex-row gap-1">
+                                                <span>
+                                                    {celebrity.birth
+                                                        ? dayjs(celebrity.birth).format(
+                                                              "DD/MM/YYYY"
+                                                          )
+                                                        : ""}
+                                                </span>
+                                                <span>-</span>
+                                                <span>
+                                                    {celebrity.death
+                                                        ? dayjs(celebrity.death).format(
+                                                              "DD/MM/YYYY"
+                                                          )
+                                                        : ""}
+                                                </span>
+                                            </p>
+                                        </CardBody>
+                                    </Card>
+                                </PopoverContent>
+                            </Popover>
+
+                            <Chip className="capitalize" color="warning" variant="flat">
+                                {celebrity.birth && `${points} point${points > 1 ? "s" : ""}`}
+                            </Chip>
                         </div>
                     </div>
 
-                    <div className="flex flex-col">
-                        <ul className="timeline timeline-vertical">
-                            <li>
-                                <div className="timeline-start">Naissance</div>
-                                <div className="timeline-middle">
-                                    <BabyIcon className="w-5 h-5 text-accent" />
-                                </div>
-                                <div className="timeline-end timeline-box my-6">
-                                    {celebrity.birth
-                                        ? dayjs(celebrity.birth).format("DD/MM/YYYY")
-                                        : "-"}
-                                </div>
-                                <hr className="bg-accent" />
-                            </li>
-                            <li className="flex-1">
-                                <hr className="bg-accent" />
-                                <div className="timeline-start">Age</div>
-                                <div className="timeline-middle">
-                                    <CheckIcon className="w-5 h-5 text-accent" />
-                                </div>
-                                <div className="timeline-end timeline-box my-6">
-                                    {celebrity.birth
-                                        ? `${dayjs(celebrity.death || undefined).diff(
-                                              celebrity.birth,
-                                              "year"
-                                          )} ans`
-                                        : "-"}
-                                </div>
-                                <hr className={`${celebrity.death ? "bg-accent" : ""}`} />
-                            </li>
-                            <li>
-                                <hr className={`${celebrity.death ? "bg-accent" : ""}`} />
-                                <div className="timeline-start">{`${
-                                    celebrity.death ? "Mort" : ""
-                                }`}</div>
-                                <div className="timeline-middle">
-                                    <CrossIcon
-                                        className={`w-5 h-5 ${
-                                            celebrity.death ? "text-accent" : ""
-                                        }`}
-                                    />
-                                </div>
-                                <div
-                                    className={`timeline-end my-6 ${
-                                        celebrity.death ? "timeline-box" : ""
-                                    }`}
-                                >
-                                    {celebrity.death
-                                        ? dayjs(celebrity.death).format("DD/MM/YYYY")
-                                        : ""}
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                    <Divider className="my-1" />
+
+                    <Tabs
+                        fullWidth
+                        variant="bordered"
+                        color="secondary"
+                        selectedKey={selectedTab}
+                        onSelectionChange={(key) => setSelectedTab(key.toString())}
+                        items={tabs}
+                    >
+                        {(item) => (
+                            <Tab key={item.id} title={item.label}>
+                                <Card className="">
+                                    <CardHeader className="flex flex-col">
+                                        <p className="text-lg font-medium text-center">
+                                            {`${usersWhoBetThisCelebrity?.length} Pari${
+                                                usersWhoBetThisCelebrity?.length > 1 ? "s" : ""
+                                            }`}
+                                        </p>
+                                    </CardHeader>
+                                    <Divider />
+                                    <CardBody>
+                                        <Table removeWrapper hideHeader>
+                                            <TableHeader>
+                                                <TableColumn>Nom</TableColumn>
+                                                <TableColumn>Points</TableColumn>
+                                                <TableColumn>Classement</TableColumn>
+                                                <TableColumn>Action</TableColumn>
+                                            </TableHeader>
+                                            <TableBody
+                                                items={usersWhoBetThisCelebrity}
+                                                emptyContent="Aucun paris pour l'année sélectionnée"
+                                            >
+                                                {(item) => {
+                                                    const currentBet = rankedBets.find(
+                                                        (b) => b.userId === item.id
+                                                    );
+
+                                                    const index = findIndex(
+                                                        rankedBets,
+                                                        (b) => b.userId === item.id
+                                                    );
+
+                                                    return (
+                                                        <TableRow key={item.id}>
+                                                            <TableCell>
+                                                                <User
+                                                                    //description={item.email}
+                                                                    name={`${item.firstname} ${
+                                                                        item.lastname ?? ""
+                                                                    }`}
+                                                                    avatarProps={{
+                                                                        radius: "full",
+                                                                        size: "sm",
+                                                                        src: item.image ?? undefined
+                                                                    }}
+                                                                />
+                                                            </TableCell>
+                                                            <TableCell className="text-center text-xs font-light">
+                                                                {`${currentBet?.total} Pts`}
+                                                            </TableCell>
+                                                            <TableCell className="text-center text-xs font-light">
+                                                                {`${index + 1}${
+                                                                    index + 1 === 1 ? "er" : "ème"
+                                                                }`}
+                                                            </TableCell>
+                                                            <TableCell className="">
+                                                                <Button
+                                                                    isIconOnly
+                                                                    href={`/bets/${currentBet?.id}`}
+                                                                    as={Link}
+                                                                    color="secondary"
+                                                                    showAnchorIcon
+                                                                    variant="solid"
+                                                                    size="sm"
+                                                                />
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    );
+                                                }}
+                                            </TableBody>
+                                        </Table>
+                                    </CardBody>
+                                </Card>
+                            </Tab>
+                        )}
+                    </Tabs>
                 </>
             )}
 
             {isAdmin && mode === "consultation" && (
                 <div className="flex justify-center">
-                    <button className="btn btn-wide btn-primary" onClick={() => setMode("editing")}>
+                    <Button color="primary" onPress={() => setMode("editing")}>
                         Modifier
-                    </button>
+                    </Button>
                 </div>
             )}
 
-            {isAdmin && mode === "editing" && <CelebrityUpdate celebrity={celebrity} />}
+            {isAdmin && mode === "editing" && (
+                <CelebrityUpdate celebrity={celebrity} onBack={() => setMode("consultation")} />
+            )}
         </>
     );
 }
