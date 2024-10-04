@@ -23,6 +23,7 @@
         "@clerk/themes": "^2.1.29",
         "@headlessui/react": "^1.7.17",
         "@heroicons/react": "^2.0.18",
+        "@internationalized/date": "^3.5.6",
         "@nextui-org/react": "^2.4.8",
         "@prisma/client": "^5.10.2",
         "@vercel/analytics": "^1.0.2",
@@ -37,7 +38,6 @@
         "prop-types": "^15.8.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "react-tailwindcss-datepicker": "^1.6.6",
         "server-only": "^0.0.1",
         "swr": "^2.2.4",
         "vaul": "^1.0.0"

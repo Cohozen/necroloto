@@ -1,126 +1,108 @@
 "use client";
 
 import { Celebrity } from "@prisma/client";
-import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
-import { useEffect, useState } from "react";
-import useClerkSWRMutation from "@/utils/hooks/useClerkSWRMutation";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { updateCelebrityAction } from "@/lib/actions/celebrity";
+import { DatePicker, Input, Button } from "@nextui-org/react";
+import { parseDate, CalendarDate } from "@internationalized/date";
 
 interface CelebrityUpdateProps {
     celebrity: Celebrity;
+    onBack: () => void;
 }
 
-export default function CelebrityUpdate({ celebrity }: CelebrityUpdateProps) {
-    const [birthDate, setBirthDate] = useState<DateValueType>({
-        startDate: null,
-        endDate: null
-    });
-    const [deathDate, setDeathDate] = useState<DateValueType>({
-        startDate: null,
-        endDate: null
-    });
+export default function CelebrityUpdate({ celebrity, onBack }: CelebrityUpdateProps) {
+    const [birthDate, setBirthDate] = useState<CalendarDate | null>(null);
+    const [deathDate, setDeathDate] = useState<CalendarDate | null>(null);
     const [urlPhoto, setUrlPhoto] = useState<string | null>(null);
     const [name, setName] = useState<string>("");
 
-    const router = useRouter();
-
-    const { trigger: updateCelebrity, isMutating } = useClerkSWRMutation(
-        `/api/celebrities/${celebrity.id}`,
-        "PUT"
-    );
-
     const onUpdateCelebrity = async () => {
-        const celebrityToUpdate = {
-            id: celebrity.id,
-            birth: new Date(birthDate?.startDate || "") || null,
-            death: new Date(deathDate?.startDate || "") || null,
-            photo: urlPhoto || null,
-            name: name
-        };
+        await updateCelebrityAction(
+            celebrity.id,
+            name,
+            birthDate ? new Date(birthDate.toString()).toISOString() : null,
+            deathDate ? new Date(deathDate.toString()).toISOString() : null,
+            urlPhoto
+        );
 
-        try {
-            const updateResult = await updateCelebrity(celebrityToUpdate);
-            if (updateResult) router.refresh();
-        } catch (e) {
-            // gestion de l'erreur
-        }
+        onBack();
     };
 
     const updateIsDisabled = () => {
-        if (isMutating) return true;
         if (name?.length === 0) return true;
+        if (birthDate === null) return true;
         if (celebrity.photo !== urlPhoto) return false;
         if (celebrity.name !== name) return false;
-        if (!!birthDate?.startDate && celebrity.birth && !deathDate?.startDate) return true;
-        return !birthDate?.startDate && !deathDate?.startDate;
+        if (!!birthDate && celebrity.birth && !deathDate) return true;
+        return !birthDate && !deathDate;
     };
 
     useEffect(() => {
         if (celebrity.photo) setUrlPhoto(celebrity.photo);
-
-        if (celebrity.birth)
-            setBirthDate({
-                startDate: celebrity.birth,
-                endDate: celebrity.birth
-            });
-
-        if (celebrity.death)
-            setBirthDate({
-                startDate: celebrity.death,
-                endDate: celebrity.death
-            });
-
         if (celebrity.name) setName(celebrity.name);
+
+        if (celebrity.birth) {
+            const date = new Date(celebrity?.birth);
+            const isoString = date.toISOString().split("T")[0];
+            setBirthDate(parseDate(isoString));
+        }
+
+        if (celebrity.death) {
+            const date = new Date(celebrity?.death);
+            const isoString = date.toISOString().split("T")[0];
+            setDeathDate(parseDate(isoString));
+        }
     }, [celebrity]);
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 h-screen">
             <div className="flex flex-col gap-4">
-                <input
-                    type="text"
-                    placeholder="Nom"
-                    className="input input-bordered w-full"
+                <Input
+                    isRequired
+                    variant="bordered"
+                    label="Nom"
                     value={name || ""}
-                    onChange={(v) => setName(v.target.value)}
+                    onValueChange={setName}
+                    isInvalid={name.length === 0}
                 />
-                <input
-                    type="text"
-                    placeholder="Url photo"
-                    className="input input-bordered w-full"
+                <Input
+                    variant="bordered"
+                    label="Url photo"
                     value={urlPhoto || ""}
-                    onChange={(v) => setUrlPhoto(v.target.value)}
+                    onValueChange={setUrlPhoto}
                 />
-                <Datepicker
-                    asSingle={true}
-                    useRange={false}
+
+                <DatePicker
+                    isRequired
+                    variant="bordered"
+                    showMonthAndYearPickers
+                    className="w-full"
+                    label="Date de naissance"
                     value={birthDate}
-                    onChange={(value) => setBirthDate(value)}
-                    displayFormat={"DD/MM/YYYY"}
-                    placeholder="Date de naissance"
-                    disabled={!!celebrity.birth}
-                    inputClassName="input input-bordered w-full text-base-content"
+                    isInvalid={birthDate === null}
+                    onChange={setBirthDate}
                 />
-                <Datepicker
-                    asSingle={true}
-                    showShortcuts={true}
-                    useRange={false}
+                <DatePicker
+                    showMonthAndYearPickers
+                    variant="bordered"
+                    className="w-full"
+                    label="Date de décès"
                     value={deathDate}
-                    onChange={(value) => setDeathDate(value)}
-                    displayFormat={"DD/MM/YYYY"}
-                    placeholder="Date de décès"
-                    disabled={!!celebrity.death}
-                    inputClassName="input input-bordered w-full text-base-content"
+                    onChange={setDeathDate}
                 />
             </div>
-            <div className="flex flex-row justify-between">
-                <button
-                    className="btn btn-primary"
+            <div className="flex flex-row gap-2">
+                <Button
+                    color="primary"
+                    onPress={() => onUpdateCelebrity()}
                     disabled={updateIsDisabled()}
-                    onClick={() => onUpdateCelebrity()}
                 >
-                    {isMutating && <span className="loading loading-spinner"></span>}
                     Mettre à jour
-                </button>
+                </Button>
+                <Button color="secondary" variant="solid" onPress={onBack}>
+                    Retour
+                </Button>
             </div>
         </div>
     );

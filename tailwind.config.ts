@@ -18,7 +18,7 @@ module.exports = {
     darkMode: "class",
 
     plugins: [
-        require("daisyui"),
+        //require("daisyui"),
         nextui({
             themes: {
                 light: {
@@ -28,12 +28,13 @@ module.exports = {
                         divider: "#e0e7eb", // Gris léger pour des séparations discrètes
                         focus: "#4fa3f7", // Bleu vif pour les états de focus
 
-                        content1: "#333", // Couleur principale du texte
-                        content2: "#555", // Texte secondaire
-                        content3: "#777", // Texte tertiaire
-                        content4: "#999", // Texte subtil ou désactivé
+                        content1: "#ffffff", // Fond blanc pour des composants primaires (comme des cards)
+                        content2: "#f3f4f6", // Fond légèrement plus gris pour des composants secondaires
+                        content3: "#e5e7eb", // Fond gris très léger pour des composants tertiaires
+                        content4: "#d1d5db", // Fond gris encore plus marqué pour des composants désactivés ou subtils
 
                         default: {
+                            DEFAULT: "##d1d5db",
                             "50": "#f9fafb",
                             "100": "#f3f4f6",
                             "200": "#e5e7eb",
@@ -46,6 +47,7 @@ module.exports = {
                             "900": "#111827"
                         },
                         primary: {
+                            DEFAULT: "#3b82f6",
                             "50": "#eff6ff",
                             "100": "#dbeafe",
                             "200": "#bfdbfe",
@@ -58,6 +60,7 @@ module.exports = {
                             "900": "#1e3a8a"
                         },
                         secondary: {
+                            DEFAULT: "#627d98",
                             "50": "#f0f4f8",
                             "100": "#d9e2ec",
                             "200": "#bcccdc",
@@ -70,6 +73,7 @@ module.exports = {
                             "900": "#102a43"
                         },
                         success: {
+                            DEFAULT: "#10b981",
                             "50": "#ecfdf5",
                             "100": "#d1fae5",
                             "200": "#a7f3d0",
@@ -82,6 +86,7 @@ module.exports = {
                             "900": "#064e3b"
                         },
                         warning: {
+                            DEFAULT: "#f59e0b",
                             "50": "#fffbeb",
                             "100": "#fef3c7",
                             "200": "#fde68a",
@@ -94,6 +99,7 @@ module.exports = {
                             "900": "#78350f"
                         },
                         danger: {
+                            DEFAULT: "#ef4444",
                             "50": "#fef2f2",
                             "100": "#fee2e2",
                             "200": "#fecaca",
@@ -114,12 +120,13 @@ module.exports = {
                         divider: "#374151", // Séparateur discret
                         focus: "#93c5fd", // Bleu vif pour le focus
 
-                        content1: "#e5e7eb", // Texte principal
-                        content2: "#cbd5e1", // Texte secondaire
-                        content3: "#94a3b8", // Texte tertiaire
-                        content4: "#64748b", // Texte subtil ou désactivé
+                        content1: "#2d3748", // Fond sombre pour des composants primaires
+                        content2: "#374151", // Fond un peu plus clair pour des composants secondaires
+                        content3: "#4b5563", // Niveau de gris intermédiaire pour des composants tertiaires
+                        content4: "#6b7280", // Couleur encore plus claire pour des composants très subtils ou désactivés
 
                         default: {
+                            DEFAULT: "#374151",
                             "50": "#111827",
                             "100": "#1f2937",
                             "200": "#374151",
@@ -132,6 +139,7 @@ module.exports = {
                             "900": "#f9fafb"
                         },
                         primary: {
+                            DEFAULT: "#3b82f6",
                             "50": "#1e3a8a",
                             "100": "#1e40af",
                             "200": "#1d4ed8",
@@ -144,6 +152,7 @@ module.exports = {
                             "900": "#eff6ff"
                         },
                         secondary: {
+                            DEFAULT: "#627d98",
                             "50": "#102a43",
                             "100": "#243b53",
                             "200": "#334e68",
@@ -156,6 +165,7 @@ module.exports = {
                             "900": "#f0f4f8"
                         },
                         success: {
+                            DEFAULT: "#10b981",
                             "50": "#064e3b",
                             "100": "#065f46",
                             "200": "#047857",
@@ -168,6 +178,7 @@ module.exports = {
                             "900": "#ecfdf5"
                         },
                         warning: {
+                            DEFAULT: "#f59e0b",
                             "50": "#78350f",
                             "100": "#92400e",
                             "200": "#b45309",
@@ -180,6 +191,7 @@ module.exports = {
                             "900": "#fffbeb"
                         },
                         danger: {
+                            DEFAULT: "#ef4444",
                             "50": "#7f1d1d",
                             "100": "#991b1b",
                             "200": "#b91c1c",
