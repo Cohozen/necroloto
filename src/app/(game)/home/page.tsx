@@ -43,15 +43,15 @@ export default async function IndexPage() {
     const totalPoints = myBet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
 
     return (
-        <main className="flex-1 overflow-auto">
+        <main className="flex flex-1">
             <div className="flex flex-col items-center">
                 <div className="flex flex-col gap-8 lg:gap-16 p-4">
                     {userDb && (
                         <div className="flex flex-row gap-4 justify-center px-2 pt-4">
                             <UserAvatar user={userDb} size="w-20" />
                             <div className="flex flex-col justify-center">
-                                <span className="text-2xl">{buildUserName(userDb)}</span>
-                                <span className="text-sm">{userDb?.email}</span>
+                                <span className="text-[28px]">{buildUserName(userDb)}</span>
+                                <span className="text-[14px]">{userDb?.email}</span>
                             </div>
                         </div>
                     )}

@@ -9,7 +9,7 @@ import Rules from "./Rules";
 
 export default function IndexPage() {
     return (
-        <div className="relative overflow-hidden h-[100dvh]">
+        <div className="relative overflow-hidden h-[100dvh] light bg-background">
             <div className="relative">
                 <div className="max-w-2xl mx-auto text-center pt-64">
                     <div className="flex flex-col relative">

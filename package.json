@@ -21,7 +21,7 @@
         "@clerk/localizations": "^3.0.4",
         "@clerk/nextjs": "^5.5.2",
         "@clerk/themes": "^2.1.29",
-        "@headlessui/react": "^1.7.17",
+        "@headlessui/react": "^2.1.9",
         "@heroicons/react": "^2.0.18",
         "@internationalized/date": "^3.5.6",
         "@nextui-org/react": "^2.4.8",

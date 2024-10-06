@@ -4,7 +4,7 @@ import { UserButton } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
 import { Drawer } from "vaul";
 
-import { SignedIn } from "@clerk/nextjs";
+import { Transition } from "@headlessui/react";
 import {
     Navbar as NextNavbar,
     NavbarBrand,
@@ -13,7 +13,7 @@ import {
     Link,
     Button,
     Listbox,
-    ListboxItem
+    ListboxItem, Spacer
 } from "@nextui-org/react";
 
 import ToggleTheme from "@/components/layout/toggleTheme";
@@ -21,11 +21,9 @@ import React from "react";
 import { ArrowLeftLineIcon } from "@/ui/icons/ArrowLeftLineIcon";
 import classNames from "classnames";
 import { HomeIcon } from "@/ui/icons/HomeIcon";
-// import Link from "next/link";
 import { RankingIcon } from "@/ui/icons/RankingIcon";
 import { NoteListIcon } from "@/ui/icons/NoteListIcon";
 import { PeopleIcon } from "@/ui/icons/PeopleIcon";
-import Image from "next/image";
 import { HamburgerMenuIcon } from "@/ui/icons/HamburgerMenuIcon";
 
 export default function Navbar() {
@@ -41,49 +39,88 @@ export default function Navbar() {
     const isSignPages =
         isInPrimaryPage && (pathnames[1] === "sign-in" || pathnames[1] === "sign-up");
 
-    console.log(pathnames);
-
     return (
-        <NextNavbar>
-            <NavbarBrand>
-                <p className="font-bold text-inherit">Necroloto</p>
-            </NavbarBrand>
-            <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NextNavbar isBlurred={false} className="bg-transparent py-4" height="54px">
+            {/*<NavbarBrand>*/}
+            {/*    <p className="font-bold text-inherit">Necroloto</p>*/}
+            {/*</NavbarBrand>*/}
+            {/*<NavbarContent className="hidden sm:flex gap-4" justify="center">*/}
+            {/*    <NavbarItem>*/}
+            {/*        <Link color="foreground" href="#">*/}
+            {/*            Features*/}
+            {/*        </Link>*/}
+            {/*    </NavbarItem>*/}
+            {/*    <NavbarItem isActive>*/}
+            {/*        <Link href="#" aria-current="page">*/}
+            {/*            Customers*/}
+            {/*        </Link>*/}
+            {/*    </NavbarItem>*/}
+            {/*    <NavbarItem>*/}
+            {/*        <Link color="foreground" href="#">*/}
+            {/*            Integrations*/}
+            {/*        </Link>*/}
+            {/*    </NavbarItem>*/}
+            {/*</NavbarContent>*/}
+            <NavbarContent
+                justify="start"
+                className="gap-4 rounded-full border-small border-default-200/20 bg-background/60 px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+            >
                 <NavbarItem>
-                    <Link color="foreground" href="#">
-                        Features
-                    </Link>
+                    {isInPrimaryPage && (
+                        <Button
+                            color="secondary"
+                            variant="flat"
+                            radius="full"
+                            startContent={<HomeIcon className="h-5 w-5" />}
+                            onPress={(e) => router.push("/home")}
+                            isDisabled={pathnames[1] === "home"}
+                        >
+                            Accueil
+                        </Button>
+                    )}
+
+                    {isInSecondaryPage && (
+                        <Button
+                            color="secondary"
+                            variant="flat"
+                            radius="full"
+                            startContent={<ArrowLeftLineIcon className="h-5 w-5" />}
+                            onPress={(e) => router.back()}
+                        >
+                            Retour
+                        </Button>
+                    )}
                 </NavbarItem>
-                <NavbarItem isActive>
-                    <Link href="#" aria-current="page">
-                        Customers
-                    </Link>
-                </NavbarItem>
-                <NavbarItem>
-                    <Link color="foreground" href="#">
-                        Integrations
-                    </Link>
-                </NavbarItem>
-            </NavbarContent>
-            <NavbarContent justify="end">
-                <NavbarItem>
-                    <Button
-                        isIconOnly
-                        color="primary"
-                        variant="light"
-                        aria-label="Open mobile menu"
-                        onClick={() => setOpen(true)}
-                    >
-                        <HamburgerMenuIcon className="h-6 w-6" />
-                    </Button>
-                </NavbarItem>
+                <div className="flex basis-0 flex-row flex-grow flex-nowrap justify-start bg-transparent items-center no-underline text-medium whitespace-nowrap box-border mr-2 md:w-auto md:max-w-fit"></div>
+                <Button
+                    isIconOnly
+                    color="default"
+                    variant="light"
+                    aria-label="Open mobile menu"
+                    radius="full"
+                    onClick={() => setOpen(true)}
+                >
+                    <HamburgerMenuIcon className="h-6 w-6" />
+                </Button>
             </NavbarContent>
 
             <Drawer.Root direction="right" open={open} onOpenChange={setOpen}>
                 <Drawer.Portal>
                     <Drawer.Overlay className="fixed inset-0 z-50 bg-black/40" />
                     <Drawer.Content className="right-0 top-0 bottom-0 fixed z-50 flex outline-none">
-                        <div className="bg-background rounded-2xl w-[310px] grow mt-2 mr-2 mb-2 p-5 flex flex-col justify-between">
+                        <div className="flex flex-col bg-background rounded-2xl w-72 grow mt-2 mr-2 mb-2 p-6">
+                            <div className="flex items-center gap-2 px-2">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground text-background">
+                                    <HamburgerMenuIcon className="h-5 w-5" />
+                                </div>
+                                <span className="text-base font-bold uppercase leading-6 text-foreground">
+                                    Necroloto
+                                </span>
+                            </div>
+
+                            <Spacer y={8} />
+
+
                             <Listbox
                                 variant="bordered"
                                 selectionMode="single"
@@ -132,7 +169,9 @@ export default function Navbar() {
                                 </ListboxItem>
                             </Listbox>
 
-                            <div className="flex flex-row justify-between">
+                            <Spacer y={8} />
+
+                            <div className="mt-auto flex flex-row justify-between">
                                 <ToggleTheme />
                                 <UserButton />
                             </div>
