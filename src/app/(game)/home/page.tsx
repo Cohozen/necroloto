@@ -36,7 +36,7 @@ export default async function IndexPage() {
         const result = await getBetByUserAndYear(userDb.id, year);
         if (result) myBet = result;
 
-        position = await GetPositionOfUserForYear(userDb.id, year);
+        position = await GetPositionOfUserForYear(userDb.id, year, "points");
         aliveStats = await GetCelebritiesAliveStats(userDb.id, year);
     }
 

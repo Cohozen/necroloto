@@ -10,6 +10,14 @@ export type BetsWithUserAndCelebritiesOnBet = Prisma.BetGetPayload<{
     include: { user: true; CelebritiesOnBet: true };
 }>;
 
+export type BetsWithUserAndCelebrities = Prisma.BetGetPayload<{
+    include: { user: true; CelebritiesOnBet: { include: { celebrity: true } } };
+}>;
+
 export type RankedBets = BetsWithCelebrities & {
+    total: number;
+};
+
+export type RankedBetsWithUsers = BetsWithUserAndCelebrities & {
     total: number;
 };

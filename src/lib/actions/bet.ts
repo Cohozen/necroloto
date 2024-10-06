@@ -1,7 +1,9 @@
 import { listBetsByYear } from "@/lib/api/bet";
 import { findIndex, sortBy } from "lodash";
 
-export async function RankBetsByYearWithTotalPoints(year: number) {
+export type sortByRank = "points" | "death";
+
+export async function RankBetsByYearWithTotalPoints(year: number, sort: sortByRank) {
     const bets = await listBetsByYear(year);
 
     const totals = bets?.map((b) => {
@@ -12,11 +14,17 @@ export async function RankBetsByYearWithTotalPoints(year: number) {
         };
     });
 
+    if (sort === "death")
+        return sortBy(
+            totals,
+            (b) => b.CelebritiesOnBet.filter((c) => !!c.celebrity.death).length || b.user.firstname
+        ).reverse();
+
     return sortBy(totals, (b) => b.total || b.user.firstname).reverse();
 }
 
-export async function GetPositionOfUserForYear(userId: string, year: number) {
-    const bets = await RankBetsByYearWithTotalPoints(year);
+export async function GetPositionOfUserForYear(userId: string, year: number, sort: sortByRank) {
+    const bets = await RankBetsByYearWithTotalPoints(year, sort);
     const index = findIndex(bets, (b) => b.userId === userId);
     return index + 1;
 }

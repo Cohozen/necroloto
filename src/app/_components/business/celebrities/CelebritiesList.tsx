@@ -8,7 +8,6 @@ import { WidgetLineIcon } from "@/ui/icons/WidgetLineIcon";
 import { ListLineIcon } from "@/ui/icons/ListLineIcon";
 import classNames from "classnames";
 import CelebrityCard from "@/components/business/celebrity/CelebrityCard";
-import { Drawer } from "vaul";
 
 import {
     Table,
@@ -24,18 +23,12 @@ import {
     Button,
     Link
 } from "@nextui-org/react";
-import { InfoIcon } from "@/ui/icons/InfoIcon";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 
 interface CelebritiesListProps {
     celebrities: Celebrity[];
 }
-
-type CelebrityFilters = {
-    living: boolean;
-    deceased: boolean;
-};
 
 export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
     const router = useRouter();

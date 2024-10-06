@@ -12,7 +12,6 @@ import {
     Card,
     CardBody,
     Divider,
-    AvatarGroup,
     Table,
     TableHeader,
     TableColumn,
@@ -145,7 +144,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                     >
                         {(item) => (
                             <Tab key={item.id} title={item.label}>
-                                <Card className="">
+                                <Card>
                                     <CardHeader className="flex flex-col">
                                         <p className="text-lg font-medium text-center">
                                             {`${usersWhoBetThisCelebrity?.length} Pari${

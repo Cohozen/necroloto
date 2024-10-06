@@ -6,7 +6,7 @@ import { listBets } from "@/lib/api/bet";
 import { BetsWithUserAndCelebritiesOnBet } from "@/lib/types/bet";
 import { RankBetsByYearWithTotalPoints } from "@/lib/actions/bet";
 
-export default async function Page({
+export default async function CelebrityPage({
     params,
     searchParams
 }: {
@@ -36,7 +36,7 @@ export default async function Page({
         });
     }
 
-    const rankedBets = await RankBetsByYearWithTotalPoints(num);
+    const rankedBets = await RankBetsByYearWithTotalPoints(num, "points");
 
     return (
         <main className="flex-1 overflow-auto p-4 md:px-24 lg:px-48 xl:px-80">
