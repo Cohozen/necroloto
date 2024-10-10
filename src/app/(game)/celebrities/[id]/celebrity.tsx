@@ -141,6 +141,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                         selectedKey={selectedTab}
                         onSelectionChange={(key) => setSelectedTab(key.toString())}
                         items={tabs}
+                        radius="full"
                     >
                         {(item) => (
                             <Tab key={item.id} title={item.label}>

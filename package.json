@@ -15,7 +15,13 @@
         "singleQuote": false,
         "tabWidth": 4,
         "trailingComma": "none",
-        "printWidth": 100
+        "printWidth": 100,
+        "importOrder": [
+            "^@/ui/(.*)$",
+            "^[./]"
+        ],
+        "importOrderSeparation": true,
+        "importOrderSortSpecifiers": true
     },
     "dependencies": {
         "@clerk/localizations": "^3.0.4",
@@ -37,12 +43,14 @@
         "next-themes": "^0.3.0",
         "prop-types": "^15.8.1",
         "react": "^18.2.0",
+        "react-confetti-boom": "^1.0.0",
         "react-dom": "^18.2.0",
         "server-only": "^0.0.1",
         "swr": "^2.2.4",
         "vaul": "^1.0.0"
     },
     "devDependencies": {
+        "@trivago/prettier-plugin-sort-imports": "^4.3.0",
         "@types/lodash": "^4.14.202",
         "@types/node": "^20.8.7",
         "@types/react": "18.2.21",

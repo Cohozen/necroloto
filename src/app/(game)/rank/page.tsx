@@ -9,11 +9,13 @@ export const metadata = {
 export default async function RankPage({
     searchParams
 }: {
-    searchParams: Promise<{ sort: string }>;
+    searchParams: Promise<{ sort: string; year: string }>;
 }) {
-    const sort = (await searchParams).sort;
+    const { sort, year } = await searchParams;
 
-    const bets = await RankBetsByYearWithTotalPoints(2024, sort as sortByRank);
+    const num = isNaN(parseInt(year, 10)) ? 2024 : parseInt(year, 10);
+
+    const bets = await RankBetsByYearWithTotalPoints(num, sort as sortByRank);
 
     return (
         <main className="flex-1 overflow-auto p-4">
