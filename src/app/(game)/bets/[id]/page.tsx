@@ -17,13 +17,13 @@ import {
     Card,
     Divider
 } from "@nextui-org/react";
-import { findIndex, sortBy } from "lodash";
+import { findIndex, head, last, sortBy } from "lodash";
 import UserAvatar from "@/components/business/user/UserAvatar";
 import { buildUserName } from "@/lib/helpers/user";
 import CelebritiesTable from "@/components/business/celebrities/CelebritiesTable";
 import { GetPositionOfUserForYear, RankBetsByYearWithTotalPoints } from "@/lib/actions/bet";
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function BetPage({ params }: { params: { id: string } }) {
     const bet = await getBetWithCelebrities(params.id);
     let rank = 0;
 
@@ -36,6 +36,11 @@ export default async function Page({ params }: { params: { id: string } }) {
 
     const inLife = celebrities?.filter((c) => !c.death).length;
     const inLifePercent = inLife ? (inLife / celebrities.length) * 100 : 0;
+
+    const olderCelebrity = head(
+        sortBy(celebrities?.filter((c) => c.birth && !c.death), (c) => c.birth)
+    );
+    const youngerCelebrity = last(sortBy(celebrities?.filter((c) => c.birth), (c) => c.birth));
 
     return (
         <main className="flex-1 flex flex-col gap-4 overflow-auto p-4">

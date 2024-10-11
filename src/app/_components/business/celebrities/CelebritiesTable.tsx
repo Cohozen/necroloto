@@ -68,6 +68,7 @@ export default function CelebritiesTable({ celebrities, hideHeader }: Celebritie
                                     showAnchorIcon
                                     variant="flat"
                                     size="sm"
+                                    radius="md"
                                     href={`/celebrities/${item.id}`}
                                 />
                             </TableCell>
