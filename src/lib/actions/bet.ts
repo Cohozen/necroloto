@@ -25,7 +25,24 @@ export async function RankBetsByYearWithTotalPoints(year: number, sort: sortByRa
 
 export async function GetPositionOfUserForYear(userId: string, year: number, sort: sortByRank) {
     const bets = await RankBetsByYearWithTotalPoints(year, sort);
-    const index = findIndex(bets, (b) => b.userId === userId);
+
+    const currentBet = bets.find((b) => b.userId === userId);
+    const currentTotal =
+        currentBet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
+
+    if (sort === "death") {
+        const currentCelebrities = currentBet?.CelebritiesOnBet.map((c) => c.celebrity);
+        const currentInLife = currentCelebrities?.filter((c) => !c.death).length;
+
+        return (
+            findIndex(
+                bets,
+                (b) => b.CelebritiesOnBet.filter((c) => !c.celebrity.death).length === currentInLife
+            ) + 1
+        );
+    }
+
+    const index = findIndex(bets, (b) => b.total === currentTotal);
     return index + 1;
 }
 

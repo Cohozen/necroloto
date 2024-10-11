@@ -78,7 +78,7 @@ export default function Ranking({ bets }: RankingProps) {
             <Tabs
                 fullWidth
                 variant="bordered"
-                color="secondary"
+                color="primary"
                 selectedKey={selectedTab}
                 onSelectionChange={(key) => setSelectedTab(key.toString())}
                 items={tabs}
@@ -110,6 +110,7 @@ export default function Ranking({ bets }: RankingProps) {
                                     <div className="flex flex-col items-center gap-2">
                                         {bets[2]?.user && (
                                             <Avatar
+                                                isBordered
                                                 radius="full"
                                                 size="sm"
                                                 src={bets[2]?.user.image ?? undefined}
@@ -118,7 +119,7 @@ export default function Ranking({ bets }: RankingProps) {
                                                 }`}
                                             />
                                         )}
-                                        <div className="flex justify-center items-start py-4 bg-primary-200 dark:bg-primary-400 h-16 w-20 rounded-tl-xl">
+                                        <div className="flex justify-center items-start py-4 bg-secondary-200 dark:bg-secondary-400 h-16 w-20 rounded-tl-xl">
                                             <MedalStarIcon className="w-6 h-6 text-amber-800" />
                                         </div>
                                     </div>
@@ -126,6 +127,7 @@ export default function Ranking({ bets }: RankingProps) {
                                     <div className="flex flex-col items-center gap-2">
                                         {bets[0].user && (
                                             <Avatar
+                                                isBordered
                                                 radius="full"
                                                 size="sm"
                                                 src={bets[0]?.user.image ?? undefined}
@@ -134,7 +136,7 @@ export default function Ranking({ bets }: RankingProps) {
                                                 }`}
                                             />
                                         )}
-                                        <div className="flex justify-center items-start py-4 bg-primary-400 dark:bg-primary-200 h-44 w-20 rounded-t-xl">
+                                        <div className="flex justify-center items-start py-4 bg-secondary-400 dark:bg-secondary-200 h-44 w-20 rounded-t-xl">
                                             <CupFirstIcon className="w-8 h-8 text-amber-300" />
                                         </div>
                                     </div>
@@ -142,6 +144,7 @@ export default function Ranking({ bets }: RankingProps) {
                                     <div className="flex flex-col items-center gap-2">
                                         {bets[1]?.user && (
                                             <Avatar
+                                                isBordered
                                                 radius="full"
                                                 size="sm"
                                                 src={bets[1]?.user.image ?? undefined}
@@ -150,7 +153,7 @@ export default function Ranking({ bets }: RankingProps) {
                                                 }`}
                                             />
                                         )}
-                                        <div className="flex justify-center items-start py-4 bg-primary-300 h-28 w-20 rounded-tr-xl">
+                                        <div className="flex justify-center items-start py-4 bg-secondary-300 h-28 w-20 rounded-tr-xl">
                                             <MedalRibbonsIcon className="w-6 h-6 text-zinc-500" />
                                         </div>
                                     </div>
@@ -269,6 +272,7 @@ export default function Ranking({ bets }: RankingProps) {
                                                     src={bet.user.image ?? undefined}
                                                     size="sm"
                                                     name={bet.user.firstname || ""}
+                                                    isBordered
                                                 />
                                             </div>
                                         </CardHeader>

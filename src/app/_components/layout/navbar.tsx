@@ -41,26 +41,6 @@ export default function Navbar() {
 
     return (
         <NextNavbar isBlurred={false} className="bg-transparent py-4" height="54px">
-            {/*<NavbarBrand>*/}
-            {/*    <p className="font-bold text-inherit">Necroloto</p>*/}
-            {/*</NavbarBrand>*/}
-            {/*<NavbarContent className="hidden sm:flex gap-4" justify="center">*/}
-            {/*    <NavbarItem>*/}
-            {/*        <Link color="foreground" href="#">*/}
-            {/*            Features*/}
-            {/*        </Link>*/}
-            {/*    </NavbarItem>*/}
-            {/*    <NavbarItem isActive>*/}
-            {/*        <Link href="#" aria-current="page">*/}
-            {/*            Customers*/}
-            {/*        </Link>*/}
-            {/*    </NavbarItem>*/}
-            {/*    <NavbarItem>*/}
-            {/*        <Link color="foreground" href="#">*/}
-            {/*            Integrations*/}
-            {/*        </Link>*/}
-            {/*    </NavbarItem>*/}
-            {/*</NavbarContent>*/}
             <NavbarContent
                 justify="start"
                 className="gap-4 rounded-full border-small border-default-200/20 bg-background/60 px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
@@ -68,7 +48,7 @@ export default function Navbar() {
                 <NavbarItem>
                     {isInPrimaryPage && (
                         <Button
-                            color="secondary"
+                            color="default"
                             variant="flat"
                             radius="full"
                             startContent={<HomeIcon className="h-5 w-5" />}
@@ -81,7 +61,7 @@ export default function Navbar() {
 
                     {isInSecondaryPage && (
                         <Button
-                            color="secondary"
+                            color="default"
                             variant="flat"
                             radius="full"
                             startContent={<ArrowLeftLineIcon className="h-5 w-5" />}

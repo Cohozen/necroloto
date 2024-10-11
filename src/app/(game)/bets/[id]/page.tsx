@@ -2,101 +2,131 @@ import { getBetWithCelebrities } from "@/lib/api/bet";
 import dayjs from "dayjs";
 import CelebrityAvatar from "@/components/business/user/CelebrityAvatar";
 import React from "react";
-
-import { sortBy } from "lodash";
+import {
+    Table,
+    TableHeader,
+    TableColumn,
+    TableBody,
+    TableRow,
+    TableCell,
+    User,
+    Chip,
+    CardFooter,
+    CircularProgress,
+    CardBody,
+    Card,
+    Divider
+} from "@nextui-org/react";
+import { findIndex, sortBy } from "lodash";
 import UserAvatar from "@/components/business/user/UserAvatar";
 import { buildUserName } from "@/lib/helpers/user";
-import Link from "next/link";
+import CelebritiesTable from "@/components/business/celebrities/CelebritiesTable";
+import { GetPositionOfUserForYear, RankBetsByYearWithTotalPoints } from "@/lib/actions/bet";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const bet = await getBetWithCelebrities(params.id);
+    let rank = 0;
+
+    if (bet) rank = await GetPositionOfUserForYear(bet.userId, bet.year, "points");
 
     const celebrities = bet?.CelebritiesOnBet.map((c) => c.celebrity);
+    const celebritiesSorted = sortBy(celebrities, (c) => c.death && c.name) ?? [];
+
+    const total = bet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
+
+    const inLife = celebrities?.filter((c) => !c.death).length;
+    const inLifePercent = inLife ? (inLife / celebrities.length) * 100 : 0;
 
     return (
-        <main className="flex-1 overflow-auto p-4 md:px-24 lg:px-48 xl:px-80">
-            <div className="flex flex-col gap-4">
-                <div className="flex flex-col gap-4 items-start p-4">
-                    {bet && (
-                        <div className="flex flex-row gap-4 justify-center px-2">
-                            <UserAvatar user={bet.user} size="w-12" />
-                            <div className="flex flex-col justify-center">
-                                <span className="text-xl">{buildUserName(bet.user)}</span>
-                                <span className="text-xs">
-                                    {dayjs(bet.createdAt).format("DD/MM/YYYY HH:mm")}
-                                </span>
-                            </div>
+        <main className="flex-1 flex flex-col gap-4 overflow-auto p-4">
+            <div className="flex flex-col gap-4 items-start">
+                {bet && (
+                    <>
+                        <div className="flex flex-row gap-4">
+                            <User
+                                name={`${bet.user.firstname} ${bet.user.lastname ?? ""}`}
+                                description={dayjs(bet.createdAt).format("DD/MM/YYYY HH:mm")}
+                                avatarProps={{
+                                    src: bet.user.image ?? "",
+                                    isBordered: true
+                                }}
+                            />
                         </div>
-                    )}
 
-                    <div className="flex flex-row px-2 text-2xl font-bold">{`Pari pour l'année 2024`}</div>
-
-                    {bet && (
-                        <div className="flex w-full flex-row px-2 gap-2">
-                            <div className="basis-1/2 bg-base-200 p-3 rounded-lg">
-                                {`${bet.CelebritiesOnBet.reduce(
-                                    (acc, curr) => acc + curr.points,
-                                    0
-                                )} point(s)`}
-                            </div>
-
-                            <div className="basis-1/2 bg-base-200 p-3 rounded-lg">
-                                {`${celebrities?.filter((c) => !c.death).length} en vie`}
-                            </div>
+                        <div className="flex flex-row gap-2">
+                            <Chip className="capitalize" color="primary" variant="flat">
+                                {bet.year}
+                            </Chip>
+                            <Chip className="capitalize" color="primary" variant="flat">
+                                {`${rank}${rank === 1 ? "er" : "ème"}`}
+                            </Chip>
                         </div>
-                    )}
-                </div>
+                    </>
+                )}
 
-                <div className="divider">Célébrités</div>
+                {bet && (
+                    <div className="flex w-full flex-row gap-3">
+                        <Card className="basis-1/2 h-[180px] border-none bg-gradient-to-br from-primary-500 to-secondary-500">
+                            <CardBody className="justify-center items-center p-0">
+                                <CircularProgress
+                                    classNames={{
+                                        svg: "w-32 h-32 drop-shadow-md",
+                                        indicator: "stroke-white",
+                                        track: "stroke-white/10",
+                                        value: "text-3xl font-semibold text-white"
+                                    }}
+                                    value={total}
+                                    strokeWidth={3}
+                                    formatOptions={{ style: "decimal" }}
+                                    showValueLabel={true}
+                                />
+                            </CardBody>
+                            <CardFooter className="justify-center items-center">
+                                <Chip
+                                    classNames={{
+                                        base: "border-1 border-white/30",
+                                        content: "text-white/90 text-small font-semibold"
+                                    }}
+                                    variant="bordered"
+                                >
+                                    {`${total} point${total > 1 ? "s" : ""}`}
+                                </Chip>
+                            </CardFooter>
+                        </Card>
 
-                <table className="table table-zebra">
-                    <tbody>
-                        {bet &&
-                            sortBy(
-                                bet.CelebritiesOnBet,
-                                (c) => c.celebrity.death && c.celebrity.name
-                            ).map((celebritiesOnBet, index) => (
-                                <tr key={celebritiesOnBet.celebrity.id}>
-                                    {/*<Link*/}
-                                    {/*    href={`/celebrities/${celebritiesOnBet.celebrity.id}`}*/}
-                                    {/*>*/}
-                                        <td>
-                                            <div className="flex items-center gap-3">
-                                                <CelebrityAvatar
-                                                    celebrity={celebritiesOnBet.celebrity}
-                                                    size="w-12"
-                                                    indicator
-                                                />
-                                                <div>
-                                                    <div className="font-bold truncate">
-                                                        {celebritiesOnBet.celebrity.name}
-                                                    </div>
-                                                    <div className="text-sm opacity-50">
-                                                        {celebritiesOnBet.celebrity.birth
-                                                            ? `${dayjs(
-                                                                  celebritiesOnBet.celebrity
-                                                                      .death || undefined
-                                                              ).diff(
-                                                                  celebritiesOnBet.celebrity.birth,
-                                                                  "year"
-                                                              )} ans`
-                                                            : "-"}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            {celebritiesOnBet.celebrity.death
-                                                ? `${celebritiesOnBet.points} pts`
-                                                : "-"}
-                                        </td>
-                                    {/*</Link>*/}
-                                </tr>
-                            ))}
-                    </tbody>
-                </table>
+                        <Card className="basis-1/2 h-[180px] border-none bg-gradient-to-br from-primary-500 to-secondary-500">
+                            <CardBody className="justify-center items-center p-0">
+                                <CircularProgress
+                                    classNames={{
+                                        svg: "w-32 h-32 drop-shadow-md",
+                                        indicator: "stroke-white",
+                                        track: "stroke-white/10",
+                                        value: "text-3xl font-semibold text-white"
+                                    }}
+                                    value={inLifePercent}
+                                    strokeWidth={3}
+                                    showValueLabel={true}
+                                />
+                            </CardBody>
+                            <CardFooter className="justify-center items-center">
+                                <Chip
+                                    classNames={{
+                                        base: "border-1 border-white/30",
+                                        content: "text-white/90 text-small font-semibold"
+                                    }}
+                                    variant="bordered"
+                                >
+                                    {`${inLife} en vie`}
+                                </Chip>
+                            </CardFooter>
+                        </Card>
+                    </div>
+                )}
             </div>
+
+            <Divider />
+
+            <CelebritiesTable celebrities={celebritiesSorted} hideHeader />
         </main>
     );
 }

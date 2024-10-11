@@ -25,6 +25,7 @@ import {
 } from "@nextui-org/react";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
+import CelebritiesTable from "@/components/business/celebrities/CelebritiesTable";
 
 interface CelebritiesListProps {
     celebrities: Celebrity[];
@@ -94,66 +95,7 @@ export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
                     </div>
                 )}
 
-                {displayMode && (
-                    <Table removeWrapper>
-                        <TableHeader>
-                            <TableColumn>Célébrités</TableColumn>
-                            <TableColumn align="center">Etat</TableColumn>
-                            <TableColumn> </TableColumn>
-                        </TableHeader>
-                        <TableBody
-                            items={celebritiesSorted}
-                            emptyContent={"Aucune célébrité avec cette recherche"}
-                        >
-                            {(item) => {
-                                const old = dayjs(item.death || new Date()).diff(
-                                    item?.birth,
-                                    "year"
-                                );
-
-                                return (
-                                    <TableRow key={item.id}>
-                                        <TableCell>
-                                            <User
-                                                avatarProps={{
-                                                    radius: "lg",
-                                                    src: item.photo || undefined,
-                                                    name: item.name
-                                                }}
-                                                description={`${old} ans`}
-                                                name={item.name}
-                                            >
-                                                {item.name}
-                                            </User>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Chip
-                                                className="capitalize"
-                                                color={item.death ? "danger" : "success"}
-                                                size="sm"
-                                                variant="flat"
-                                            >
-                                                {item.death ? "Décédé" : "En vie"}
-                                            </Chip>
-                                        </TableCell>
-
-                                        <TableCell>
-                                            <Button
-                                                as={Link}
-                                                isIconOnly
-                                                color="secondary"
-                                                showAnchorIcon
-                                                variant="solid"
-                                                size="sm"
-                                                href={`/celebrities/${item.id}`}
-                                            />
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            }}
-                        </TableBody>
-                    </Table>
-                )}
+                {displayMode && <CelebritiesTable celebrities={celebritiesSorted} />}
             </div>
         </div>
     );

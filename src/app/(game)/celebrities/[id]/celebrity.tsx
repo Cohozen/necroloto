@@ -91,7 +91,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
 
                             <Popover placement="bottom" backdrop="blur">
                                 <PopoverTrigger>
-                                    <Chip className="capitalize" color="secondary" variant="flat">
+                                    <Chip className="capitalize" color="default" variant="flat">
                                         {`${dayjs(celebrity.death || undefined).diff(
                                             celebrity.birth,
                                             "year"
@@ -137,7 +137,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                     <Tabs
                         fullWidth
                         variant="bordered"
-                        color="secondary"
+                        color="primary"
                         selectedKey={selectedTab}
                         onSelectionChange={(key) => setSelectedTab(key.toString())}
                         items={tabs}
@@ -173,14 +173,13 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
 
                                                     const index = findIndex(
                                                         rankedBets,
-                                                        (b) => b.userId === item.id
+                                                        (b) => b.total === currentBet?.total
                                                     );
 
                                                     return (
                                                         <TableRow key={item.id}>
                                                             <TableCell>
                                                                 <User
-                                                                    //description={item.email}
                                                                     name={`${item.firstname} ${
                                                                         item.lastname ?? ""
                                                                     }`}
