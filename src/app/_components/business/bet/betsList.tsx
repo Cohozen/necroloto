@@ -53,7 +53,7 @@ export async function BetsList({ bets }: BetsListProps) {
     }, [year]);
 
     return (
-        <div className="flex flex-col gap-4 p-4">
+        <>
             <Select
                 selectionMode="single"
                 label="Année"
@@ -72,9 +72,9 @@ export async function BetsList({ bets }: BetsListProps) {
 
             <div className="flex flex-col gap-2">
                 {bets.map((b) => {
-                    return <BetCard bet={b} />;
+                    return <BetCard key={b.id} bet={b} />;
                 })}
             </div>
-        </div>
+        </>
     );
 }

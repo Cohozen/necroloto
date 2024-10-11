@@ -43,7 +43,7 @@ export default async function BetPage({ params }: { params: { id: string } }) {
     const youngerCelebrity = last(sortBy(celebrities?.filter((c) => c.birth), (c) => c.birth));
 
     return (
-        <main className="flex-1 flex flex-col gap-4 overflow-auto p-4">
+        <div className="flex flex-col gap-4 p-4">
             <div className="flex flex-col gap-4 items-start">
                 {bet && (
                     <>
@@ -132,6 +132,6 @@ export default async function BetPage({ params }: { params: { id: string } }) {
             <Divider />
 
             <CelebritiesTable celebrities={celebritiesSorted} hideHeader />
-        </main>
+        </div>
     );
 }

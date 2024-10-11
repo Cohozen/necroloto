@@ -18,8 +18,8 @@ export default async function RankPage({
     const bets = await RankBetsByYearWithTotalPoints(num, sort as sortByRank);
 
     return (
-        <main className="flex-1 overflow-auto p-4">
+        <div className="flex flex-col p-4">
             <Ranking bets={bets} />
-        </main>
+        </div>
     );
 }

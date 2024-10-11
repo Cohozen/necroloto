@@ -74,95 +74,93 @@ export default function Ranking({ bets }: RankingProps) {
     }, [selectedTab, year]);
 
     return (
-        <div>
-            <Tabs
-                fullWidth
-                variant="bordered"
-                color="primary"
-                selectedKey={selectedTab}
-                onSelectionChange={(key) => setSelectedTab(key.toString())}
-                items={tabs}
-                radius="full"
-            >
-                {(item) => (
-                    <Tab key={item.id} title={item.label} className="flex flex-col gap-4 px-0">
-                        <Select
-                            selectionMode="single"
-                            label="Année"
-                            disallowEmptySelection
-                            variant="bordered"
-                            size="sm"
-                            radius="lg"
-                            fullWidth
-                            selectedKeys={[year]}
-                            disabledKeys={["2025"]}
-                            onChange={(event) => setYear(event.target.value)}
-                            items={yearSelect}
-                        >
-                            {(item) => <SelectItem key={item.key}>{item.label}</SelectItem>}
-                        </Select>
+        <Tabs
+            fullWidth
+            variant="bordered"
+            color="primary"
+            selectedKey={selectedTab}
+            onSelectionChange={(key) => setSelectedTab(key.toString())}
+            items={tabs}
+            radius="full"
+        >
+            {(item) => (
+                <Tab key={item.id} title={item.label} className="flex flex-col gap-6 px-0">
+                    <Select
+                        selectionMode="single"
+                        label="Année"
+                        disallowEmptySelection
+                        variant="bordered"
+                        size="sm"
+                        radius="lg"
+                        fullWidth
+                        selectedKeys={[year]}
+                        disabledKeys={["2025"]}
+                        onChange={(event) => setYear(event.target.value)}
+                        items={yearSelect}
+                    >
+                        {(item) => <SelectItem key={item.key}>{item.label}</SelectItem>}
+                    </Select>
 
-                        <Divider />
-
-                        <Card>
-                            <CardBody className="pb-0">
-                                <div className="flex flex-row justify-center items-end md:pb-4">
-                                    <div className="flex flex-col items-center gap-2">
-                                        {bets[2]?.user && (
-                                            <Avatar
-                                                isBordered
-                                                radius="full"
-                                                size="sm"
-                                                src={bets[2]?.user.image ?? undefined}
-                                                name={`${bets[2]?.user.firstname} ${
-                                                    bets[2]?.user.lastname ?? ""
-                                                }`}
-                                            />
-                                        )}
-                                        <div className="flex justify-center items-start py-4 bg-secondary-200 dark:bg-secondary-400 h-16 w-20 rounded-tl-xl">
-                                            <MedalStarIcon className="w-6 h-6 text-amber-800" />
-                                        </div>
-                                    </div>
-
-                                    <div className="flex flex-col items-center gap-2">
-                                        {bets[0].user && (
-                                            <Avatar
-                                                isBordered
-                                                radius="full"
-                                                size="sm"
-                                                src={bets[0]?.user.image ?? undefined}
-                                                name={`${bets[0]?.user.firstname} ${
-                                                    bets[0]?.user.lastname ?? ""
-                                                }`}
-                                            />
-                                        )}
-                                        <div className="flex justify-center items-start py-4 bg-secondary-400 dark:bg-secondary-200 h-44 w-20 rounded-t-xl">
-                                            <CupFirstIcon className="w-8 h-8 text-amber-300" />
-                                        </div>
-                                    </div>
-
-                                    <div className="flex flex-col items-center gap-2">
-                                        {bets[1]?.user && (
-                                            <Avatar
-                                                isBordered
-                                                radius="full"
-                                                size="sm"
-                                                src={bets[1]?.user.image ?? undefined}
-                                                name={`${bets[1]?.user.firstname} ${
-                                                    bets[1]?.user.lastname ?? ""
-                                                }`}
-                                            />
-                                        )}
-                                        <div className="flex justify-center items-start py-4 bg-secondary-300 h-28 w-20 rounded-tr-xl">
-                                            <MedalRibbonsIcon className="w-6 h-6 text-zinc-500" />
-                                        </div>
+                    <Card>
+                        <CardBody className="pb-0">
+                            <div className="flex flex-row justify-center items-end md:pb-4">
+                                <div className="flex flex-col items-center gap-2">
+                                    {bets[2]?.user && (
+                                        <Avatar
+                                            isBordered
+                                            radius="full"
+                                            size="sm"
+                                            src={bets[2]?.user.image ?? undefined}
+                                            name={`${bets[2]?.user.firstname} ${
+                                                bets[2]?.user.lastname ?? ""
+                                            }`}
+                                        />
+                                    )}
+                                    <div className="flex justify-center items-start py-4 bg-secondary-200 dark:bg-secondary-400 h-16 w-20 rounded-tl-xl">
+                                        <MedalStarIcon className="w-6 h-6 text-amber-800" />
                                     </div>
                                 </div>
-                            </CardBody>
-                        </Card>
 
-                        <Confetti mode="boom" />
+                                <div className="flex flex-col items-center gap-2">
+                                    {bets[0].user && (
+                                        <Avatar
+                                            isBordered
+                                            radius="full"
+                                            size="sm"
+                                            src={bets[0]?.user.image ?? undefined}
+                                            name={`${bets[0]?.user.firstname} ${
+                                                bets[0]?.user.lastname ?? ""
+                                            }`}
+                                        />
+                                    )}
+                                    <div className="flex justify-center items-start py-4 bg-secondary-400 dark:bg-secondary-200 h-44 w-20 rounded-t-xl">
+                                        <CupFirstIcon className="w-8 h-8 text-amber-300" />
+                                    </div>
+                                </div>
 
+                                <div className="flex flex-col items-center gap-2">
+                                    {bets[1]?.user && (
+                                        <Avatar
+                                            isBordered
+                                            radius="full"
+                                            size="sm"
+                                            src={bets[1]?.user.image ?? undefined}
+                                            name={`${bets[1]?.user.firstname} ${
+                                                bets[1]?.user.lastname ?? ""
+                                            }`}
+                                        />
+                                    )}
+                                    <div className="flex justify-center items-start py-4 bg-secondary-300 h-28 w-20 rounded-tr-xl">
+                                        <MedalRibbonsIcon className="w-6 h-6 text-zinc-500" />
+                                    </div>
+                                </div>
+                            </div>
+                        </CardBody>
+                    </Card>
+
+                    <Confetti mode="boom" />
+
+                    <div className="flex flex-col gap-3">
                         {bets &&
                             bets.map((bet, index) => {
                                 let rank = index + 1;
@@ -279,9 +277,9 @@ export default function Ranking({ bets }: RankingProps) {
                                     </Card>
                                 );
                             })}
-                    </Tab>
-                )}
-            </Tabs>
-        </div>
+                    </div>
+                </Tab>
+            )}
+        </Tabs>
     );
 }

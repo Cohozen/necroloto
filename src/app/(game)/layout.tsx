@@ -38,14 +38,14 @@ export default async function GameLayout({ children }: { children: React.ReactNo
 
     return (
         <html lang="fr">
-            <body className="antialiased bg-background h-screen">
+            <body className="antialiased bg-background">
                 <ClerkProvider afterSignOutUrl="/" localization={frFR}>
                     <Providers>
                         <SignedIn>
                             <Navbar />
                         </SignedIn>
 
-                        {children}
+                        <main>{children}</main>
 
                         {/*<SignedIn>{userDb && <BottomNav user={userDb} />}</SignedIn>*/}
                     </Providers>

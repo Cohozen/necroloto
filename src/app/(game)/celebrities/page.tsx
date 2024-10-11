@@ -17,8 +17,8 @@ export default async function CelebritiesPage({
         : await listAllCelebrities();
 
     return (
-        <main className="overflow-auto">
+        <div className="flex flex-col p-4">
             <CelebritiesList celebrities={celebrities} />
-        </main>
+        </div>
     );
 }

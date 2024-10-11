@@ -54,16 +54,8 @@ export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
     }, [searchName]);
 
     return (
-        <div
-            className={classNames("flex flex-col gap-4", {
-                "py-2 px-4 md:px-24 lg:px-48 xl:px-80": !displayMode
-            })}
-        >
-            <div
-                className={classNames("flex flex-row gap-2 justify-between items-center", {
-                    "py-2 px-4": displayMode
-                })}
-            >
+        <div className="flex flex-col gap-4">
+            <div className="flex flex-row gap-2 justify-between items-center">
                 <Input
                     type="text"
                     placeholder="Rechercher"

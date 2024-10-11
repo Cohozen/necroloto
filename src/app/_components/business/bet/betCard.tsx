@@ -30,7 +30,7 @@ export default async function BetCard({ bet }: BetCardProps) {
         <Card className="w-full">
             <CardHeader className="justify-between">
                 <div className="flex gap-3">
-                    <Avatar isBordered radius="full" size="md" src={bet.user.image ?? ""} />
+                    <Avatar isBordered radius="full" size="sm" src={bet.user.image ?? ""} />
                     <div className="flex flex-col items-start justify-center">
                         <h4 className="text-small font-medium text-default-600">
                             {`${bet.user.firstname} ${bet.user.lastname ?? ""}`}

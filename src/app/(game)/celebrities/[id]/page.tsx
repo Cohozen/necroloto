@@ -39,17 +39,15 @@ export default async function CelebrityPage({
     const rankedBets = await RankBetsByYearWithTotalPoints(num, "points");
 
     return (
-        <main className="flex-1 overflow-auto p-4 md:px-24 lg:px-48 xl:px-80">
-            <div className="flex flex-col gap-4">
-                {celebrity && (
-                    <Celebrity
-                        celebrity={celebrity}
-                        bets={bets}
-                        rankedBets={rankedBets}
-                        isAdmin={isAdmin}
-                    />
-                )}
-            </div>
-        </main>
+        <div className="flex flex-col p-4 gap-4">
+            {celebrity && (
+                <Celebrity
+                    celebrity={celebrity}
+                    bets={bets}
+                    rankedBets={rankedBets}
+                    isAdmin={isAdmin}
+                />
+            )}
+        </div>
     );
 }

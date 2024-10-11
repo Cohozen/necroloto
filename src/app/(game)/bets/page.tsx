@@ -35,8 +35,8 @@ export default async function BetsPage({
     });
 
     return (
-        <main className="flex-1 overflow-auto">
+        <div className="flex flex-col gap-4 p-4">
             <BetsList bets={bets} />
-        </main>
+        </div>
     );
 }
