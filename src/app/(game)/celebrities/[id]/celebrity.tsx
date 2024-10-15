@@ -203,9 +203,9 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                                                                     isIconOnly
                                                                     href={`/bets/${currentBet?.id}`}
                                                                     as={Link}
-                                                                    color="secondary"
+                                                                    color="primary"
                                                                     showAnchorIcon
-                                                                    variant="solid"
+                                                                    variant="flat"
                                                                     size="sm"
                                                                 />
                                                             </TableCell>

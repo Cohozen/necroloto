@@ -24,8 +24,9 @@ export async function updateCelebrityAction(
     };
 
     if (newBirth && newDeath) {
+        const yearOfDeath = newDeath.getFullYear();
         const points = calculPointByCelebrity(newBirth, newDeath);
-        await updatePointsCelebrityOnBets(celebrityId, points);
+        await updatePointsCelebrityOnBets(celebrityId, points, yearOfDeath);
     }
 
     await updateCelebrity(celebrity);

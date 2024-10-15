@@ -1,10 +1,9 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { User } from "@prisma/client";
-import { BetsWithCelebrities } from "@/lib/types/bet";
-import { getBetByUserAndYear } from "@/lib/api/bet";
+import { User as UserType } from "@prisma/client";
+import { BetsWithCelebrities, BetsWithUserAndCelebrities } from "@/lib/types/bet";
+import { getBetByUserAndYear, listBets } from "@/lib/api/bet";
 import UserAvatar from "@/components/business/user/UserAvatar";
 import React from "react";
-import Link from "next/link";
 import { buildUserName } from "@/lib/helpers/user";
 import { CalendarIcon } from "@/ui/icons/CalendarIcon";
 import { UserHeartIcon } from "@/ui/icons/UserHeartIcon";
@@ -12,6 +11,30 @@ import { RankingIcon } from "@/ui/icons/RankingIcon";
 import { InfoIcon } from "@/ui/icons/InfoIcon";
 import { CreateOrUpdateUserByClerkAuth } from "@/lib/actions/user";
 import { GetCelebritiesAliveStats, GetPositionOfUserForYear } from "@/lib/actions/bet";
+import {
+    Avatar,
+    Chip,
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    Card,
+    CardBody,
+    Divider,
+    Table,
+    TableHeader,
+    TableColumn,
+    TableBody,
+    TableRow,
+    TableCell,
+    User,
+    Tabs,
+    Tab,
+    Button,
+    Link,
+    CircularProgress,
+    CardFooter
+} from "@nextui-org/react";
+import { CardHeader } from "@nextui-org/card";
 
 export const metadata = {
     title: "Necroloto | Accueil"
@@ -22,120 +45,85 @@ export default async function IndexPage() {
 
     const year = 2024;
 
-    let position: number = 0;
-    let aliveStats: number | null = null;
-    let userDb: User | null = null;
+    let userDb: UserType | null = null;
 
-    if (user) {
-        userDb = await CreateOrUpdateUserByClerkAuth(user);
-    }
+    if (user) userDb = await CreateOrUpdateUserByClerkAuth(user);
 
-    let myBet: BetsWithCelebrities | null = null;
+    const bets = await listBets<BetsWithUserAndCelebrities>({
+        where: { year: year },
+        include: { user: true, CelebritiesOnBet: { include: { celebrity: true } } }
+    });
 
-    if (userDb) {
-        const result = await getBetByUserAndYear(userDb.id, year);
-        if (result) myBet = result;
-
-        position = await GetPositionOfUserForYear(userDb.id, year, "points");
-        aliveStats = await GetCelebritiesAliveStats(userDb.id, year);
-    }
-
-    const totalPoints = myBet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
+    const haveBet = bets.find((b) => b.userId === userDb?.id);
 
     return (
         <div className="flex flex-col gap-8 p-4">
             {userDb && (
                 <div className="flex flex-row gap-4 justify-center px-2 pt-4">
-                    <UserAvatar user={userDb} size="w-20" />
-                    <div className="flex flex-col justify-center">
-                        <span className="text-[28px]">{buildUserName(userDb)}</span>
-                        <span className="text-[14px]">{userDb?.email}</span>
-                    </div>
+                    <User
+                        description={userDb.email}
+                        name={`${userDb.firstname} ${userDb.lastname ?? ""}`}
+                        avatarProps={{
+                            radius: "full",
+                            size: "lg",
+                            src: userDb.image ?? undefined
+                        }}
+                    />
                 </div>
             )}
-            {myBet && (
-                <div className="stats w-full justify-center stats-vertical lg:stats-horizontal bg-primary text-primary-content shadow-lg">
-                    <div className="stat">
-                        <div className="stat-figure text-primary-content">
-                            <CalendarIcon className="h-10 w-10 text-accent" />
-                        </div>
-                        <div className="stat-title text-primary-content">Année</div>
-                        <div className="stat-value">2024</div>
-                        <div className="stat-desc text-primary-content">En cours</div>
-                    </div>
 
-                    <div className="stat border-t-primary-content">
-                        <div className="stat-figure text-primary-content">
-                            <UserHeartIcon className="h-10 w-10 text-accent" />
-                        </div>
-                        <div className="stat-title text-primary-content">Encore en vie</div>
-                        <div className="stat-value">
-                            {myBet.CelebritiesOnBet.filter((cb) => !cb.celebrity.death).length}
-                            <span className="text-sm pl-1">célébrités</span>
-                        </div>
-                        <div className="stat-desc text-primary-content">
-                            {aliveStats !== null ? (
-                                <>
-                                    {aliveStats === 0 && "Autant que la moyenne"}
-                                    {aliveStats > 0 && `${aliveStats}% de plus que la moyenne`}
-                                    {aliveStats < 0 &&
-                                        `${Math.abs(aliveStats)}% de moins que la moyenne`}
-                                </>
-                            ) : null}
-                        </div>
-                    </div>
-
-                    <div className="stat border-t-primary-content">
-                        <div className="stat-figure text-primary-content">
-                            <RankingIcon className="h-10 w-10 text-accent" />
-                        </div>
-                        <div className="stat-title text-primary-content">Score</div>
-                        <div className="stat-value">
-                            {totalPoints}
-                            <span className="text-sm pl-1">points</span>
-                        </div>
-                        <div className="stat-desc text-primary-content">
-                            {position > 0 ? (
-                                <>
-                                    {position === 1
-                                        ? `${position}er au classement`
-                                        : `${position}ème au classement`}
-                                </>
-                            ) : null}
-                        </div>
-                    </div>
-                </div>
-            )}
-            {myBet ? (
-                <div role="alert" className="alert shadow-lg">
-                    <InfoIcon className="h-6 w-6" />
-                    <div>
-                        <h3 className="font-bold">{"Vous avez déjà parier pour 2024"}</h3>
-                        <div className="text-xs">
-                            {"Le parie pour l'année 2024 est déjà enregistré"}
-                        </div>
-                    </div>
-                    <Link href={`/bets/${myBet.id}`} className="btn btn-sm">
-                        Voir le pari
-                    </Link>
-                </div>
-            ) : (
-                <div role="alert" className="alert shadow-lg">
-                    <InfoIcon className="h-6 w-6" />
-                    <div>
-                        <h3 className="font-bold">Aucun pari pour 2024</h3>
-                        <div className="text-xs">
-                            {/*{"Vous pouvez parier dès maintenant pour l'année 2024"}*/}
+            {!haveBet && (
+                <Card>
+                    <CardHeader className="gap-2">
+                        <InfoIcon className="h-6 w-6" />
+                        <span>Dommage</span>
+                    </CardHeader>
+                    <CardBody>
+                        <p>
                             {
                                 "Malheureusement, il est trop tard pour faire votre pari pour l'année 2024, revenez plus tard !"
                             }
-                        </div>
-                    </div>
-                    {/*<Link href="/bet">*/}
-                    {/*    <button className="btn btn-sm">Parier</button>*/}
-                    {/*</Link>*/}
-                </div>
+                        </p>
+                    </CardBody>
+                </Card>
             )}
+
+            <div className="flex w-full flex-row gap-3">
+                <Card className="basis-1/2 h-36 border-none bg-gradient-to-br from-primary-500 to-secondary-500">
+                    <CardBody className="justify-center items-center">
+                        <span className="font-bold text-4xl">{bets.length}</span>
+                        <span>Paris</span>
+                    </CardBody>
+                    <CardFooter className="justify-center items-center pt-0">
+                        <Chip
+                            classNames={{
+                                base: "border-1 border-white/30",
+                                content: "text-white/90 text-small font-semibold"
+                            }}
+                            variant="bordered"
+                        >
+                            {year}
+                        </Chip>
+                    </CardFooter>
+                </Card>
+                <Card className="basis-1/2 h-36 border-none bg-gradient-to-br from-primary-500 to-secondary-500">
+                    <CardBody className="justify-center items-center">
+                        <span className="font-bold text-4xl">5</span>
+                        <span>Décès</span>
+                    </CardBody>
+                    <CardFooter className="justify-center items-center pt-0">
+                        <Chip
+                            classNames={{
+                                base: "border-1 border-white/30",
+                                content: "text-white/90 text-small font-semibold"
+                            }}
+                            variant="bordered"
+                        >
+                            Trouvés
+                        </Chip>
+                    </CardFooter>
+                </Card>
+            </div>
         </div>
     );
 }

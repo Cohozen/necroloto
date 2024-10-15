@@ -72,9 +72,13 @@ export const updateCelebrity = async (celebrity: Celebrity) => {
     return result;
 };
 
-export async function updatePointsCelebrityOnBets(celebrityId: string, points: number) {
+export async function updatePointsCelebrityOnBets(
+    celebrityId: string,
+    points: number,
+    year: number
+) {
     return prisma.celebritiesOnBet.updateMany({
-        where: { celebrityId: celebrityId },
+        where: { celebrityId: celebrityId, bet: { year: year } },
         data: {
             points
         }

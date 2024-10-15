@@ -1,18 +1,7 @@
-import {
-    BetsWithCelebrities,
-    BetsWithUserAndCelebrities,
-    BetsWithUserAndCelebritiesOnBet
-} from "@/lib/types/bet";
-import { getBetByUserAndYear, listBets } from "@/lib/api/bet";
+import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
+import { listBets } from "@/lib/api/bet";
 import { currentUser } from "@clerk/nextjs/server";
-import { head, last, sortBy } from "lodash";
 import React from "react";
-import dayjs from "dayjs";
-import CelebrityAvatar from "@/components/business/user/CelebrityAvatar";
-import Link from "next/link";
-import { UserHeartIcon } from "@/ui/icons/UserHeartIcon";
-import { CupStarIcon } from "@/ui/icons/CupStarIcon";
-import { InfoIcon } from "@/ui/icons/InfoIcon";
 import { BetsList } from "@/components/business/bet/betsList";
 
 export const metadata = {
