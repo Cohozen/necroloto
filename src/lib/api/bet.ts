@@ -113,10 +113,15 @@ export const insertBetWithCelebrities = async (bet: CreatedBet, celebrities: str
 
             const celebritiesOnBetPromises: Promise<CelebritiesOnBet>[] = [];
 
-            for (const celebrityName of celebrities) {
-                const celebrityFound = await tx.celebrity.findFirst({
-                    where: { name: celebrityName.trim() }
+            for (const celebrityKey of celebrities) {
+                let celebrityFound = await tx.celebrity.findUnique({
+                    where: { id: celebrityKey.trim() }
                 });
+
+                if (!celebrityFound)
+                    celebrityFound = await tx.celebrity.findFirst({
+                        where: { name: celebrityKey.trim() }
+                    });
 
                 if (celebrityFound) {
                     celebritiesOnBetPromises.push(
@@ -130,7 +135,7 @@ export const insertBetWithCelebrities = async (bet: CreatedBet, celebrities: str
                 } else {
                     const createdCelebrity = await tx.celebrity.create({
                         data: {
-                            name: celebrityName.trim()
+                            name: celebrityKey.trim()
                         }
                     });
 
@@ -149,7 +154,7 @@ export const insertBetWithCelebrities = async (bet: CreatedBet, celebrities: str
 
             return createdBet;
         },
-        { timeout: 30000 }
+        { timeout: 60000 }
     );
 
     revalidateTag("bets");

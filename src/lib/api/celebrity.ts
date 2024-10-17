@@ -19,9 +19,11 @@ export const SearchCelebrities = unstable_cache(
                 name: {
                     contains: name,
                     mode: "insensitive"
-                }
-                // ...(living && !deceased ? { death: null } : {}),
-                // ...(deceased && !living ? { death: { not: null } } : {})
+                },
+                OR: [
+                    ...(living ? [{ death: null }] : []),
+                    ...(deceased ? [{ death: { not: null } }] : [])
+                ]
             }
         });
     },

@@ -4,7 +4,6 @@ import { UserButton } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
 import { Drawer } from "vaul";
 
-import { Transition } from "@headlessui/react";
 import {
     Navbar as NextNavbar,
     NavbarBrand,
@@ -13,7 +12,8 @@ import {
     Link,
     Button,
     Listbox,
-    ListboxItem, Spacer
+    ListboxItem,
+    Spacer
 } from "@nextui-org/react";
 
 import ToggleTheme from "@/components/layout/toggleTheme";
@@ -25,6 +25,7 @@ import { RankingIcon } from "@/ui/icons/RankingIcon";
 import { NoteListIcon } from "@/ui/icons/NoteListIcon";
 import { PeopleIcon } from "@/ui/icons/PeopleIcon";
 import { HamburgerMenuIcon } from "@/ui/icons/HamburgerMenuIcon";
+import { AppIcon } from "@/ui/icons/AppIcon";
 
 export default function Navbar() {
     const [open, setOpen] = React.useState(false);
@@ -91,7 +92,7 @@ export default function Navbar() {
                         <div className="flex flex-col bg-background rounded-2xl w-72 grow mt-2 mr-2 mb-2 p-6">
                             <div className="flex items-center gap-2 px-2">
                                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground text-background">
-                                    <HamburgerMenuIcon className="h-5 w-5" />
+                                    <AppIcon className="h-7 w-7" />
                                 </div>
                                 <span className="text-base font-bold uppercase leading-6 text-foreground">
                                     Necroloto
@@ -99,7 +100,6 @@ export default function Navbar() {
                             </div>
 
                             <Spacer y={8} />
-
 
                             <Listbox
                                 variant="bordered"
@@ -135,7 +135,7 @@ export default function Navbar() {
                                         "bg-default-200": pathname === "/bets"
                                     })}
                                 >
-                                    Paris
+                                    Prédictions
                                 </ListboxItem>
                                 <ListboxItem
                                     key="celebrities"

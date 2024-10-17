@@ -1,5 +1,8 @@
-import { listBetsByYear } from "@/lib/api/bet";
+"use server";
+
+import { insertBetWithCelebrities, listBetsByYear } from "@/lib/api/bet";
 import { findIndex, sortBy } from "lodash";
+import { revalidatePath } from "next/cache";
 
 export type sortByRank = "points" | "death";
 
@@ -64,4 +67,21 @@ export async function GetCelebritiesAliveStats(userId: string, year: number) {
     const percent = Math.round((userBetAlive * 100) / aliveAverage);
 
     return percent - 100;
+}
+
+export async function createBetWithCelebritiesAction(
+    userId: string,
+    year: number,
+    celebrities: string[]
+) {
+    const bet = {
+        userId: userId,
+        year: year
+    };
+
+    const result = await insertBetWithCelebrities(bet, celebrities);
+
+    revalidatePath("/bets");
+
+    return result;
 }

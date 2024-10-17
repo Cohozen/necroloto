@@ -28,8 +28,6 @@ export default function CelebrityCard({ celebrity }: CelebrityCardProps) {
             onPress={() => router.push(`/celebrities/${celebrity.id}`)}
         >
             <CardHeader className="absolute z-10 top-1 flex-col items-start">
-                {/*<p className="text-tiny text-white/60 uppercase font-bold">{old} ans</p>*/}
-                {/*<h4 className="text-black font-medium text-2xl">{celebrity.name}</h4>*/}
                 <Chip
                     className="capitalize"
                     color={celebrity.death ? "danger" : "success"}
@@ -48,7 +46,7 @@ export default function CelebrityCard({ celebrity }: CelebrityCardProps) {
             <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
                 <div className="flex flex-col items-start">
                     <p className="text-black text-tiny font-bold">{celebrity.name}</p>
-                    <p className="text-black text-tiny">{old} ans</p>
+                    <p className="text-black text-tiny">{old ? `${old} ans` : "-"}</p>
                 </div>
             </CardFooter>
         </Card>

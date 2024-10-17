@@ -6,9 +6,6 @@ import CelebrityUpdate from "./celebrityUpdate";
 import {
     Avatar,
     Chip,
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
     Card,
     CardBody,
     Divider,
@@ -61,6 +58,8 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
         ? calculPointByCelebrity(celebrity.birth, celebrity.death ?? new Date())
         : 0;
 
+    const old = dayjs(celebrity.death || undefined).diff(celebrity.birth, "year");
+
     useEffect(() => {
         router.replace(`/celebrities/${celebrity.id}/?year=${encodeURIComponent(selectedTab)}`);
     }, [selectedTab]);
@@ -89,46 +88,17 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                                 {celebrity.death ? "Décédé" : "En vie"}
                             </Chip>
 
-                            <Popover placement="bottom" backdrop="blur">
-                                <PopoverTrigger>
-                                    <Chip className="capitalize" color="default" variant="flat">
-                                        {`${dayjs(celebrity.death || undefined).diff(
-                                            celebrity.birth,
-                                            "year"
-                                        )} ans`}
-                                    </Chip>
-                                </PopoverTrigger>
-                                <PopoverContent className="p-1">
-                                    <Card
-                                        shadow="none"
-                                        className="max-w-[250px] border-none bg-transparent"
-                                    >
-                                        <CardBody>
-                                            <p className="flex flex-row gap-1">
-                                                <span>
-                                                    {celebrity.birth
-                                                        ? dayjs(celebrity.birth).format(
-                                                              "DD/MM/YYYY"
-                                                          )
-                                                        : ""}
-                                                </span>
-                                                <span>-</span>
-                                                <span>
-                                                    {celebrity.death
-                                                        ? dayjs(celebrity.death).format(
-                                                              "DD/MM/YYYY"
-                                                          )
-                                                        : ""}
-                                                </span>
-                                            </p>
-                                        </CardBody>
-                                    </Card>
-                                </PopoverContent>
-                            </Popover>
+                            {!!old && (
+                                <Chip className="capitalize" color="default" variant="flat">
+                                    {`${old} ans`}
+                                </Chip>
+                            )}
 
-                            <Chip className="capitalize" color="warning" variant="flat">
-                                {celebrity.birth && `${points} point${points > 1 ? "s" : ""}`}
-                            </Chip>
+                            {!!points && (
+                                <Chip className="capitalize" color="warning" variant="flat">
+                                    {celebrity.birth && `${points} point${points > 1 ? "s" : ""}`}
+                                </Chip>
+                            )}
                         </div>
                     </div>
 
@@ -148,7 +118,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                                 <Card>
                                     <CardHeader className="flex flex-col">
                                         <p className="text-lg font-medium text-center">
-                                            {`${usersWhoBetThisCelebrity?.length} Pari${
+                                            {`${usersWhoBetThisCelebrity?.length} Prédiction${
                                                 usersWhoBetThisCelebrity?.length > 1 ? "s" : ""
                                             }`}
                                         </p>
@@ -164,7 +134,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                                             </TableHeader>
                                             <TableBody
                                                 items={usersWhoBetThisCelebrity}
-                                                emptyContent="Aucun paris pour l'année sélectionnée"
+                                                emptyContent="Aucune prédiction pour l'année sélectionnée"
                                             >
                                                 {(item) => {
                                                     const currentBet = rankedBets.find(

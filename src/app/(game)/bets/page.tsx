@@ -5,7 +5,7 @@ import React from "react";
 import { BetsList } from "@/components/business/bet/betsList";
 
 export const metadata = {
-    title: "Necroloto | Paris"
+    title: "Necroloto | Prédictions"
 };
 
 export default async function BetsPage({

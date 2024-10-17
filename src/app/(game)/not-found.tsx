@@ -15,7 +15,7 @@ export default function NotFound() {
 
                 <span className="text-lg">{"La page demandé n'existe pas"}</span>
 
-                <Link className="btn btn-primary" href="/">
+                <Link className="btn btn-primary" href="/home">
                     {"Retour à l'appli"}
                 </Link>
             </div>

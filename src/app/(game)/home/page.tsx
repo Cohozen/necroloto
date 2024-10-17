@@ -43,14 +43,15 @@ export const metadata = {
 export default async function IndexPage() {
     const user = await currentUser();
 
-    const year = 2024;
+    const currentYear = 2024;
+    const allowNewBet = true;
 
     let userDb: UserType | null = null;
 
     if (user) userDb = await CreateOrUpdateUserByClerkAuth(user);
 
     const bets = await listBets<BetsWithUserAndCelebrities>({
-        where: { year: year },
+        where: { year: currentYear },
         include: { user: true, CelebritiesOnBet: { include: { celebrity: true } } }
     });
 
@@ -70,6 +71,19 @@ export default async function IndexPage() {
                         }}
                     />
                 </div>
+            )}
+
+            {allowNewBet && (
+                <Button
+                    color="primary"
+                    href={`/bet/${currentYear + 1}`}
+                    as={Link}
+                    showAnchorIcon
+                    variant="flat"
+                    size="sm"
+                >
+                    Aller parier pour 2025
+                </Button>
             )}
 
             {!haveBet && (
@@ -92,7 +106,7 @@ export default async function IndexPage() {
                 <Card className="basis-1/2 h-36 border-none bg-gradient-to-br from-primary-500 to-secondary-500">
                     <CardBody className="justify-center items-center">
                         <span className="font-bold text-4xl">{bets.length}</span>
-                        <span>Paris</span>
+                        <span>Prédictions</span>
                     </CardBody>
                     <CardFooter className="justify-center items-center pt-0">
                         <Chip
@@ -102,7 +116,7 @@ export default async function IndexPage() {
                             }}
                             variant="bordered"
                         >
-                            {year}
+                            {currentYear}
                         </Chip>
                     </CardFooter>
                 </Card>

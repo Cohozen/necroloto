@@ -3,15 +3,11 @@ import React from "react";
 import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 
 import Navbar from "@/components/layout/navbar";
-import BottomNav from "@/components/layout/bottomNav";
 import { Providers } from "../providers";
 
 import { frFR } from "@clerk/localizations";
 
 import "../globals.css";
-import { currentUser } from "@clerk/nextjs/server";
-import { User } from "@prisma/client";
-import { CreateOrUpdateUserByClerkAuth } from "@/lib/actions/user";
 
 export const metadata = {
     title: "Necroloto",
@@ -28,14 +24,6 @@ export const metadata = {
 };
 
 export default async function GameLayout({ children }: { children: React.ReactNode }) {
-    const user = await currentUser();
-
-    let userDb: User | null = null;
-
-    if (user) {
-        userDb = await CreateOrUpdateUserByClerkAuth(user);
-    }
-
     return (
         <html lang="fr">
             <body className="antialiased bg-background">
@@ -46,8 +34,6 @@ export default async function GameLayout({ children }: { children: React.ReactNo
                         </SignedIn>
 
                         <main>{children}</main>
-
-                        {/*<SignedIn>{userDb && <BottomNav user={userDb} />}</SignedIn>*/}
                     </Providers>
                 </ClerkProvider>
             </body>

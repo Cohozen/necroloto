@@ -60,7 +60,9 @@ export default async function BetPage({ params }: { params: { id: string } }) {
                                 {bet.year}
                             </Chip>
                             <Chip className="capitalize" color="primary" variant="flat">
-                                {`${rank}${rank === 1 ? "er" : "ème"}`}
+                                {rank === 1 && total === 0
+                                    ? "Non classé"
+                                    : `${rank}${rank === 1 ? "er" : "ème"}`}
                             </Chip>
                             <Chip className="capitalize" color="primary" variant="flat">
                                 <span className="font-bold">{`${total} point${

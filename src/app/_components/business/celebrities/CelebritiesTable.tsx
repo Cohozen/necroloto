@@ -43,7 +43,7 @@ export default function CelebritiesTable({ celebrities, hideHeader }: Celebritie
                                         src: item.photo || undefined,
                                         name: item.name
                                     }}
-                                    description={`${old} ans`}
+                                    description={old ? `${old} ans` : "-"}
                                     name={item.name}
                                 >
                                     {item.name}
