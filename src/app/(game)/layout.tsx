@@ -5,8 +5,6 @@ import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 import Navbar from "@/components/layout/navbar";
 import { Providers } from "../providers";
 
-import { frFR } from "@clerk/localizations";
-
 import "../globals.css";
 
 export const metadata = {
@@ -27,15 +25,13 @@ export default async function GameLayout({ children }: { children: React.ReactNo
     return (
         <html lang="fr">
             <body className="antialiased bg-background">
-                <ClerkProvider afterSignOutUrl="/" localization={frFR}>
-                    <Providers>
-                        <SignedIn>
-                            <Navbar />
-                        </SignedIn>
+                <Providers>
+                    <SignedIn>
+                        <Navbar />
+                    </SignedIn>
 
-                        <main>{children}</main>
-                    </Providers>
-                </ClerkProvider>
+                    <main>{children}</main>
+                </Providers>
             </body>
         </html>
     );

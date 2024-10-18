@@ -8,6 +8,7 @@ import { GetPositionOfUserForYear } from "@/lib/actions/bet";
 import { Card, CardBody, Divider, User, Button, Link } from "@nextui-org/react";
 import { SearchCelebrities } from "@/lib/api/celebrity";
 import CurrentBet from "./currentBet";
+import { UserButton } from "@clerk/nextjs";
 
 export default async function IndexPage() {
     const user = await currentUser();
@@ -37,15 +38,6 @@ export default async function IndexPage() {
         );
     }
 
-    const currentTotal =
-        myCurrentBet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
-    const currentCelebrities = myCurrentBet?.CelebritiesOnBet.map((c) => c.celebrity);
-
-    const currentInLife = currentCelebrities?.filter((c) => !c.death).length;
-    const currentInLifePercent = currentInLife
-        ? (currentInLife / currentCelebrities.length) * 100
-        : 0;
-
     return (
         <div className="flex flex-col gap-6 p-4">
             {userDb && (
@@ -59,6 +51,8 @@ export default async function IndexPage() {
                     }}
                 />
             )}
+
+            <UserButton />
 
             <Divider className="my-2" />
 
