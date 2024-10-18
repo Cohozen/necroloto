@@ -2,10 +2,6 @@ import React from "react";
 import { RankBetsByYearWithTotalPoints, sortByRank } from "@/lib/actions/bet";
 import Ranking from "./ranking";
 
-export const metadata = {
-    title: "Necroloto | Classement"
-};
-
 export default async function RankPage({
     searchParams
 }: {

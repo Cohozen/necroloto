@@ -1,48 +1,13 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { User as UserType } from "@prisma/client";
-import { BetsWithCelebrities, BetsWithUserAndCelebrities } from "@/lib/types/bet";
-import { getBetByUserAndYear, listBets } from "@/lib/api/bet";
-import UserAvatar from "@/components/business/user/UserAvatar";
+import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
+import { listBets } from "@/lib/api/bet";
 import React from "react";
-import { buildUserName } from "@/lib/helpers/user";
-import { CalendarIcon } from "@/ui/icons/CalendarIcon";
-import { UserHeartIcon } from "@/ui/icons/UserHeartIcon";
-import { RankingIcon } from "@/ui/icons/RankingIcon";
-import { InfoIcon } from "@/ui/icons/InfoIcon";
 import { CreateOrUpdateUserByClerkAuth } from "@/lib/actions/user";
-import { GetCelebritiesAliveStats, GetPositionOfUserForYear } from "@/lib/actions/bet";
-import {
-    Avatar,
-    Chip,
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
-    Card,
-    CardBody,
-    Divider,
-    Table,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    TableRow,
-    TableCell,
-    User,
-    Tabs,
-    Tab,
-    Button,
-    Link,
-    CircularProgress,
-    CardFooter,
-    Progress
-} from "@nextui-org/react";
-import { CardHeader } from "@nextui-org/card";
+import { GetPositionOfUserForYear } from "@/lib/actions/bet";
+import { Card, CardBody, Divider, User, Button, Link } from "@nextui-org/react";
 import { SearchCelebrities } from "@/lib/api/celebrity";
 import CurrentBet from "./currentBet";
-import { log } from "next/dist/server/typescript/utils";
-
-export const metadata = {
-    title: "Necroloto | Accueil"
-};
 
 export default async function IndexPage() {
     const user = await currentUser();

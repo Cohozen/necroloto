@@ -2,10 +2,6 @@ import CelebritiesList from "../../_components/business/celebrities/CelebritiesL
 import React from "react";
 import { listAllCelebrities, SearchCelebrities } from "@/lib/api/celebrity";
 
-export const metadata = {
-    title: "Necroloto | Célébrités"
-};
-
 export default async function CelebritiesPage({
     searchParams
 }: {

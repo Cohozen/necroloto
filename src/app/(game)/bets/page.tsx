@@ -4,10 +4,6 @@ import { currentUser } from "@clerk/nextjs/server";
 import React from "react";
 import { BetsList } from "@/components/business/bet/betsList";
 
-export const metadata = {
-    title: "Necroloto | Prédictions"
-};
-
 export default async function BetsPage({
     searchParams
 }: {

@@ -5,10 +5,6 @@ import { CreateOrUpdateUserByClerkAuth } from "@/lib/actions/user";
 import UserAvatar from "@/components/business/user/UserAvatar";
 import { buildUserName } from "@/lib/helpers/user";
 
-export const metadata = {
-    title: "Necroloto | Profil"
-};
-
 export default async function Page() {
     const user = await currentUser();
 
@@ -32,8 +28,12 @@ export default async function Page() {
                 )}
             </div>
             <div role="tablist" className="tabs tabs-bordered pt-2">
-                <a role="tab" className="tab tab-active">Résumé</a>
-                <a role="tab" className="tab">Stats</a>
+                <a role="tab" className="tab tab-active">
+                    Résumé
+                </a>
+                <a role="tab" className="tab">
+                    Stats
+                </a>
             </div>
         </main>
     );

@@ -4,10 +4,6 @@ import BetCreate from "./betCreate";
 import { SearchCelebrities } from "@/lib/api/celebrity";
 import { notFound, redirect } from "next/navigation";
 
-export const metadata = {
-    title: "Necroloto | Prédire"
-};
-
 export default async function BetPage({ params }: { params: { year: string } }) {
     const user = await currentUser();
 
