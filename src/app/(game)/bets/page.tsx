@@ -13,8 +13,6 @@ export default async function BetsPage({
 }: {
     searchParams: Promise<{ year: string }>;
 }) {
-    const user = await currentUser();
-
     const year = (await searchParams).year;
     const num = isNaN(parseInt(year, 10)) ? 2024 : parseInt(year, 10);
 

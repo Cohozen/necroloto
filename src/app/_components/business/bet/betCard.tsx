@@ -1,6 +1,5 @@
 "use client";
 
-import dayjs from "dayjs";
 import {
     Card,
     Button,
@@ -9,7 +8,8 @@ import {
     Avatar,
     CardBody,
     Link,
-    Chip, Progress
+    Chip,
+    Progress
 } from "@nextui-org/react";
 import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
 import React from "react";
@@ -27,7 +27,7 @@ export default async function BetCard({ bet }: BetCardProps) {
     const total = bet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
 
     return (
-        <Card className="w-full">
+        <Card fullWidth>
             <CardHeader className="justify-between">
                 <div className="flex gap-3">
                     <Avatar isBordered radius="full" size="sm" src={bet.user.image ?? ""} />
@@ -57,7 +57,7 @@ export default async function BetCard({ bet }: BetCardProps) {
                         track: "drop-shadow-md border border-default",
                         indicator: "bg-gradient-to-r from-primary-500 to-secondary-500",
                         label: "tracking-wider font-medium text-default-600",
-                        value: "text-foreground/60",
+                        value: "text-foreground/60"
                     }}
                     label="En vie"
                     value={inLifePercent}
@@ -68,9 +68,6 @@ export default async function BetCard({ bet }: BetCardProps) {
                 <Chip className="capitalize" color="default" variant="flat" size="sm">
                     {`${total} ${total > 1 ? "points" : "point"}`}
                 </Chip>
-                {/*<Chip className="" color="default" variant="flat" size="sm">*/}
-                {/*    {dayjs(bet.createdAt).format("DD/MM/YYYY HH:mm")}*/}
-                {/*</Chip>*/}
             </CardFooter>
         </Card>
     );

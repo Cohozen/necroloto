@@ -1,30 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { BetsWithUserAndCelebrities, BetsWithUserAndCelebritiesOnBet } from "@/lib/types/bet";
-import {
-    Avatar,
-    Chip,
-    Popover,
-    PopoverTrigger,
-    CardFooter,
-    Card,
-    CardBody,
-    Divider,
-    Table,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    AccordionItem,
-    Accordion,
-    User,
-    Tabs,
-    Tab,
-    Button,
-    Link,
-    Select,
-    SelectItem
-} from "@nextui-org/react";
+import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
+import { Select, SelectItem } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import BetCard from "@/components/business/bet/betCard";
 

@@ -20,10 +20,10 @@ export async function RankBetsByYearWithTotalPoints(year: number, sort: sortByRa
     if (sort === "death")
         return sortBy(
             totals,
-            (b) => b.CelebritiesOnBet.filter((c) => !!c.celebrity.death).length || b.user.firstname
+            (b) => b.CelebritiesOnBet.filter((c) => !!c.celebrity.death).length
         ).reverse();
 
-    return sortBy(totals, (b) => b.total || b.user.firstname).reverse();
+    return sortBy(totals, (b) => b.total).reverse();
 }
 
 export async function GetPositionOfUserForYear(userId: string, year: number, sort: sortByRank) {
