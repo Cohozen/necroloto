@@ -1,7 +1,10 @@
+"use server";
+
 import { User } from "@prisma/client";
 import { findUserByClerkId, insertUser, updateUser } from "@/lib/api/user";
 import { clerkClient } from "@clerk/nextjs/server";
 import { User as UserClerk } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 export async function CreateOrUpdateUserByClerkAuth(clerkUser: UserClerk) {
     let userDb = await findUserByClerkId(clerkUser.id);
@@ -24,6 +27,7 @@ export async function CreateOrUpdateUserByClerkAuth(clerkUser: UserClerk) {
             updatedAt: new Date(),
             createdAt: new Date()
         };
+
         userDb = await insertUser(newUserDb);
         await clerkClient.users.updateUser(clerkUser.id, { externalId: userDb.id });
     } else {
@@ -42,5 +46,27 @@ export async function CreateOrUpdateUserByClerkAuth(clerkUser: UserClerk) {
         }
     }
 
+    revalidatePath(`/profile`);
+
     return userDb;
+}
+
+export async function UpdateUserAction(clerkId: string, firstName: string, lastName: string) {
+    let userDb = await findUserByClerkId(clerkId);
+
+    if (!userDb) throw "not found";
+
+    const updatedClerkUser = await clerkClient.users.updateUser(clerkId, { firstName, lastName });
+
+    const userToUpdate = {
+        ...userDb,
+        firstname: firstName,
+        lastname: lastName,
+        image: updatedClerkUser.imageUrl,
+        clerkUpdatedAt: new Date(updatedClerkUser.updatedAt)
+    };
+
+    revalidatePath(`/profile`);
+
+    return await updateUser(userToUpdate);
 }

@@ -18,7 +18,6 @@ module.exports = {
     darkMode: "class",
 
     plugins: [
-        //require("daisyui"),
         nextui({
             themes: {
                 light: {
@@ -71,7 +70,7 @@ module.exports = {
                             "700": "#075985",
                             "800": "#0c4a6e",
                             "900": "#0a364b"
-                        },
+                        }
                         // success: {
                         //     DEFAULT: "#10b981",
                         //     "50": "#ecfdf5",
@@ -115,7 +114,7 @@ module.exports = {
                 },
                 dark: {
                     colors: {
-                        // background: "#1f2937", // Fond sombre
+                        background: "#202124", // Fond sombre
                         // foreground: "#e5e7eb", // Texte principal en gris clair
                         // divider: "#374151", // Séparateur discret
                         // focus: "#93c5fd", // Bleu vif pour le focus
@@ -163,7 +162,7 @@ module.exports = {
                             "700": "#003a5e",
                             "800": "#002844",
                             "900": "#00192b"
-                        },
+                        }
                         // success: {
                         //     DEFAULT: "#10b981",
                         //     "50": "#064e3b",
@@ -207,42 +206,5 @@ module.exports = {
                 }
             }
         })
-    ],
-
-    daisyui: {
-        themes: [
-            {
-                "necroloto-light": {
-                    primary: "#5a7184", // Bleu-gris pour une bonne lisibilité
-                    secondary: "#849cae", // Bleu clair-gris pour un contraste modéré
-                    accent: "#f28c52", // Orange doux et terreux pour un contraste agréable
-                    neutral: "#d1d8de", // Gris doux et neutre pour une base discrète
-                    "base-100": "#f4f7fa", // Blanc légèrement bleuté pour un fond lisible
-                    info: "#4fa3f7", // Bleu vif pour les informations
-                    success: "#34d399", // Vert plus saturé pour les succès
-                    warning: "#facc15", // Jaune doux mais bien visible pour les avertissements
-                    error: "#f87171" // Rouge pastel mais plus saturé pour les erreurs
-                }
-            },
-            {
-                "necroloto-dark": {
-                    primary: "#4b5563", // Gris anthracite doux pour une ambiance reposante
-                    secondary: "#6b7280", // Gris moyen pour plus de contraste sans être trop sombre
-                    accent: "#eab308", // Jaune doux et légèrement doré pour accentuer
-                    neutral: "#374151", // Gris foncé apaisant pour une base calme
-                    "base-100": "#1e293b", // Bleu nuit pour un fond relaxant et sombre
-                    info: "#93c5fd", // Bleu doux pour les informations
-                    success: "#4ade80", // Vert pastel pour les succès
-                    warning: "#fde047", // Jaune pâle pour les avertissements
-                    error: "#f87171" // Rouge doux pour les erreurs
-                }
-            }
-        ],
-        darkTheme: "necroloto-dark", // name of one of the included themes for dark mode
-        base: true, // applies background color and foreground color for root element by default
-        styled: true, // include daisyUI colors and design decisions for all components
-        utils: true, // adds responsive and modifier utility classes
-        logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
-        themeRoot: ":root" // The element that receives theme color CSS variables
-    }
+    ]
 };

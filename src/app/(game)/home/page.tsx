@@ -1,5 +1,4 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { User as UserType } from "@prisma/client";
 import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
 import { listBets } from "@/lib/api/bet";
 import React from "react";
@@ -8,7 +7,6 @@ import { GetPositionOfUserForYear } from "@/lib/actions/bet";
 import { Card, CardBody, Divider, User, Button, Link } from "@nextui-org/react";
 import { SearchCelebrities } from "@/lib/api/celebrity";
 import CurrentBet from "./currentBet";
-import { UserButton } from "@clerk/nextjs";
 
 export default async function IndexPage() {
     const user = await currentUser();
@@ -16,10 +14,9 @@ export default async function IndexPage() {
     const currentYear = 2024;
     const allowNewBet = true;
 
-    let userDb: UserType | null = null;
     let currentRank = 0;
 
-    if (user) userDb = await CreateOrUpdateUserByClerkAuth(user);
+    if (user) await CreateOrUpdateUserByClerkAuth(user);
 
     const bets = await listBets<BetsWithUserAndCelebrities>({
         where: { year: currentYear },
@@ -28,7 +25,7 @@ export default async function IndexPage() {
 
     const deadCelebrities = await SearchCelebrities("", false, true);
 
-    const myCurrentBet = bets.find((b) => b.userId === userDb?.id);
+    const myCurrentBet = bets.find((b) => b.userId === user?.externalId);
 
     if (myCurrentBet) {
         currentRank = await GetPositionOfUserForYear(
@@ -40,21 +37,21 @@ export default async function IndexPage() {
 
     return (
         <div className="flex flex-col gap-6 p-4">
-            {userDb && (
-                <User
-                    description={userDb.email}
-                    name={`${userDb.firstname} ${userDb.lastname ?? ""}`}
-                    avatarProps={{
-                        radius: "full",
-                        size: "lg",
-                        src: userDb.image ?? undefined
-                    }}
-                />
-            )}
+            {/*{userDb && (*/}
+            {/*    <User*/}
+            {/*        description={userDb.email}*/}
+            {/*        name={`${userDb.firstname} ${userDb.lastname ?? ""}`}*/}
+            {/*        avatarProps={{*/}
+            {/*            radius: "full",*/}
+            {/*            size: "lg",*/}
+            {/*            src: userDb.image ?? undefined*/}
+            {/*        }}*/}
+            {/*    />*/}
+            {/*)}*/}
 
-            <UserButton />
+            {/*<UserButton />*/}
 
-            <Divider className="my-2" />
+            {/*<Divider className="my-2" />*/}
 
             <div className="flex flex-col gap-4">
                 <div className="text-xl uppercase font-medium">Prédiction en cours</div>
@@ -84,13 +81,13 @@ export default async function IndexPage() {
                 </div>
 
                 <div className="flex flex-row w-full gap-3">
-                    <Card className="basis-1/2 h-32 border-none bg-gradient-to-br from-primary-500 to-secondary-500">
+                    <Card className="basis-1/2 h-32 border-none bg-gradient-to-br from-primary to-secondary text-white">
                         <CardBody className="justify-center items-center">
                             <span className="font-bold text-4xl">{bets.length}</span>
                             <span>Prédictions</span>
                         </CardBody>
                     </Card>
-                    <Card className="basis-1/2 h-32 border-none bg-gradient-to-br from-primary-500 to-secondary-500">
+                    <Card className="basis-1/2 h-32 border-none bg-gradient-to-br from-primary to-secondary text-white">
                         <CardBody className="justify-center items-center">
                             <span className="font-bold text-4xl">{deadCelebrities.length}</span>
                             <span>Décès</span>

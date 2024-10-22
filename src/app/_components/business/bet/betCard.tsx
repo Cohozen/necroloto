@@ -55,7 +55,7 @@ export default async function BetCard({ bet }: BetCardProps) {
                     classNames={{
                         base: "max-w-md",
                         track: "drop-shadow-md border border-default",
-                        indicator: "bg-gradient-to-r from-primary-500 to-secondary-500",
+                        indicator: "bg-gradient-to-r from-primary to-secondary",
                         label: "tracking-wider font-medium text-default-600",
                         value: "text-foreground/60"
                     }}
