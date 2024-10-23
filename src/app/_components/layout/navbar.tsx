@@ -92,8 +92,8 @@ export default function Navbar() {
                 <Drawer.Portal>
                     <Drawer.Overlay className="fixed inset-0 z-50 bg-black/40" />
                     <Drawer.Content className="right-0 top-0 bottom-0 fixed z-50 flex outline-none">
-                        <div className="flex flex-col bg-background rounded-2xl w-72 grow mt-2 mr-2 mb-2 p-6">
-                            <div className="flex items-center justify-between px-2">
+                        <div className="flex flex-col bg-background rounded-l-2xl w-72 grow p-6">
+                            <Drawer.Title className="flex items-center justify-between px-2">
                                 <div className="flex items-center gap-2">
                                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground text-background">
                                         <AppIcon className="h-7 w-7" />
@@ -112,7 +112,7 @@ export default function Navbar() {
                                 >
                                     <CrossLineIcon className="h-7 w-7" />
                                 </Button>
-                            </div>
+                            </Drawer.Title>
 
                             <Spacer y={8} />
 

@@ -13,7 +13,7 @@ export const metadata = {
     generator: "Next.js",
     manifest: "/manifest.json",
     keywords: ["necroloto", "loto", "game"],
-    themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#000" }],
+    themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#202124" }],
     authors: [{ name: "LE GAL Corentin" }],
     icons: [
         { rel: "apple-touch-icon", url: "/icon-192x192.png" },

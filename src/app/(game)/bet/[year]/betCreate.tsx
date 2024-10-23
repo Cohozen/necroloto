@@ -11,11 +11,14 @@ import {
     Button,
     Autocomplete,
     Progress,
+    Card,
+    CardBody,
+    CardHeader,
     MenuTriggerAction
 } from "@nextui-org/react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-
+import { Drawer } from "vaul";
 import { createBetWithCelebritiesAction } from "@/lib/actions/bet";
 
 interface BetCreateProps {
@@ -35,8 +38,9 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
 
     const maxCelebritiesInBet = 5;
 
+    const [confirmationOpened, setConfirmationOpened] = useState(false);
     const [fieldState, setFieldState] = useState<AutocompleteState>({
-        selectedKey: "",
+        selectedKey: null,
         inputValue: "",
         items: celebrities
     });
@@ -125,7 +129,6 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
             <Progress
                 label="Progression de la prédiction"
                 value={selectedCelebrities.length}
-                size="sm"
                 showValueLabel={true}
                 maxValue={maxCelebritiesInBet}
                 classNames={{
@@ -153,12 +156,13 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
                     label={`${celebrities.length} Célébrités`}
                     placeholder="Rechercher une célébrité"
                     radius="lg"
-                    size="sm"
+                    size="md"
                     fullWidth
                     allowsCustomValue
                     listboxProps={{
                         emptyContent: "Ajouter une nouvelle célébrité"
                     }}
+                    description="Tu peux ajouter de nouvelles célébrités"
                     isDisabled={selectedCelebrities.length >= maxCelebritiesInBet}
                 >
                     {(celebrity) => (
@@ -174,8 +178,8 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
                 </Autocomplete>
                 <Button
                     color="primary"
-                    variant="flat"
-                    size="lg"
+                    variant="solid"
+                    className="h-14"
                     onPress={onPressAddButton}
                     isDisabled={fieldState.selectedKey === null && fieldState.inputValue === ""}
                 >
@@ -183,38 +187,99 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
                 </Button>
             </div>
 
-            <div className="flex flex-wrap gap-1">
-                {selectedCelebrities.map((c) => {
-                    const celebrity = celebrities.find((celebrity) => celebrity.id === c);
-                    return (
-                        <Chip
-                            key={c}
-                            variant="flat"
-                            avatar={
-                                <Avatar
-                                    name={celebrity?.name ?? c}
-                                    src={celebrity?.photo ?? ""}
-                                    getInitials={(name) => name.charAt(0)}
-                                />
-                            }
-                            onClose={() => handleDeleteCelebrity(c)}
-                        >
-                            {celebrity?.name ?? c}
-                        </Chip>
-                    );
-                })}
-            </div>
+            <Card
+                fullWidth
+                isBlurred
+                shadow="sm"
+                className="border-none bg-background/60 dark:bg-default-100/50"
+            >
+                <CardHeader className="pb-0 text-xs">
+                    {`${selectedCelebrities.length}/${maxCelebritiesInBet} sélectionné${
+                        selectedCelebrities.length > 1 ? "s" : ""
+                    }`}
+                </CardHeader>
+                <CardBody>
+                    <div className="flex flex-wrap gap-1">
+                        {selectedCelebrities.map((c) => {
+                            const celebrity = celebrities.find((celebrity) => celebrity.id === c);
+                            return (
+                                <Chip
+                                    key={c}
+                                    variant="flat"
+                                    onClose={() => handleDeleteCelebrity(c)}
+                                    avatar={
+                                        <Avatar
+                                            name={celebrity?.name ?? c}
+                                            src={celebrity?.photo ?? ""}
+                                            getInitials={(name) => name.charAt(0)}
+                                        />
+                                    }
+                                >
+                                    {celebrity?.name ?? c}
+                                </Chip>
+                            );
+                        })}
+                    </div>
+                </CardBody>
+            </Card>
 
             <Button
                 color="primary"
-                variant="flat"
-                size="lg"
-                isLoading={loadingCreate}
-                isDisabled={selectedCelebrities.length < maxCelebritiesInBet}
-                onPress={() => onCreateBet()}
+                variant="solid"
+                radius="full"
+                isDisabled={selectedCelebrities.length < maxCelebritiesInBet || loadingCreate}
+                onPress={() => setConfirmationOpened(true)}
             >
                 Valider la prédiction
             </Button>
+
+            <Drawer.Root
+                direction="bottom"
+                open={confirmationOpened}
+                onOpenChange={setConfirmationOpened}
+            >
+                <Drawer.Portal>
+                    <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+                    <Drawer.Content className="bg-background flex flex-col rounded-t-2xl mt-24 h-fit fixed bottom-0 left-0 right-0 outline-none">
+                        <div className="p-4 bg-background rounded-t-2xl flex-1">
+                            <div
+                                aria-hidden
+                                className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 dark:bg-default-50 mb-8"
+                            />
+                            <div className="max-w-md mx-auto flex flex-col gap-4">
+                                <Drawer.Title className="text-xl font-medium">
+                                    Confirmation
+                                </Drawer.Title>
+                                <p>
+                                    Vérifie bien ta prédiction avant de la valider, il serait
+                                    dommage de se tromper !
+                                </p>
+                                <div className="flex flex-row gap-2">
+                                    <Button
+                                        color="secondary"
+                                        variant="ghost"
+                                        radius="full"
+                                        className="basis-1/2"
+                                        onPress={() => setConfirmationOpened(false)}
+                                    >
+                                        Retour
+                                    </Button>
+                                    <Button
+                                        color="primary"
+                                        variant="solid"
+                                        radius="full"
+                                        className="basis-1/2"
+                                        isLoading={loadingCreate}
+                                        onPress={() => onCreateBet()}
+                                    >
+                                        Confirmer
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </Drawer.Content>
+                </Drawer.Portal>
+            </Drawer.Root>
         </div>
     );
 }

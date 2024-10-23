@@ -1,36 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import {
-    Avatar,
-    Chip,
-    Popover,
-    PopoverTrigger,
-    CardFooter,
-    Card,
-    CardBody,
-    Divider,
-    Table,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    AccordionItem,
-    Accordion,
-    User,
-    Tabs,
-    Tab,
-    Button,
-    Link,
-    Select,
-    SelectItem
-} from "@nextui-org/react";
-import { Celebrity } from "@prisma/client";
-import { BetsWithUserAndCelebritiesOnBet, RankedBets, RankedBetsWithUsers } from "@/lib/types/bet";
-import UserAvatar from "@/components/business/user/UserAvatar";
+import { Avatar, Chip, Card, CardBody, Tabs, Tab, Select, SelectItem } from "@nextui-org/react";
+import { RankedBetsWithUsers } from "@/lib/types/bet";
 import { MedalStarIcon } from "@/ui/icons/MedalStarIcon";
 import { CupFirstIcon } from "@/ui/icons/CupFirstIcon";
 import { MedalRibbonsIcon } from "@/ui/icons/MedalRibbonsIcon";
-import { buildUserName } from "@/lib/helpers/user";
 import { CardHeader } from "@nextui-org/card";
 import { useRouter } from "next/navigation";
 import Confetti from "react-confetti-boom";
@@ -90,7 +65,6 @@ export default function Ranking({ bets }: RankingProps) {
                         label="Année"
                         disallowEmptySelection
                         variant="bordered"
-                        size="sm"
                         radius="lg"
                         fullWidth
                         selectedKeys={[year]}
@@ -197,6 +171,7 @@ export default function Ranking({ bets }: RankingProps) {
                                         key={bet.id}
                                         fullWidth
                                         isPressable
+                                        shadow="sm"
                                         onPress={() => router.push(`/bets/${bet.id}`)}
                                     >
                                         <CardHeader className="flex gap-3">
@@ -215,7 +190,7 @@ export default function Ranking({ bets }: RankingProps) {
                                                 {rank > 3 && <MedalStarIcon className="w-6 h-6 " />}
                                             </div>
 
-                                            <div className="flex flex-col flex-1 items-start">
+                                            <div className="flex flex-col flex-1 items-start gap-1">
                                                 <div className="text-md font-medium">
                                                     {`${bet.user.firstname} ${
                                                         bet.user.lastname ?? ""

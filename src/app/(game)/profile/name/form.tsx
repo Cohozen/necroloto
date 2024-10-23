@@ -63,9 +63,12 @@ export default function FormName({ userDb }: FormNameProps) {
                 radius="full"
                 onPress={() => update()}
                 isLoading={loading}
-                isDisabled={firstNameInvalid}
+                isDisabled={
+                    firstNameInvalid ||
+                    (userDb.firstname === firstName && userDb.lastname === lastName)
+                }
             >
-                OK
+                Valider
             </Button>
         </div>
     );

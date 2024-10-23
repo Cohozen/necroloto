@@ -154,6 +154,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                                                                         item.lastname ?? ""
                                                                     }`}
                                                                     avatarProps={{
+                                                                        isBordered: true,
                                                                         radius: "full",
                                                                         size: "sm",
                                                                         src: item.image ?? undefined

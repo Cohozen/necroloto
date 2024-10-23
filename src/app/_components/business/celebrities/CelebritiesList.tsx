@@ -2,28 +2,11 @@
 
 import { Celebrity } from "@prisma/client";
 import React, { useEffect, useState } from "react";
-import useClerkSWR from "@/utils/hooks/useClerkSWR";
-import useDebounce from "@/utils/hooks/useDebounce";
 import { WidgetLineIcon } from "@/ui/icons/WidgetLineIcon";
 import { ListLineIcon } from "@/ui/icons/ListLineIcon";
-import classNames from "classnames";
 import CelebrityCard from "@/components/business/celebrity/CelebrityCard";
 
-import {
-    Table,
-    TableHeader,
-    TableColumn,
-    TableBody,
-    TableRow,
-    TableCell,
-    User,
-    Chip,
-    Input,
-    Switch,
-    Button,
-    Link
-} from "@nextui-org/react";
-import dayjs from "dayjs";
+import { Input, Switch } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import CelebritiesTable from "@/components/business/celebrities/CelebritiesTable";
 
@@ -35,14 +18,7 @@ export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
     const router = useRouter();
 
     const [searchName, setSearchName] = useState("");
-    const [displayMode, setDisplayMode] = useState(false);
-    const [open, setOpen] = useState(false);
-
-    // const debouncedSearch = useDebounce(searchName, 500);
-    //
-    // const { data: celebrities } = useClerkSWR<Celebrity[]>(
-    //     `/api/celebrities?name=${debouncedSearch}`
-    // );
+    const [displayMode, setDisplayMode] = useState(true);
 
     const celebritiesSorted =
         celebrities?.sort((a, b) => {

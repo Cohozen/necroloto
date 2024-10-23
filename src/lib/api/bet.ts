@@ -120,7 +120,7 @@ export const insertBetWithCelebrities = async (bet: CreatedBet, celebrities: str
 
                 if (!celebrityFound)
                     celebrityFound = await tx.celebrity.findFirst({
-                        where: { name: celebrityKey.trim() }
+                        where: { name: { equals: celebrityKey.trim(), mode: "insensitive" } }
                     });
 
                 if (celebrityFound) {

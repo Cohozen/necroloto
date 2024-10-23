@@ -37,7 +37,6 @@ export async function BetsList({ bets }: BetsListProps) {
                 label="Année"
                 disallowEmptySelection
                 variant="bordered"
-                size="sm"
                 radius="lg"
                 fullWidth
                 selectedKeys={[year]}
