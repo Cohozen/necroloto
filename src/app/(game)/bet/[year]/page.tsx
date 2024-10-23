@@ -6,10 +6,9 @@ import { notFound, redirect } from "next/navigation";
 
 export default async function BetPage({ params }: { params: { year: string } }) {
     const user = await currentUser();
-
     const number = parseInt(params.year, 10);
 
-    if (number !== 2025) notFound();
+    if (process.env.ALLOW_NEW_BET !== "true" || number !== 2025) notFound();
 
     if (user && user.externalId) {
         const result = await getBetByUserAndYear(user.externalId, number);

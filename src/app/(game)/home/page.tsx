@@ -12,7 +12,7 @@ export default async function IndexPage() {
     const user = await currentUser();
 
     const currentYear = 2024;
-    const allowNewBet = true;
+    const allowNewBet = process.env.ALLOW_NEW_BET;
 
     let currentRank = 0;
 
@@ -98,7 +98,7 @@ export default async function IndexPage() {
                             <span className="text-center">A venir</span>
                         </CardBody>
                     </Card>
-                    {allowNewBet && (
+                    {allowNewBet === "true" && (
                         <Button
                             color="primary"
                             href={`/bet/${currentYear + 1}`}
