@@ -36,7 +36,6 @@ export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
                     type="text"
                     placeholder="Rechercher"
                     variant="faded"
-                    size="sm"
                     radius="full"
                     className="grow"
                     isClearable
@@ -45,7 +44,7 @@ export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
                 />
 
                 <Switch
-                    size="md"
+                    size="lg"
                     color="default"
                     isSelected={displayMode}
                     onValueChange={setDisplayMode}

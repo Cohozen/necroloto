@@ -45,10 +45,7 @@ export default function Navbar() {
 
     return (
         <NextNavbar isBlurred={false} className="bg-transparent py-4" height="54px">
-            <NavbarContent
-                justify="start"
-                className="gap-4 rounded-full border-small border-default-200/20 bg-background/60 px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
-            >
+            <NavbarContent className="gap-4 rounded-full !justify-between border-small border-default-200/20 bg-background/60 px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50">
                 <NavbarItem>
                     {isInPrimaryPage && (
                         <Button
@@ -75,7 +72,6 @@ export default function Navbar() {
                         </Button>
                     )}
                 </NavbarItem>
-                <div className="flex basis-0 flex-row flex-grow flex-nowrap justify-start bg-transparent items-center no-underline text-medium whitespace-nowrap box-border mr-2 md:w-auto md:max-w-fit"></div>
                 <Button
                     isIconOnly
                     color="default"

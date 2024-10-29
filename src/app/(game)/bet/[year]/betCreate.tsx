@@ -179,6 +179,7 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
                 <Button
                     color="primary"
                     variant="solid"
+                    radius="lg"
                     className="h-14"
                     onPress={onPressAddButton}
                     isDisabled={fieldState.selectedKey === null && fieldState.inputValue === ""}
@@ -256,7 +257,7 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
                                 </p>
                                 <div className="flex flex-row gap-2">
                                     <Button
-                                        color="secondary"
+                                        color="default"
                                         variant="ghost"
                                         radius="full"
                                         className="basis-1/2"

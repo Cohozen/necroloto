@@ -74,7 +74,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                             src={celebrity.photo ?? undefined}
                             name={celebrity.name}
                             radius="md"
-                            className="w-full h-56 text-large"
+                            className="w-full h-56 md:h-80 text-large"
                         />
 
                         <div className="text-3xl font-bold">{celebrity.name}</div>
@@ -128,9 +128,9 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                                         <Table removeWrapper hideHeader>
                                             <TableHeader>
                                                 <TableColumn>Nom</TableColumn>
-                                                <TableColumn>Points</TableColumn>
-                                                <TableColumn>Classement</TableColumn>
-                                                <TableColumn>Action</TableColumn>
+                                                <TableColumn align="center">Points</TableColumn>
+                                                <TableColumn align="center">Classement</TableColumn>
+                                                <TableColumn align="end">Action</TableColumn>
                                             </TableHeader>
                                             <TableBody
                                                 items={usersWhoBetThisCelebrity}
@@ -161,10 +161,10 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                                                                     }}
                                                                 />
                                                             </TableCell>
-                                                            <TableCell className="text-center text-xs font-light">
+                                                            <TableCell className="text-xs font-light">
                                                                 {`${currentBet?.total} Pts`}
                                                             </TableCell>
-                                                            <TableCell className="text-center text-xs font-light">
+                                                            <TableCell className="text-xs font-light">
                                                                 {`${index + 1}${
                                                                     index + 1 === 1 ? "er" : "ème"
                                                                 }`}

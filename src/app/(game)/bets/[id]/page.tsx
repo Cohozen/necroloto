@@ -116,7 +116,6 @@ export default async function BetPage({ params }: { params: { id: string } }) {
                                         }}
                                         value={Math.abs(aliveStats)}
                                         strokeWidth={3}
-                                        //formatOptions={{ style: "decimal" }}
                                         showValueLabel={true}
                                     />
                                 </CardBody>
@@ -166,7 +165,7 @@ export default async function BetPage({ params }: { params: { id: string } }) {
                                         }}
                                         variant="bordered"
                                     >
-                                        Le plus vieux
+                                        Plus vieux
                                     </Chip>
                                 </div>
                                 <div className="flex flex-col gap-1 items-center">
@@ -177,7 +176,7 @@ export default async function BetPage({ params }: { params: { id: string } }) {
                                         }}
                                         variant="bordered"
                                     >
-                                        Le plus jeune
+                                        Plus jeune
                                     </Chip>
                                 </div>
                             </CardFooter>

@@ -38,13 +38,13 @@ export default async function CurrentBet({ bet, rank }: CurrentBetProps) {
     const diff = dayjs.duration(endOfYear.diff(now));
 
     return (
-        <Card fullWidth>
+        <Card className="w-full md:basis-2/3">
             <CardBody className="text-small text-default-400">
                 <Progress
                     size="sm"
                     radius="sm"
                     classNames={{
-                        base: "max-w-md",
+                        base: "w-full",
                         track: "drop-shadow-md border border-default",
                         indicator: "bg-gradient-to-r from-primary to-secondary",
                         label: "tracking-wider font-medium text-default-600",

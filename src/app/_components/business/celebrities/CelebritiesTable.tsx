@@ -24,11 +24,11 @@ interface CelebritiesTableProps {
 
 export default function CelebritiesTable({ celebrities, hideHeader }: CelebritiesTableProps) {
     return (
-        <Table removeWrapper hideHeader={hideHeader}>
+        <Table removeWrapper hideHeader={hideHeader} fullWidth>
             <TableHeader>
                 <TableColumn>Célébrités</TableColumn>
                 <TableColumn align="center">Etat</TableColumn>
-                <TableColumn> </TableColumn>
+                <TableColumn align="end"> </TableColumn>
             </TableHeader>
             <TableBody items={celebrities} emptyContent={"Aucune célébrité"}>
                 {(item) => {
