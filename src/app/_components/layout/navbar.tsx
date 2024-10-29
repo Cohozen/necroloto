@@ -44,7 +44,7 @@ export default function Navbar() {
         isInPrimaryPage && (pathnames[1] === "sign-in" || pathnames[1] === "sign-up");
 
     return (
-        <NextNavbar isBlurred={false} className="bg-transparent py-4" height="54px">
+        <NextNavbar isBlurred={false} className="bg-transparent py-4 lg:hidden" height="54px">
             <NavbarContent className="gap-4 rounded-full !justify-between border-small border-default-200/20 bg-background/60 px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50">
                 <NavbarItem>
                     {isInPrimaryPage && (

@@ -53,7 +53,6 @@ export default async function BetCard({ bet }: BetCardProps) {
                     size="sm"
                     radius="sm"
                     classNames={{
-                        base: "max-w-md",
                         track: "drop-shadow-md border border-default",
                         indicator: "bg-gradient-to-r from-primary to-secondary",
                         label: "tracking-wider font-medium text-default-600",
