@@ -245,7 +245,7 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
                         <div className="p-4 bg-background rounded-t-2xl flex-1">
                             <div
                                 aria-hidden
-                                className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 dark:bg-default-50 mb-8"
+                                className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 dark:bg-default-200 mb-8"
                             />
                             <div className="max-w-md mx-auto flex flex-col gap-4">
                                 <Drawer.Title className="text-xl font-medium">

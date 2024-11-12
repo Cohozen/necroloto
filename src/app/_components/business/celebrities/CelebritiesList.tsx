@@ -35,7 +35,8 @@ export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
                 <Input
                     type="text"
                     placeholder="Rechercher"
-                    variant="faded"
+                    variant="bordered"
+                    color="default"
                     radius="full"
                     className="grow"
                     isClearable
@@ -62,7 +63,7 @@ export default function CelebritiesList({ celebrities }: CelebritiesListProps) {
                     </div>
                 )}
 
-                {displayMode && <CelebritiesTable celebrities={celebritiesSorted} />}
+                {displayMode && <CelebritiesTable hideHeader celebrities={celebritiesSorted} />}
             </div>
         </div>
     );

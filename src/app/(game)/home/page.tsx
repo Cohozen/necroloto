@@ -44,12 +44,12 @@ export default async function IndexPage() {
                 <div className="text-[28px] font-semibold mb-3 lg:mb-4">Prédiction en cours</div>
 
                 <div className="flex flex-row w-full gap-2">
-                    <Card className="basis-1/3 h-28 lg:h-40 border-2 bg-background">
+                    <Card shadow="none" className="basis-1/3 h-28 lg:h-40 border-2 bg-background">
                         <CardBody className="justify-center items-center">
                             <span className="font-bold text-3xl">{currentYear}</span>
                         </CardBody>
                     </Card>
-                    <Card className="basis-1/3 h-28 lg:h-40">
+                    <Card shadow="none" className="basis-1/3 h-28 lg:h-40">
                         <CardBody className="justify-center">
                             <span className="text-center lg:text-xl">Prédictions fermés</span>
                         </CardBody>
@@ -69,13 +69,19 @@ export default async function IndexPage() {
                 </div>
 
                 <div className="flex flex-row w-full gap-3">
-                    <Card className="basis-1/2 h-32 lg:h-44 border-none bg-gradient-to-br from-primary to-secondary text-white">
+                    <Card
+                        shadow="none"
+                        className="basis-1/2 h-32 lg:h-44 border-none bg-gradient-to-br from-primary to-secondary text-white"
+                    >
                         <CardBody className="justify-center items-center">
                             <span className="font-bold text-4xl">{bets.length}</span>
                             <span>Prédictions</span>
                         </CardBody>
                     </Card>
-                    <Card className="basis-1/2 h-32 lg:h-44 border-none bg-gradient-to-br from-primary to-secondary text-white">
+                    <Card
+                        shadow="none"
+                        className="basis-1/2 h-32 lg:h-44 border-none bg-gradient-to-br from-primary to-secondary text-white"
+                    >
                         <CardBody className="justify-center items-center">
                             <span className="font-bold text-4xl">{deadCelebrities.length}</span>
                             <span>Décès</span>
@@ -88,12 +94,12 @@ export default async function IndexPage() {
                 <div className="text-[28px] font-semibold mb-3 lg:mb-4">Prochaine prédiction</div>
 
                 <div className="flex flex-row w-full gap-2">
-                    <Card className="basis-1/3 h-28 lg:h-40 border-2 bg-background">
+                    <Card shadow="none" className="basis-1/3 h-28 lg:h-40 border-2 bg-background">
                         <CardBody className="justify-center items-center">
                             <span className="font-bold text-3xl">{currentYear + 1}</span>
                         </CardBody>
                     </Card>
-                    <Card className="basis-1/3 h-28 lg:h-40">
+                    <Card shadow="none" className="basis-1/3 h-28 lg:h-40">
                         <CardBody className="justify-center">
                             <span className="text-center lg:text-xl">A venir</span>
                         </CardBody>

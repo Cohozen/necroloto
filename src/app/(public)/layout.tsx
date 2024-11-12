@@ -12,6 +12,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     if (user) redirect("/home");
 
     return (
-        <div className="relative overflow-hidden h-[100dvh] light bg-background">{children}</div>
+        <div className="relative overflow-hidden h-[100dvh] dark bg-background">{children}</div>
     );
 }

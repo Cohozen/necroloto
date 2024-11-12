@@ -38,7 +38,7 @@ export default async function CurrentBet({ bet, rank }: CurrentBetProps) {
     const diff = dayjs.duration(endOfYear.diff(now));
 
     return (
-        <Card className="w-full xl:basis-2/3">
+        <Card shadow="none" className="w-full xl:basis-2/3">
             <CardBody className="text-small text-default-400">
                 <Progress
                     size="sm"

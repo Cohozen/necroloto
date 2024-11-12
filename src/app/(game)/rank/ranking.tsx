@@ -1,7 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Avatar, Chip, Card, CardBody, Tabs, Tab, Select, SelectItem } from "@nextui-org/react";
+import {
+    Avatar,
+    Chip,
+    Card,
+    CardBody,
+    Tabs,
+    Tab,
+    Select,
+    SelectItem,
+    Popover,
+    PopoverTrigger,
+    PopoverContent
+} from "@nextui-org/react";
 import { RankedBetsWithUsers } from "@/lib/types/bet";
 import { MedalStarIcon } from "@/ui/icons/MedalStarIcon";
 import { CupFirstIcon } from "@/ui/icons/CupFirstIcon";
@@ -75,20 +87,47 @@ export default function Ranking({ bets }: RankingProps) {
                         {(item) => <SelectItem key={item.key}>{item.label}</SelectItem>}
                     </Select>
 
-                    <Card>
+                    <Card shadow="none">
                         <CardBody className="pb-0">
                             <div className="flex flex-row justify-center items-end md:pb-4">
                                 <div className="flex flex-col items-center gap-2">
                                     {bets[2]?.user && (
-                                        <Avatar
-                                            isBordered
-                                            radius="full"
-                                            size="sm"
-                                            src={bets[2]?.user.image ?? undefined}
-                                            name={`${bets[2]?.user.firstname} ${
-                                                bets[2]?.user.lastname ?? ""
-                                            }`}
-                                        />
+                                        <Popover
+                                            showArrow
+                                            backdrop="blur"
+                                            classNames={{
+                                                base: ["before:bg-default-200"],
+                                                content: [
+                                                    "py-3 px-4 border border-default-200",
+                                                    "bg-gradient-to-br from-white to-default-300",
+                                                    "dark:from-default-100 dark:to-default-50"
+                                                ]
+                                            }}
+                                        >
+                                            <PopoverTrigger>
+                                                <Avatar
+                                                    isBordered
+                                                    radius="full"
+                                                    size="sm"
+                                                    src={bets[2]?.user.image ?? undefined}
+                                                    name={`${bets[2]?.user.firstname} ${
+                                                        bets[2]?.user.lastname ?? ""
+                                                    }`}
+                                                />
+                                            </PopoverTrigger>
+                                            <PopoverContent>
+                                                <div className="px-1 py-2">
+                                                    <div className="text-small font-bold">
+                                                        {`${bets[2]?.user.firstname} ${
+                                                            bets[2]?.user.lastname ?? ""
+                                                        }`}
+                                                    </div>
+                                                    <div className="text-tiny">
+                                                        {`3ème place avec ${bets[2]?.total} points`}
+                                                    </div>
+                                                </div>
+                                            </PopoverContent>
+                                        </Popover>
                                     )}
                                     <div className="flex justify-center items-start py-4 bg-secondary-200 dark:bg-secondary-400 h-16 w-20 rounded-tl-xl">
                                         <MedalStarIcon className="w-6 h-6 text-amber-800" />
@@ -97,15 +136,42 @@ export default function Ranking({ bets }: RankingProps) {
 
                                 <div className="flex flex-col items-center gap-2">
                                     {bets[0].user && (
-                                        <Avatar
-                                            isBordered
-                                            radius="full"
-                                            size="sm"
-                                            src={bets[0]?.user.image ?? undefined}
-                                            name={`${bets[0]?.user.firstname} ${
-                                                bets[0]?.user.lastname ?? ""
-                                            }`}
-                                        />
+                                        <Popover
+                                            showArrow
+                                            backdrop="blur"
+                                            classNames={{
+                                                base: ["before:bg-default-200"],
+                                                content: [
+                                                    "py-3 px-4 border border-default-200",
+                                                    "bg-gradient-to-br from-white to-default-300",
+                                                    "dark:from-default-100 dark:to-default-50"
+                                                ]
+                                            }}
+                                        >
+                                            <PopoverTrigger>
+                                                <Avatar
+                                                    isBordered
+                                                    radius="full"
+                                                    size="sm"
+                                                    src={bets[0]?.user.image ?? undefined}
+                                                    name={`${bets[0]?.user.firstname} ${
+                                                        bets[0]?.user.lastname ?? ""
+                                                    }`}
+                                                />
+                                            </PopoverTrigger>
+                                            <PopoverContent>
+                                                <div className="px-1 py-2">
+                                                    <div className="text-small font-bold">
+                                                        {`${bets[0]?.user.firstname} ${
+                                                            bets[0]?.user.lastname ?? ""
+                                                        }`}
+                                                    </div>
+                                                    <div className="text-tiny">
+                                                        {`1ère place avec ${bets[0]?.total} points`}
+                                                    </div>
+                                                </div>
+                                            </PopoverContent>
+                                        </Popover>
                                     )}
                                     <div className="flex justify-center items-start py-4 bg-secondary-400 dark:bg-secondary-200 h-44 w-20 rounded-t-xl">
                                         <CupFirstIcon className="w-8 h-8 text-amber-300" />
@@ -114,15 +180,42 @@ export default function Ranking({ bets }: RankingProps) {
 
                                 <div className="flex flex-col items-center gap-2">
                                     {bets[1]?.user && (
-                                        <Avatar
-                                            isBordered
-                                            radius="full"
-                                            size="sm"
-                                            src={bets[1]?.user.image ?? undefined}
-                                            name={`${bets[1]?.user.firstname} ${
-                                                bets[1]?.user.lastname ?? ""
-                                            }`}
-                                        />
+                                        <Popover
+                                            showArrow
+                                            backdrop="blur"
+                                            classNames={{
+                                                base: ["before:bg-default-200"],
+                                                content: [
+                                                    "py-3 px-4 border border-default-200",
+                                                    "bg-gradient-to-br from-white to-default-300",
+                                                    "dark:from-default-100 dark:to-default-50"
+                                                ]
+                                            }}
+                                        >
+                                            <PopoverTrigger>
+                                                <Avatar
+                                                    isBordered
+                                                    radius="full"
+                                                    size="sm"
+                                                    src={bets[1]?.user.image ?? undefined}
+                                                    name={`${bets[1]?.user.firstname} ${
+                                                        bets[1]?.user.lastname ?? ""
+                                                    }`}
+                                                />
+                                            </PopoverTrigger>
+                                            <PopoverContent>
+                                                <div className="px-1 py-2">
+                                                    <div className="text-small font-bold">
+                                                        {`${bets[1]?.user.firstname} ${
+                                                            bets[1]?.user.lastname ?? ""
+                                                        }`}
+                                                    </div>
+                                                    <div className="text-tiny">
+                                                        {`2ème place avec ${bets[1]?.total} points`}
+                                                    </div>
+                                                </div>
+                                            </PopoverContent>
+                                        </Popover>
                                     )}
                                     <div className="flex justify-center items-start py-4 bg-secondary-300 h-28 w-20 rounded-tr-xl">
                                         <MedalRibbonsIcon className="w-6 h-6 text-zinc-500" />
@@ -171,7 +264,7 @@ export default function Ranking({ bets }: RankingProps) {
                                         key={bet.id}
                                         fullWidth
                                         isPressable
-                                        shadow="sm"
+                                        shadow="none"
                                         onPress={() => router.push(`/bets/${bet.id}`)}
                                     >
                                         <CardHeader className="flex gap-3">

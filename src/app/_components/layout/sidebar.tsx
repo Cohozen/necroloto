@@ -2,10 +2,10 @@
 
 import { useUser } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
+import NextImage from "next/image";
 import React from "react";
-import { AppIcon } from "@/ui/icons/AppIcon";
 import ToggleTheme from "@/components/layout/toggleTheme";
-import { Avatar, Button, Link, Listbox, ListboxItem, Spacer } from "@nextui-org/react";
+import { Avatar, Image, Link, Listbox, ListboxItem, Spacer } from "@nextui-org/react";
 import { HomeIcon } from "@/ui/icons/HomeIcon";
 import classNames from "classnames";
 import { RankingIcon } from "@/ui/icons/RankingIcon";
@@ -23,9 +23,13 @@ export default function Sidebar() {
         <nav className="fixed lg:flex flex-col pt-5 pb-4 bg-default-50 top-0 h-screen hidden w-[280px]">
             <div className="flex items-center px-4">
                 <div className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground text-background">
-                        <AppIcon className="h-7 w-7" />
-                    </div>
+                    <Image
+                        as={NextImage}
+                        src="/logo.jpeg"
+                        width={52}
+                        height={38}
+                        alt="Necroloto logo"
+                    />
                     <span className="text-base font-bold uppercase leading-6 text-foreground">
                         Necroloto
                     </span>
@@ -34,7 +38,12 @@ export default function Sidebar() {
 
             <Spacer y={8} />
 
-            <Listbox variant="bordered" selectionMode="single" selectedKeys={[pathnames[1]]} className="px-2">
+            <Listbox
+                variant="bordered"
+                selectionMode="single"
+                selectedKeys={[pathnames[1]]}
+                className="px-2"
+            >
                 <ListboxItem
                     key="home"
                     href="/home"

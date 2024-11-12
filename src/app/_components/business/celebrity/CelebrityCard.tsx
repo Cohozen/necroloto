@@ -25,6 +25,7 @@ export default function CelebrityCard({ celebrity }: CelebrityCardProps) {
             isFooterBlurred
             className="h-[220px]"
             isPressable
+            shadow="none"
             onPress={() => router.push(`/celebrities/${celebrity.id}`)}
         >
             <CardHeader className="absolute z-10 top-1 flex-col items-start">
