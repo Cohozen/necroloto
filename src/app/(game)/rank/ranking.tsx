@@ -21,6 +21,7 @@ import { MedalRibbonsIcon } from "@/ui/icons/MedalRibbonsIcon";
 import { CardHeader } from "@nextui-org/card";
 import { useRouter } from "next/navigation";
 import Confetti from "react-confetti-boom";
+import Link from "next/link";
 
 interface RankingProps {
     bets: RankedBetsWithUsers[];
@@ -261,11 +262,12 @@ export default function Ranking({ bets }: RankingProps) {
 
                                 return (
                                     <Card
+                                        as={Link}
+                                        href={`/bets/${bet.id}`}
                                         key={bet.id}
                                         fullWidth
                                         isPressable
                                         shadow="none"
-                                        onPress={() => router.push(`/bets/${bet.id}`)}
                                     >
                                         <CardHeader className="flex gap-3">
                                             <div className="flex bg-default-300 p-2 rounded-xl h-full">
