@@ -78,7 +78,10 @@ export default async function BetPage({ params }: { params: { id: string } }) {
                 {bet && (
                     <>
                         <div className="flex w-full flex-row gap-3">
-                            <Card className="basis-1/2 h-[180px] border-none bg-gradient-to-br from-primary to-secondary">
+                            <Card
+                                shadow="none"
+                                className="basis-1/2 h-[180px] border-none bg-gradient-to-br from-primary to-secondary"
+                            >
                                 <CardBody className="justify-center items-center p-0">
                                     <CircularProgress
                                         classNames={{
@@ -105,7 +108,10 @@ export default async function BetPage({ params }: { params: { id: string } }) {
                                 </CardFooter>
                             </Card>
 
-                            <Card className="basis-1/2 h-[180px] border-none bg-gradient-to-br from-primary to-secondary">
+                            <Card
+                                shadow="none"
+                                className="basis-1/2 h-[180px] border-none bg-gradient-to-br from-primary to-secondary"
+                            >
                                 <CardBody className="justify-center items-center p-0">
                                     <CircularProgress
                                         classNames={{
@@ -135,7 +141,10 @@ export default async function BetPage({ params }: { params: { id: string } }) {
                             </Card>
                         </div>
 
-                        <Card className="w-full h-32 border-none bg-gradient-to-br from-primary to-secondary">
+                        <Card
+                            shadow="none"
+                            className="w-full h-32 border-none bg-gradient-to-br from-primary to-secondary"
+                        >
                             <CardHeader className="justify-evenly gap-4">
                                 <div className="flex flex-col items-center px-6">
                                     <span className="font-bold text-4xl">

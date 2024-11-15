@@ -18,7 +18,7 @@ export default async function BetsPage({
     });
 
     return (
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col gap-6 p-4">
             <BetsList bets={bets} />
         </div>
     );

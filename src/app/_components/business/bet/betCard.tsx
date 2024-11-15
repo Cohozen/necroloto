@@ -27,7 +27,7 @@ export default async function BetCard({ bet }: BetCardProps) {
     const total = bet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
 
     return (
-        <Card fullWidth>
+        <Card shadow="none" fullWidth>
             <CardHeader className="justify-between">
                 <div className="flex gap-3">
                     <Avatar isBordered radius="full" size="sm" src={bet.user.image ?? ""} />

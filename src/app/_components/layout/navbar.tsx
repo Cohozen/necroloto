@@ -2,6 +2,7 @@
 
 import { useUser } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
+import NextImage from "next/image";
 import { Drawer } from "vaul";
 
 import {
@@ -13,7 +14,7 @@ import {
     ListboxItem,
     Spacer,
     Avatar,
-    Link
+    Link, Image
 } from "@nextui-org/react";
 
 import ToggleTheme from "@/components/layout/toggleTheme";
@@ -45,7 +46,7 @@ export default function Navbar() {
 
     return (
         <NextNavbar isBlurred={false} className="bg-transparent py-4 lg:hidden" height="54px">
-            <NavbarContent className="gap-4 rounded-full !justify-between border-small border-default-200/20 bg-background/60 px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50">
+            <NavbarContent className="gap-4 rounded-full !justify-between border-small border-default-200/20 bg-background px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50">
                 <NavbarItem>
                     {isInPrimaryPage && (
                         <Button
@@ -89,12 +90,16 @@ export default function Navbar() {
                     <Drawer.Overlay className="fixed inset-0 z-50 bg-black/40" />
                     <Drawer.Content className="right-0 top-0 bottom-0 fixed z-50 flex outline-none">
                         <div className="flex flex-col bg-background rounded-l-2xl w-72 grow p-6">
-                            <Drawer.Title className="flex items-center justify-between px-2">
+                            <Drawer.Title className="flex items-center justify-between">
                                 <div className="flex items-center gap-2">
-                                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground text-background">
-                                        <AppIcon className="h-7 w-7" />
-                                    </div>
-                                    <span className="text-base font-bold uppercase leading-6 text-foreground">
+                                    <Image
+                                        as={NextImage}
+                                        src="/logo.jpeg"
+                                        width={52}
+                                        height={38}
+                                        alt="Necroloto logo"
+                                    />
+                                    <span className="font-bold uppercase leading-6 text-foreground">
                                         Necroloto
                                     </span>
                                 </div>
@@ -106,7 +111,7 @@ export default function Navbar() {
                                     size="sm"
                                     onClick={() => setOpen(false)}
                                 >
-                                    <CrossLineIcon className="h-7 w-7" />
+                                    <CrossLineIcon className="h-7 w-7 text-default-300" />
                                 </Button>
                             </Drawer.Title>
 

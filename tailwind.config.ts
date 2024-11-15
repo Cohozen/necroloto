@@ -114,15 +114,15 @@ module.exports = {
                 },
                 dark: {
                     colors: {
-                        background: "#202124", // Fond sombre
+                        background: "#1a1824", // Fond sombre
                         // foreground: "#e5e7eb", // Texte principal en gris clair
                         // divider: "#374151", // Séparateur discret
                         // focus: "#93c5fd", // Bleu vif pour le focus
                         //
-                        // content1: "#2d3748", // Fond sombre pour des composants primaires
-                        // content2: "#374151", // Fond un peu plus clair pour des composants secondaires
-                        // content3: "#4b5563", // Niveau de gris intermédiaire pour des composants tertiaires
-                        // content4: "#6b7280", // Couleur encore plus claire pour des composants très subtils ou désactivés
+                        content1: "#211f2e",
+                        content2: "#37334b",
+                        content3: "#4d4768",
+                        content4: "#635d86",
                         //
                         // default: {
                         //     DEFAULT: "#374151",

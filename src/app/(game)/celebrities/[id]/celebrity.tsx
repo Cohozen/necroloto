@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 import { Celebrity } from "@prisma/client";
 import { BetsWithUserAndCelebritiesOnBet, RankedBets } from "@/lib/types/bet";
 import { findIndex } from "lodash";
+import { EditPenIcon } from "@/ui/icons/EditPenIcon";
 
 interface CelebrityProps {
     celebrity: Celebrity;
@@ -109,6 +110,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                         variant="bordered"
                         color="primary"
                         selectedKey={selectedTab}
+                        disabledKeys={["2025"]}
                         onSelectionChange={(key) => setSelectedTab(key.toString())}
                         items={tabs}
                         radius="full"
@@ -194,9 +196,17 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
             )}
 
             {isAdmin && mode === "consultation" && (
-                <div className="flex justify-center">
-                    <Button color="primary" onPress={() => setMode("editing")}>
-                        Modifier
+                <div className="fixed bottom-4 right-4">
+                    <Button
+                        color="primary"
+                        variant="shadow"
+                        radius="full"
+                        size="lg"
+                        isIconOnly
+                        onPress={() => setMode("editing")}
+                        className=""
+                    >
+                        <EditPenIcon className="w-7 h-7" />
                     </Button>
                 </div>
             )}

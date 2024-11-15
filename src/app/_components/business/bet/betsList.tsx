@@ -47,7 +47,7 @@ export async function BetsList({ bets }: BetsListProps) {
                 {(item) => <SelectItem key={item.key}>{item.label}</SelectItem>}
             </Select>
 
-            <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
                 {bets.map((b) => {
                     return <BetCard key={b.id} bet={b} />;
                 })}
