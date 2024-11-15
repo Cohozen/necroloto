@@ -36,7 +36,7 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
     const { user } = useUser();
     const router = useRouter();
 
-    const maxCelebritiesInBet = 5;
+    const maxCelebritiesInBet = 50;
 
     const [confirmationOpened, setConfirmationOpened] = useState(false);
     const [fieldState, setFieldState] = useState<AutocompleteState>({
