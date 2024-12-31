@@ -11,7 +11,7 @@ export const findUserByClerkId = unstable_cache(
     async (clerkId: string) => {
         return prisma.user.findFirst({
             where: {
-                clerkId
+                clerkId: clerkId
             }
         });
     },
