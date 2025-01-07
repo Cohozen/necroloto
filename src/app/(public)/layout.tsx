@@ -3,7 +3,7 @@ import React from "react";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-export const metadata = {
+export const viewport = {
     themeColor: [{ media: "(prefers-color-scheme: light)", color: "#fff" }]
 };
 

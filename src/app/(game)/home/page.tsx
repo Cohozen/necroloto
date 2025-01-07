@@ -11,8 +11,8 @@ import CurrentBet from "./currentBet";
 export default async function IndexPage() {
     const user = await currentUser();
 
-    const currentYear = 2024;
-    const allowNewBet = process.env.ALLOW_NEW_BET;
+    const currentYear = 2025;
+    //const allowNewBet = process.env.ALLOW_NEW_BET;
 
     let currentRank = 0;
 
@@ -57,7 +57,7 @@ export default async function IndexPage() {
 
                     <Button
                         color="primary"
-                        href="/rank/"
+                        href={`/rank?year=${currentYear}`}
                         as={Link}
                         variant="flat"
                         size="lg"
@@ -75,7 +75,7 @@ export default async function IndexPage() {
                     >
                         <CardBody className="justify-center items-center">
                             <span className="font-bold text-4xl">{bets.length}</span>
-                            <span>Prédictions</span>
+                            <span>{`Prédiction${bets.length > 1 ? "s" : ""}`}</span>
                         </CardBody>
                     </Card>
                     <Card
@@ -90,35 +90,35 @@ export default async function IndexPage() {
                 </div>
             </div>
 
-            <div className="flex flex-col gap-4 mt-4">
-                <div className="text-[28px] font-semibold mb-3 lg:mb-4">Prochaine prédiction</div>
+            {/*<div className="flex flex-col gap-4 mt-4">*/}
+            {/*    <div className="text-[28px] font-semibold mb-3 lg:mb-4">Prochaine prédiction</div>*/}
 
-                <div className="flex flex-row w-full gap-2">
-                    <Card shadow="none" className="basis-1/3 h-28 lg:h-40 border-2 bg-background">
-                        <CardBody className="justify-center items-center">
-                            <span className="font-bold text-3xl">{currentYear + 1}</span>
-                        </CardBody>
-                    </Card>
-                    <Card shadow="none" className="basis-1/3 h-28 lg:h-40">
-                        <CardBody className="justify-center">
-                            <span className="text-center lg:text-xl">A venir</span>
-                        </CardBody>
-                    </Card>
-                    {allowNewBet === "true" && (
-                        <Button
-                            color="primary"
-                            href={`/bet/${currentYear + 1}`}
-                            as={Link}
-                            variant="flat"
-                            size="lg"
-                            showAnchorIcon
-                            className="flex flex-col basis-1/3 h-28 lg:h-40 lg:text-xl"
-                        >
-                            Prédire
-                        </Button>
-                    )}
-                </div>
-            </div>
+            {/*    <div className="flex flex-row w-full gap-2">*/}
+            {/*        <Card shadow="none" className="basis-1/3 h-28 lg:h-40 border-2 bg-background">*/}
+            {/*            <CardBody className="justify-center items-center">*/}
+            {/*                <span className="font-bold text-3xl">{currentYear + 1}</span>*/}
+            {/*            </CardBody>*/}
+            {/*        </Card>*/}
+            {/*        <Card shadow="none" className="basis-1/3 h-28 lg:h-40">*/}
+            {/*            <CardBody className="justify-center">*/}
+            {/*                <span className="text-center lg:text-xl">A venir</span>*/}
+            {/*            </CardBody>*/}
+            {/*        </Card>*/}
+            {/*        {allowNewBet === "true" && (*/}
+            {/*            <Button*/}
+            {/*                color="primary"*/}
+            {/*                href={`/bet/${currentYear + 1}`}*/}
+            {/*                as={Link}*/}
+            {/*                variant="flat"*/}
+            {/*                size="lg"*/}
+            {/*                showAnchorIcon*/}
+            {/*                className="flex flex-col basis-1/3 h-28 lg:h-40 lg:text-xl"*/}
+            {/*            >*/}
+            {/*                Prédire*/}
+            {/*            </Button>*/}
+            {/*        )}*/}
+            {/*    </div>*/}
+            {/*</div>*/}
 
             {myCurrentBet && (
                 <div className="flex flex-col gap-4 mt-4">

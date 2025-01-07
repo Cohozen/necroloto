@@ -26,7 +26,6 @@ import { RankingIcon } from "@/ui/icons/RankingIcon";
 import { NoteListIcon } from "@/ui/icons/NoteListIcon";
 import { PeopleIcon } from "@/ui/icons/PeopleIcon";
 import { HamburgerMenuIcon } from "@/ui/icons/HamburgerMenuIcon";
-import { AppIcon } from "@/ui/icons/AppIcon";
 import { CrossLineIcon } from "@/ui/icons/CrossLineIcon";
 
 export default function Navbar() {
@@ -41,12 +40,12 @@ export default function Navbar() {
 
     const isInPrimaryPage = pathnames.length === 2;
     const isInSecondaryPage = pathnames.length === 3;
-    const isSignPages =
-        isInPrimaryPage && (pathnames[1] === "sign-in" || pathnames[1] === "sign-up");
+    // const isSignPages =
+    //     isInPrimaryPage && (pathnames[1] === "sign-in" || pathnames[1] === "sign-up");
 
     return (
         <NextNavbar isBlurred={false} className="bg-transparent py-4 lg:hidden" height="54px">
-            <NavbarContent className="gap-4 rounded-full !justify-between border-small border-default-200/20 bg-background px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50">
+            <NavbarContent className="gap-4 rounded-full !justify-between border-small border-default-200/20 px-2 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50">
                 <NavbarItem>
                     {isInPrimaryPage && (
                         <Button

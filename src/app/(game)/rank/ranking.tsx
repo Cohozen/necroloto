@@ -25,13 +25,14 @@ import Link from "next/link";
 
 interface RankingProps {
     bets: RankedBetsWithUsers[];
+    year: number;
 }
 
-export default function Ranking({ bets }: RankingProps) {
+export default function Ranking({ bets, year }: RankingProps) {
     const router = useRouter();
 
     const [selectedTab, setSelectedTab] = useState("points");
-    const [year, setYear] = useState("2024");
+    const [yearState, setYearState] = useState("");
 
     const tabs = [
         {
@@ -57,9 +58,13 @@ export default function Ranking({ bets }: RankingProps) {
 
     useEffect(() => {
         router.replace(
-            `/rank/?sort=${encodeURIComponent(selectedTab)}&year=${encodeURIComponent(year)}`
+            `/rank/?sort=${encodeURIComponent(selectedTab)}&year=${encodeURIComponent(yearState)}`
         );
-    }, [selectedTab, year]);
+    }, [selectedTab, yearState]);
+
+    useEffect(() => {
+        setYearState(year.toString())
+    }, [year]);
 
     return (
         <Tabs
@@ -80,9 +85,8 @@ export default function Ranking({ bets }: RankingProps) {
                         variant="bordered"
                         radius="lg"
                         fullWidth
-                        selectedKeys={[year]}
-                        disabledKeys={["2025"]}
-                        onChange={(event) => setYear(event.target.value)}
+                        selectedKeys={[yearState]}
+                        onChange={(event) => setYearState(event.target.value)}
                         items={yearSelect}
                     >
                         {(item) => <SelectItem key={item.key}>{item.label}</SelectItem>}
