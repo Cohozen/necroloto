@@ -14,6 +14,7 @@ export default async function CelebrityPage({
     searchParams: Promise<{ year: string }>;
 }) {
     const user = await currentUser();
+    const { year } = await searchParams;
 
     let isAdmin = false;
 
@@ -22,10 +23,11 @@ export default async function CelebrityPage({
         if (roles) isAdmin = roles.some((r) => r === "admin");
     }
 
-    const { year } = await searchParams;
-    const num = isNaN(parseInt(year, 10)) ? 2025 : parseInt(year, 10);
-
     const celebrity = await getCelebrity(params.id);
+    const yearOfDeath = celebrity?.death ? new Date(celebrity.death).getFullYear() : 2025;
+
+    let num = isNaN(parseInt(year, 10)) ? yearOfDeath : parseInt(year, 10);
+    if (yearOfDeath < num) num = yearOfDeath;
 
     let bets: BetsWithUserAndCelebritiesOnBet[] = [];
 

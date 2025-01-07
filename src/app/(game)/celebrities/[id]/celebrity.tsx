@@ -48,7 +48,7 @@ export default function Celebrity({
 }: CelebrityProps) {
     const router = useRouter();
 
-    const [selectedTab, setSelectedTab] = useState("");
+    const [selectedTab, setSelectedTab] = useState(year.toString());
     const [mode, setMode] = useState("consultation");
 
     const tabs = [
@@ -79,15 +79,6 @@ export default function Celebrity({
     useEffect(() => {
         router.replace(`/celebrities/${celebrity.id}/?year=${encodeURIComponent(selectedTab)}`);
     }, [selectedTab]);
-
-    useEffect(() => {
-        if (celebrity.death) {
-            const yearOfDeath = dayjs(celebrity.death).year();
-            setSelectedTab(yearOfDeath.toString());
-        } else {
-            setSelectedTab(year.toString());
-        }
-    }, [year]);
 
     return (
         <>
