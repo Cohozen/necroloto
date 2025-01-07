@@ -31,13 +31,21 @@ import { EditPenIcon } from "@/ui/icons/EditPenIcon";
 
 interface CelebrityProps {
     celebrity: Celebrity;
+    celebrities: Celebrity[];
     bets: BetsWithUserAndCelebritiesOnBet[];
     rankedBets: RankedBets[];
     isAdmin: boolean;
     year: number;
 }
 
-export default function Celebrity({ celebrity, bets, rankedBets, isAdmin, year }: CelebrityProps) {
+export default function Celebrity({
+    celebrity,
+    celebrities,
+    bets,
+    rankedBets,
+    isAdmin,
+    year
+}: CelebrityProps) {
     const router = useRouter();
 
     const [selectedTab, setSelectedTab] = useState("");
@@ -80,7 +88,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin, year }
             setSelectedTab(year.toString());
         }
     }, [year]);
-    
+
     return (
         <>
             {mode === "consultation" && (
@@ -228,7 +236,11 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin, year }
             )}
 
             {isAdmin && mode === "editing" && (
-                <CelebrityUpdate celebrity={celebrity} onBack={() => setMode("consultation")} />
+                <CelebrityUpdate
+                    celebrity={celebrity}
+                    celebrities={celebrities}
+                    onBack={() => setMode("consultation")}
+                />
             )}
         </>
     );
