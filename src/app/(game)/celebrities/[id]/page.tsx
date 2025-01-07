@@ -1,6 +1,6 @@
 import { currentUser } from "@clerk/nextjs/server";
 import React from "react";
-import { getCelebrity } from "@/lib/api/celebrity";
+import { getCelebrity, SearchCelebrities } from "@/lib/api/celebrity";
 import Celebrity from "./celebrity";
 import { listBets } from "@/lib/api/bet";
 import { BetsWithUserAndCelebritiesOnBet } from "@/lib/types/bet";
@@ -38,11 +38,20 @@ export default async function CelebrityPage({
 
     const rankedBets = await RankBetsByYearWithTotalPoints(num, "points");
 
+    const celebrities = await SearchCelebrities("", true, true);
+    const celebritiesSorted =
+        celebrities
+            ?.filter((c) => c.id !== params.id && !c.death)
+            ?.sort((a, b) => {
+                return a.name.localeCompare(b.name);
+            }) ?? [];
+
     return (
         <div className="flex flex-col p-4 gap-4">
             {celebrity && (
                 <Celebrity
                     celebrity={celebrity}
+                    celebrities={celebritiesSorted}
                     bets={bets}
                     rankedBets={rankedBets}
                     isAdmin={isAdmin}

@@ -87,7 +87,7 @@ export async function updatePointsCelebrityOnBets(
     });
 }
 
-export const mergeCelebrities = async (fromId: string, toId: string) => {
+export const mergeCelebrity = async (fromId: string, toId: string) => {
     const result = prisma.$transaction(
         async (tx) => {
             await tx.celebrity.findUniqueOrThrow({

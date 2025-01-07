@@ -16,7 +16,6 @@ export default async function BetPage({ params }: { params: { year: string } }) 
     }
 
     const celebrities = await SearchCelebrities("", true, false);
-
     const celebritiesSorted =
         celebrities?.sort((a, b) => {
             return a.name.localeCompare(b.name);
