@@ -22,8 +22,8 @@ export default async function CelebrityPage({
         if (roles) isAdmin = roles.some((r) => r === "admin");
     }
 
-    const year = (await searchParams).year;
-    const num = isNaN(parseInt(year, 10)) ? 2024 : parseInt(year, 10);
+    const { year } = await searchParams;
+    const num = isNaN(parseInt(year, 10)) ? 2025 : parseInt(year, 10);
 
     const celebrity = await getCelebrity(params.id);
 
@@ -46,6 +46,7 @@ export default async function CelebrityPage({
                     bets={bets}
                     rankedBets={rankedBets}
                     isAdmin={isAdmin}
+                    year={num}
                 />
             )}
         </div>

@@ -8,12 +8,13 @@ import BetCard from "@/components/business/bet/betCard";
 
 interface BetsListProps {
     bets: BetsWithUserAndCelebrities[];
+    year: number;
 }
 
-export async function BetsList({ bets }: BetsListProps) {
+export async function BetsList({ bets, year }: BetsListProps) {
     const router = useRouter();
 
-    const [year, setYear] = useState("2024");
+    const [yearState, setYearState] = useState("");
 
     const yearSelect = [
         {
@@ -27,7 +28,11 @@ export async function BetsList({ bets }: BetsListProps) {
     ];
 
     useEffect(() => {
-        router.replace(`/bets/?year=${encodeURIComponent(year)}`);
+        router.replace(`/bets/?year=${encodeURIComponent(yearState)}`);
+    }, [yearState]);
+
+    useEffect(() => {
+        setYearState(year.toString())
     }, [year]);
 
     return (
@@ -39,9 +44,8 @@ export async function BetsList({ bets }: BetsListProps) {
                 variant="bordered"
                 radius="lg"
                 fullWidth
-                selectedKeys={[year]}
-                disabledKeys={["2025"]}
-                onChange={(event) => setYear(event.target.value)}
+                selectedKeys={[yearState]}
+                onChange={(event) => setYearState(event.target.value)}
                 items={yearSelect}
             >
                 {(item) => <SelectItem key={item.key}>{item.label}</SelectItem>}

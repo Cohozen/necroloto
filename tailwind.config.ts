@@ -22,15 +22,15 @@ module.exports = {
             themes: {
                 light: {
                     colors: {
-                        // background: "#f4f7fa", // Blanc légèrement bleuté pour un fond clair et apaisant
+                        //background: "#f4f7fa", // Blanc légèrement bleuté pour un fond clair et apaisant
                         // foreground: "#333", // Noir doux pour un texte principal lisible
                         // divider: "#e0e7eb", // Gris léger pour des séparations discrètes
                         // focus: "#4fa3f7", // Bleu vif pour les états de focus
                         //
-                        // content1: "#ffffff", // Fond blanc pour des composants primaires (comme des cards)
-                        // content2: "#f3f4f6", // Fond légèrement plus gris pour des composants secondaires
-                        // content3: "#e5e7eb", // Fond gris très léger pour des composants tertiaires
-                        // content4: "#d1d5db", // Fond gris encore plus marqué pour des composants désactivés ou subtils
+                        content1: "#fffaf8",
+                        content2: "#fef5f0",
+                        content3: "#fdebe1",
+                        content4: "#fad6c3",
                         //
                         // default: {
                         //     DEFAULT: "##d1d5db",

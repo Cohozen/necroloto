@@ -5,7 +5,7 @@ import { SignedIn } from "@clerk/nextjs";
 import Navbar from "@/components/layout/navbar";
 import Sidebar from "@/components/layout/sidebar";
 
-export const metadata = {
+export const viewport = {
     themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#202124" }]
 };
 

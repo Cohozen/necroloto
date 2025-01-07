@@ -34,12 +34,13 @@ interface CelebrityProps {
     bets: BetsWithUserAndCelebritiesOnBet[];
     rankedBets: RankedBets[];
     isAdmin: boolean;
+    year: number;
 }
 
-export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: CelebrityProps) {
+export default function Celebrity({ celebrity, bets, rankedBets, isAdmin, year }: CelebrityProps) {
     const router = useRouter();
 
-    const [selectedTab, setSelectedTab] = useState("2024");
+    const [selectedTab, setSelectedTab] = useState("");
     const [mode, setMode] = useState("consultation");
 
     const tabs = [
@@ -61,10 +62,25 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
 
     const old = dayjs(celebrity.death || undefined).diff(celebrity.birth, "year");
 
+    let disabledKey = undefined;
+    if (celebrity.death) {
+        const yearOfDeath = dayjs(celebrity.death).year();
+        disabledKey = tabs.filter((t) => t.id > yearOfDeath.toString()).map((t) => t.label);
+    }
+
     useEffect(() => {
         router.replace(`/celebrities/${celebrity.id}/?year=${encodeURIComponent(selectedTab)}`);
     }, [selectedTab]);
 
+    useEffect(() => {
+        if (celebrity.death) {
+            const yearOfDeath = dayjs(celebrity.death).year();
+            setSelectedTab(yearOfDeath.toString());
+        } else {
+            setSelectedTab(year.toString());
+        }
+    }, [year]);
+    
     return (
         <>
             {mode === "consultation" && (
@@ -110,7 +126,7 @@ export default function Celebrity({ celebrity, bets, rankedBets, isAdmin }: Cele
                         variant="bordered"
                         color="primary"
                         selectedKey={selectedTab}
-                        disabledKeys={["2025"]}
+                        disabledKeys={disabledKey}
                         onSelectionChange={(key) => setSelectedTab(key.toString())}
                         items={tabs}
                         radius="full"
