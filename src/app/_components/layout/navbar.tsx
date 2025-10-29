@@ -2,8 +2,6 @@
 
 import { useUser } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
-import NextImage from "next/image";
-import { Drawer } from "vaul";
 
 import {
     Navbar as NextNavbar,
@@ -12,13 +10,19 @@ import {
     Button,
     Listbox,
     ListboxItem,
-    Spacer,
     Avatar,
-    Link, Image
+    Link,
+    Drawer,
+    DrawerContent,
+    DrawerHeader,
+    DrawerBody,
+    DrawerFooter,
+    useDisclosure,
+    Tooltip
 } from "@nextui-org/react";
 
 import ToggleTheme from "@/components/layout/toggleTheme";
-import React, { useState } from "react";
+import React from "react";
 import { ArrowLeftLineIcon } from "@/ui/icons/ArrowLeftLineIcon";
 import classNames from "classnames";
 import { HomeIcon } from "@/ui/icons/HomeIcon";
@@ -26,10 +30,9 @@ import { RankingIcon } from "@/ui/icons/RankingIcon";
 import { NoteListIcon } from "@/ui/icons/NoteListIcon";
 import { PeopleIcon } from "@/ui/icons/PeopleIcon";
 import { HamburgerMenuIcon } from "@/ui/icons/HamburgerMenuIcon";
-import { CrossLineIcon } from "@/ui/icons/CrossLineIcon";
 
 export default function Navbar() {
-    const [open, setOpen] = useState(false);
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
     const { user } = useUser();
 
@@ -78,110 +81,114 @@ export default function Navbar() {
                     variant="light"
                     aria-label="Open mobile menu"
                     radius="full"
-                    onClick={() => setOpen(true)}
+                    onPress={() => onOpen()}
                 >
                     <HamburgerMenuIcon className="h-6 w-6" />
                 </Button>
             </NavbarContent>
 
-            <Drawer.Root direction="right" open={open} onOpenChange={setOpen}>
-                <Drawer.Portal>
-                    <Drawer.Overlay className="fixed inset-0 z-50 bg-black/40" />
-                    <Drawer.Content className="right-0 top-0 bottom-0 fixed z-50 flex outline-none">
-                        <div className="flex flex-col bg-background rounded-l-2xl w-72 grow p-6">
-                            <Drawer.Title className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <Image
-                                        as={NextImage}
-                                        src="/logo.jpeg"
-                                        width={52}
-                                        height={38}
-                                        alt="Necroloto logo"
-                                    />
-                                    <span className="font-bold uppercase leading-6 text-foreground">
-                                        Necroloto
-                                    </span>
-                                </div>
-
-                                <Button
-                                    isIconOnly
-                                    color="default"
-                                    variant="light"
-                                    size="sm"
-                                    onClick={() => setOpen(false)}
-                                >
-                                    <CrossLineIcon className="h-7 w-7 text-default-300" />
-                                </Button>
-                            </Drawer.Title>
-
-                            <Spacer y={8} />
-
-                            <Listbox
-                                variant="bordered"
-                                selectionMode="single"
-                                selectedKeys={[pathnames[1]]}
-                                onAction={() => setOpen(false)}
+            <Drawer
+                hideCloseButton
+                backdrop="blur"
+                isOpen={isOpen}
+                size="xs"
+                onOpenChange={onOpenChange}
+            >
+                <DrawerContent>
+                    <DrawerHeader className="absolute top-0 inset-x-0 z-50 flex flex-row gap-2 px-2 py-2 border-b border-default-200/50 justify-between bg-content1/50 backdrop-saturate-150 backdrop-blur-lg">
+                        <Tooltip content="Close">
+                            <Button
+                                isIconOnly
+                                className="text-default-400"
+                                size="sm"
+                                variant="light"
+                                onPress={onClose}
                             >
-                                <ListboxItem
-                                    key="home"
-                                    href="/home"
-                                    startContent={<HomeIcon className="w-5 h-5" />}
-                                    className={classNames({
-                                        "bg-default-200": pathname === "/home"
-                                    })}
+                                <svg
+                                    fill="none"
+                                    height="20"
+                                    stroke="currentColor"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    viewBox="0 0 24 24"
+                                    width="20"
+                                    xmlns="http://www.w3.org/2000/svg"
                                 >
-                                    Accueil
-                                </ListboxItem>
-                                <ListboxItem
-                                    key="rank"
-                                    href="/rank"
-                                    startContent={<RankingIcon className="w-5 h-5" />}
-                                    className={classNames({
-                                        "bg-default-200": pathname === "/rank"
-                                    })}
-                                >
-                                    Classement
-                                </ListboxItem>
-                                <ListboxItem
-                                    key="bets"
-                                    href="/bets"
-                                    startContent={<NoteListIcon className="w-5 h-5" />}
-                                    className={classNames({
-                                        "bg-default-200": pathname === "/bets"
-                                    })}
-                                >
-                                    Prédictions
-                                </ListboxItem>
-                                <ListboxItem
-                                    key="celebrities"
-                                    href="/celebrities"
-                                    startContent={<PeopleIcon className="w-5 h-5" />}
-                                    className={classNames({
-                                        "bg-default-200": pathname === "/celebrities"
-                                    })}
-                                >
-                                    Célébrités
-                                </ListboxItem>
-                            </Listbox>
-
-                            <Spacer y={8} />
-
-                            <div className="mt-auto flex flex-row justify-between">
-                                <ToggleTheme />
-                                <Avatar
-                                    isBordered={pathname === "/profile"}
-                                    color={pathname === "/profile" ? "primary" : "default"}
-                                    as={Link}
-                                    className="transition-transform"
-                                    src={user?.imageUrl ?? ""}
-                                    href="/profile"
-                                    onPress={() => setOpen(false)}
-                                />
-                            </div>
+                                    <path d="m13 17 5-5-5-5M6 17l5-5-5-5" />
+                                </svg>
+                            </Button>
+                        </Tooltip>
+                        <div className="w-full flex justify-start items-center gap-2">
+                            Necroloto
                         </div>
-                    </Drawer.Content>
-                </Drawer.Portal>
-            </Drawer.Root>
+                    </DrawerHeader>
+
+                    {/*<Spacer y={8} />*/}
+                    <DrawerBody className="pt-16 px-2">
+                        <Listbox
+                            variant="bordered"
+                            selectionMode="single"
+                            selectedKeys={[pathnames[1]]}
+                            onAction={() => onClose()}
+                        >
+                            <ListboxItem
+                                key="home"
+                                href="/home"
+                                startContent={<HomeIcon className="w-5 h-5" />}
+                                className={classNames({
+                                    "bg-default-200": pathname === "/home"
+                                })}
+                            >
+                                Accueil
+                            </ListboxItem>
+                            <ListboxItem
+                                key="rank"
+                                href="/rank"
+                                startContent={<RankingIcon className="w-5 h-5" />}
+                                className={classNames({
+                                    "bg-default-200": pathname === "/rank"
+                                })}
+                            >
+                                Classement
+                            </ListboxItem>
+                            <ListboxItem
+                                key="bets"
+                                href="/bets"
+                                startContent={<NoteListIcon className="w-5 h-5" />}
+                                className={classNames({
+                                    "bg-default-200": pathname === "/bets"
+                                })}
+                            >
+                                Prédictions
+                            </ListboxItem>
+                            <ListboxItem
+                                key="celebrities"
+                                href="/celebrities"
+                                startContent={<PeopleIcon className="w-5 h-5" />}
+                                className={classNames({
+                                    "bg-default-200": pathname === "/celebrities"
+                                })}
+                            >
+                                Célébrités
+                            </ListboxItem>
+                        </Listbox>
+                    </DrawerBody>
+
+                    <DrawerFooter className="mt-auto flex flex-row justify-between">
+                        <ToggleTheme />
+                        <Avatar
+                            isBordered={pathname === "/profile"}
+                            color={pathname === "/profile" ? "primary" : "default"}
+                            as={Link}
+                            className="transition-transform"
+                            src={user?.imageUrl ?? ""}
+                            href="/profile"
+                            onPress={() => onClose()}
+                        />
+                    </DrawerFooter>
+                </DrawerContent>
+            </Drawer>
         </NextNavbar>
     );
 }

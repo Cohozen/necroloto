@@ -31,7 +31,7 @@
         "@heroicons/react": "^2.0.18",
         "@internationalized/date": "^3.5.6",
         "@next/env": "^14.2.16",
-        "@nextui-org/react": "^2.4.8",
+        "@nextui-org/react": "^2.6.11",
         "@prisma/client": "^5.10.2",
         "@react-aria/i18n": "^3.12.3",
         "@vercel/analytics": "^1.0.2",
