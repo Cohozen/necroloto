@@ -89,10 +89,22 @@ export default function Navbar() {
 
             <Drawer
                 hideCloseButton
-                backdrop="blur"
+                backdrop="opaque"
                 isOpen={isOpen}
                 size="xs"
                 onOpenChange={onOpenChange}
+                motionProps={{
+                    variants: {
+                        enter: {
+                            opacity: 1,
+                            x: 0
+                        },
+                        exit: {
+                            x: 100,
+                            opacity: 0
+                        }
+                    }
+                }}
             >
                 <DrawerContent>
                     <DrawerHeader className="absolute top-0 inset-x-0 z-50 flex flex-row gap-2 px-2 py-2 border-b border-default-200/50 justify-between bg-content1/50 backdrop-saturate-150 backdrop-blur-lg">
