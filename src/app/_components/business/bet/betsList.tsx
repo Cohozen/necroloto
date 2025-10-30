@@ -5,13 +5,14 @@ import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import BetCard from "@/components/business/bet/betCard";
+import { sortBy } from "lodash";
 
 interface BetsListProps {
     bets: BetsWithUserAndCelebrities[];
     year: number;
 }
 
-export async function BetsList({ bets, year }: BetsListProps) {
+export function BetsList({ bets, year }: BetsListProps) {
     const router = useRouter();
 
     const [yearState, setYearState] = useState("");
@@ -29,7 +30,7 @@ export async function BetsList({ bets, year }: BetsListProps) {
 
     useEffect(() => {
         router.replace(`/bets/?year=${encodeURIComponent(yearState)}`);
-    }, [yearState]);
+    }, [yearState, router]);
 
     useEffect(() => {
         setYearState(year.toString())
@@ -52,7 +53,7 @@ export async function BetsList({ bets, year }: BetsListProps) {
             </Select>
 
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
-                {bets.map((b) => {
+                {sortBy(bets, b => b.user.firstname).map((b) => {
                     return <BetCard key={b.id} bet={b} />;
                 })}
             </div>
