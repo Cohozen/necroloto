@@ -127,6 +127,7 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
                     selectedKey={key}
                     variant="bordered"
                     fullWidth
+                    isVirtualized
                     onSelectionChange={setValue}
                     description={`La célébrité ${celebrity.name} sera remplacé par celle sélectionné. Cela implique toutes les prédictions concernant ${celebrity.name}.`}
                 >
@@ -135,7 +136,7 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
                             <div className="flex gap-2 items-center">
                                 <Avatar
                                     alt={item.name}
-                                    className="flex-shrink-0"
+                                    className="shrink-0"
                                     size="sm"
                                     src={item.photo ?? undefined}
                                 />
