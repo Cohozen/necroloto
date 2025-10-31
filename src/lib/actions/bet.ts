@@ -1,7 +1,7 @@
 "use server";
 
 import { insertBetWithCelebrities, listBetsByYear } from "@/lib/api/bet";
-import { findIndex, sortBy } from "lodash";
+import { sortBy } from "lodash";
 import { revalidatePath } from "next/cache";
 
 export type sortByRank = "points" | "death";
@@ -11,42 +11,43 @@ export async function RankBetsByYearWithTotalPoints(year: number, sort: sortByRa
 
     const totals = bets?.map((b) => {
         const total = b.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
+        const deathCount = b.CelebritiesOnBet.filter((c) => !!c.celebrity.death).length;
         return {
             ...b,
-            total
+            total,
+            deathCount
         };
     });
 
-    if (sort === "death")
-        return sortBy(
-            totals,
-            (b) => b.CelebritiesOnBet.filter((c) => !!c.celebrity.death).length
-        ).reverse();
+    const sorted =
+        sort === "death"
+            ? sortBy(totals, (b) => b.deathCount).reverse()
+            : sortBy(totals, (b) => b.total).reverse();
 
-    return sortBy(totals, (b) => b.total).reverse();
+    let currentRank = 1;
+
+    return sorted.map((bet, index) => {
+        if (index > 0) {
+            const prevBet = sorted[index - 1];
+            const currentValue = sort === "death" ? bet.deathCount : bet.total;
+            const prevValue = sort === "death" ? prevBet.deathCount : prevBet.total;
+
+            if (currentValue !== prevValue) currentRank = currentRank + 1;
+        }
+
+        return {
+            ...bet,
+            rank: currentRank
+        };
+    });
 }
 
 export async function GetPositionOfUserForYear(userId: string, year: number, sort: sortByRank) {
     const bets = await RankBetsByYearWithTotalPoints(year, sort);
 
     const currentBet = bets.find((b) => b.userId === userId);
-    const currentTotal =
-        currentBet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
 
-    if (sort === "death") {
-        const currentCelebrities = currentBet?.CelebritiesOnBet.map((c) => c.celebrity);
-        const currentInLife = currentCelebrities?.filter((c) => !c.death).length;
-
-        return (
-            findIndex(
-                bets,
-                (b) => b.CelebritiesOnBet.filter((c) => !c.celebrity.death).length === currentInLife
-            ) + 1
-        );
-    }
-
-    const index = findIndex(bets, (b) => b.total === currentTotal);
-    return index + 1;
+    return currentBet?.rank ?? 0;
 }
 
 export async function GetCelebritiesAliveStats(userId: string, year: number) {

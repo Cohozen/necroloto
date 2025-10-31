@@ -20,4 +20,6 @@ export type RankedBets = BetsWithCelebrities & {
 
 export type RankedBetsWithUsers = BetsWithUserAndCelebrities & {
     total: number;
+    deathCount: number;
+    rank: number;
 };

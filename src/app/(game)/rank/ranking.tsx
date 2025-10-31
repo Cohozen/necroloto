@@ -12,7 +12,8 @@ import {
     SelectItem,
     Popover,
     PopoverTrigger,
-    PopoverContent
+    PopoverContent,
+    AvatarGroup
 } from "@nextui-org/react";
 import { RankedBetsWithUsers } from "@/lib/types/bet";
 import { MedalStarIcon } from "@/ui/icons/MedalStarIcon";
@@ -56,14 +57,18 @@ export default function Ranking({ bets, year }: RankingProps) {
         }
     ];
 
+    const betsFirstRank = bets.filter((b) => b.rank === 1);
+    const betsSecondRank = bets.filter((b) => b.rank === 2);
+    const betsThirdRank = bets.filter((b) => b.rank === 3);
+
     useEffect(() => {
         router.replace(
             `/rank/?sort=${encodeURIComponent(selectedTab)}&year=${encodeURIComponent(yearState)}`
         );
-    }, [selectedTab, yearState]);
+    }, [selectedTab, yearState, router]);
 
     useEffect(() => {
-        setYearState(year.toString())
+        setYearState(year.toString());
     }, [year]);
 
     return (
@@ -99,7 +104,7 @@ export default function Ranking({ bets, year }: RankingProps) {
                                     {bets[2]?.user && (
                                         <Popover
                                             showArrow
-                                            backdrop="blur"
+                                            backdrop="opaque"
                                             classNames={{
                                                 base: ["before:bg-default-200"],
                                                 content: [
@@ -110,31 +115,67 @@ export default function Ranking({ bets, year }: RankingProps) {
                                             }}
                                         >
                                             <PopoverTrigger>
-                                                <Avatar
+                                                <AvatarGroup
                                                     isBordered
-                                                    radius="full"
+                                                    max={3}
                                                     size="sm"
-                                                    src={bets[2]?.user.image ?? undefined}
-                                                    name={`${bets[2]?.user.firstname} ${
-                                                        bets[2]?.user.lastname ?? ""
-                                                    }`}
-                                                />
+                                                    radius="full"
+                                                >
+                                                    {betsThirdRank.map((b) => (
+                                                        <Avatar
+                                                            key={b.id}
+                                                            src={b.user.image ?? undefined}
+                                                            name={`${b.user.firstname} ${
+                                                                b.user.lastname ?? ""
+                                                            }`}
+                                                        />
+                                                    ))}
+                                                </AvatarGroup>
                                             </PopoverTrigger>
                                             <PopoverContent>
-                                                <div className="px-1 py-2">
-                                                    <div className="text-small font-bold">
-                                                        {`${bets[2]?.user.firstname} ${
-                                                            bets[2]?.user.lastname ?? ""
-                                                        }`}
+                                                <div className="flex flex-col items-center gap-2">
+                                                    <div className="flex flex-row gap-2">
+                                                        <Chip
+                                                            className="capitalize"
+                                                            color="primary"
+                                                            variant="flat"
+                                                            size="sm"
+                                                        >
+                                                            3ème
+                                                        </Chip>
+                                                        <Chip
+                                                            className="capitalize"
+                                                            color="primary"
+                                                            variant="flat"
+                                                            size="sm"
+                                                        >
+                                                            {`${betsThirdRank[0].total} point${
+                                                                betsThirdRank[0].total > 1
+                                                                    ? "s"
+                                                                    : ""
+                                                            }`}
+                                                        </Chip>
                                                     </div>
-                                                    <div className="text-tiny">
-                                                        {`3ème place avec ${bets[2]?.total} points`}
+
+                                                    <div className="flex flex-col">
+                                                        {betsThirdRank.map((b, index) => {
+                                                            return (
+                                                                <div
+                                                                    key={b.id}
+                                                                    className="text-small"
+                                                                >
+                                                                    {`${b.user.firstname} ${
+                                                                        b.user.lastname ?? ""
+                                                                    }`}
+                                                                </div>
+                                                            );
+                                                        })}
                                                     </div>
                                                 </div>
                                             </PopoverContent>
                                         </Popover>
                                     )}
-                                    <div className="flex justify-center items-start py-4 bg-secondary-200 dark:bg-secondary-400 h-16 w-20 rounded-tl-xl">
+                                    <div className="flex justify-center items-start py-4 bg-secondary-200 dark:bg-secondary-400 h-16 w-[6rem] rounded-tl-xl">
                                         <MedalStarIcon className="w-6 h-6 text-amber-800" />
                                     </div>
                                 </div>
@@ -143,7 +184,7 @@ export default function Ranking({ bets, year }: RankingProps) {
                                     {bets[0].user && (
                                         <Popover
                                             showArrow
-                                            backdrop="blur"
+                                            backdrop="opaque"
                                             classNames={{
                                                 base: ["before:bg-default-200"],
                                                 content: [
@@ -154,31 +195,67 @@ export default function Ranking({ bets, year }: RankingProps) {
                                             }}
                                         >
                                             <PopoverTrigger>
-                                                <Avatar
+                                                <AvatarGroup
                                                     isBordered
-                                                    radius="full"
+                                                    max={3}
                                                     size="sm"
-                                                    src={bets[0]?.user.image ?? undefined}
-                                                    name={`${bets[0]?.user.firstname} ${
-                                                        bets[0]?.user.lastname ?? ""
-                                                    }`}
-                                                />
+                                                    radius="full"
+                                                >
+                                                    {betsFirstRank.map((b) => (
+                                                        <Avatar
+                                                            key={b.id}
+                                                            src={b.user.image ?? undefined}
+                                                            name={`${b.user.firstname} ${
+                                                                b.user.lastname ?? ""
+                                                            }`}
+                                                        />
+                                                    ))}
+                                                </AvatarGroup>
                                             </PopoverTrigger>
                                             <PopoverContent>
-                                                <div className="px-1 py-2">
-                                                    <div className="text-small font-bold">
-                                                        {`${bets[0]?.user.firstname} ${
-                                                            bets[0]?.user.lastname ?? ""
-                                                        }`}
+                                                <div className="flex flex-col items-center gap-2">
+                                                    <div className="flex flex-row gap-2">
+                                                        <Chip
+                                                            className="capitalize"
+                                                            color="primary"
+                                                            variant="flat"
+                                                            size="sm"
+                                                        >
+                                                            1er
+                                                        </Chip>
+                                                        <Chip
+                                                            className="capitalize"
+                                                            color="primary"
+                                                            variant="flat"
+                                                            size="sm"
+                                                        >
+                                                            {`${betsFirstRank[0].total} point${
+                                                                betsFirstRank[0].total > 1
+                                                                    ? "s"
+                                                                    : ""
+                                                            }`}
+                                                        </Chip>
                                                     </div>
-                                                    <div className="text-tiny">
-                                                        {`1ère place avec ${bets[0]?.total} points`}
+
+                                                    <div className="flex flex-col">
+                                                        {betsFirstRank.map((b, index) => {
+                                                            return (
+                                                                <div
+                                                                    key={b.id}
+                                                                    className="text-small"
+                                                                >
+                                                                    {`${b.user.firstname} ${
+                                                                        b.user.lastname ?? ""
+                                                                    }`}
+                                                                </div>
+                                                            );
+                                                        })}
                                                     </div>
                                                 </div>
                                             </PopoverContent>
                                         </Popover>
                                     )}
-                                    <div className="flex justify-center items-start py-4 bg-secondary-400 dark:bg-secondary-200 h-44 w-20 rounded-t-xl">
+                                    <div className="flex justify-center items-start py-4 bg-secondary-400 dark:bg-secondary-200 h-44 w-[6rem] rounded-t-xl">
                                         <CupFirstIcon className="w-8 h-8 text-amber-300" />
                                     </div>
                                 </div>
@@ -187,7 +264,7 @@ export default function Ranking({ bets, year }: RankingProps) {
                                     {bets[1]?.user && (
                                         <Popover
                                             showArrow
-                                            backdrop="blur"
+                                            backdrop="opaque"
                                             classNames={{
                                                 base: ["before:bg-default-200"],
                                                 content: [
@@ -198,31 +275,67 @@ export default function Ranking({ bets, year }: RankingProps) {
                                             }}
                                         >
                                             <PopoverTrigger>
-                                                <Avatar
+                                                <AvatarGroup
                                                     isBordered
-                                                    radius="full"
+                                                    max={3}
                                                     size="sm"
-                                                    src={bets[1]?.user.image ?? undefined}
-                                                    name={`${bets[1]?.user.firstname} ${
-                                                        bets[1]?.user.lastname ?? ""
-                                                    }`}
-                                                />
+                                                    radius="full"
+                                                >
+                                                    {betsSecondRank.map((b) => (
+                                                        <Avatar
+                                                            key={b.id}
+                                                            src={b.user.image ?? undefined}
+                                                            name={`${b.user.firstname} ${
+                                                                b.user.lastname ?? ""
+                                                            }`}
+                                                        />
+                                                    ))}
+                                                </AvatarGroup>
                                             </PopoverTrigger>
                                             <PopoverContent>
-                                                <div className="px-1 py-2">
-                                                    <div className="text-small font-bold">
-                                                        {`${bets[1]?.user.firstname} ${
-                                                            bets[1]?.user.lastname ?? ""
-                                                        }`}
+                                                <div className="flex flex-col items-center gap-2">
+                                                    <div className="flex flex-row gap-2">
+                                                        <Chip
+                                                            className="capitalize"
+                                                            color="primary"
+                                                            variant="flat"
+                                                            size="sm"
+                                                        >
+                                                            2ème
+                                                        </Chip>
+                                                        <Chip
+                                                            className="capitalize"
+                                                            color="primary"
+                                                            variant="flat"
+                                                            size="sm"
+                                                        >
+                                                            {`${betsSecondRank[0].total} point${
+                                                                betsSecondRank[0].total > 1
+                                                                    ? "s"
+                                                                    : ""
+                                                            }`}
+                                                        </Chip>
                                                     </div>
-                                                    <div className="text-tiny">
-                                                        {`2ème place avec ${bets[1]?.total} points`}
+
+                                                    <div className="flex flex-col">
+                                                        {betsSecondRank.map((b, index) => {
+                                                            return (
+                                                                <div
+                                                                    key={b.id}
+                                                                    className="text-small"
+                                                                >
+                                                                    {`${b.user.firstname} ${
+                                                                        b.user.lastname ?? ""
+                                                                    }`}
+                                                                </div>
+                                                            );
+                                                        })}
                                                     </div>
                                                 </div>
                                             </PopoverContent>
                                         </Popover>
                                     )}
-                                    <div className="flex justify-center items-start py-4 bg-secondary-300 h-28 w-20 rounded-tr-xl">
+                                    <div className="flex justify-center items-start py-4 bg-secondary-300 h-28 w-[6rem] rounded-tr-xl">
                                         <MedalRibbonsIcon className="w-6 h-6 text-zinc-500" />
                                     </div>
                                 </div>
@@ -235,35 +348,6 @@ export default function Ranking({ bets, year }: RankingProps) {
                     <div className="flex flex-col gap-3">
                         {bets &&
                             bets.map((bet, index) => {
-                                let rank = index + 1;
-                                const deathNumber = bet.CelebritiesOnBet.filter(
-                                    (c) => !!c.celebrity.death
-                                ).length;
-
-                                const previous = bets[index - 1];
-                                const previousDeathNumber = previous?.CelebritiesOnBet.filter(
-                                    (c) => !!c.celebrity.death
-                                ).length;
-
-                                const isSamePoints = previous?.total === bet.total;
-                                const isSameDeaths = previousDeathNumber === deathNumber;
-
-                                if (selectedTab === "points") {
-                                    if (isSamePoints)
-                                        rank = bets.findIndex((b) => b.total === bet.total) + 1;
-                                }
-
-                                if (selectedTab === "death") {
-                                    if (isSameDeaths)
-                                        rank =
-                                            bets.findIndex(
-                                                (b) =>
-                                                    b.CelebritiesOnBet.filter(
-                                                        (c) => !!c.celebrity.death
-                                                    ).length === deathNumber
-                                            ) + 1;
-                                }
-
                                 return (
                                     <Card
                                         as={Link}
@@ -275,18 +359,20 @@ export default function Ranking({ bets, year }: RankingProps) {
                                     >
                                         <CardHeader className="flex gap-3">
                                             <div className="flex bg-default-300 p-2 rounded-xl h-full">
-                                                {rank === 1 && (
+                                                {bet.rank === 1 && (
                                                     <CupFirstIcon className="w-6 h-6 dark:text-amber-300 text-yellow-600" />
                                                 )}
-                                                {rank === 2 && (
+                                                {bet.rank === 2 && (
                                                     <MedalRibbonsIcon className="w-6 h-6 text-zinc-500 dark:text-zinc-400" />
                                                 )}
 
-                                                {rank === 3 && (
+                                                {bet.rank === 3 && (
                                                     <MedalStarIcon className="w-6 h-6 text-amber-800" />
                                                 )}
 
-                                                {rank > 3 && <MedalStarIcon className="w-6 h-6 " />}
+                                                {bet.rank > 3 && (
+                                                    <MedalStarIcon className="w-6 h-6 " />
+                                                )}
                                             </div>
 
                                             <div className="flex flex-col flex-1 items-start gap-1">
@@ -302,7 +388,7 @@ export default function Ranking({ bets, year }: RankingProps) {
                                                         color="primary"
                                                         className="text-2xs"
                                                     >
-                                                        {`${rank}${rank === 1 ? "er" : "ème"}`}
+                                                        {`${bet.rank}${bet.rank === 1 ? "er" : "ème"}`}
                                                     </Chip>
                                                     <Chip
                                                         variant="flat"
@@ -333,7 +419,7 @@ export default function Ranking({ bets, year }: RankingProps) {
                                                                     : ""
                                                             }
                                                         >
-                                                            {`${deathNumber} décès`}
+                                                            {`${bet.deathCount} décè${bet.deathCount > 1 ? "s" : ""}`}
                                                         </span>
                                                     </Chip>
                                                 </div>
