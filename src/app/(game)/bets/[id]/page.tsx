@@ -44,8 +44,9 @@ export default async function BetPage({ params }: { params: { id: string } }) {
             <div className="flex flex-col gap-4 items-start">
                 {bet && (
                     <>
-                        <div className="flex flex-row gap-4">
+                        <div className="flex flex-row">
                             <User
+                                className="gap-4"
                                 name={`${bet.user.firstname} ${bet.user.lastname ?? ""}`}
                                 description={dayjs(bet.createdAt).format("DD/MM/YYYY HH:mm")}
                                 avatarProps={{

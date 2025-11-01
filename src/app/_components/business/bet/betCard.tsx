@@ -1,24 +1,17 @@
 "use client";
 
-import {
-    Card,
-    Button,
-    CardHeader,
-    CardFooter,
-    Avatar,
-    CardBody,
-    Link,
-    Chip,
-    Progress
-} from "@nextui-org/react";
+import { Card, CardHeader, CardFooter, Avatar, CardBody, Chip, Progress } from "@nextui-org/react";
 import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 interface BetCardProps {
     bet: BetsWithUserAndCelebrities;
 }
 
-export default async function BetCard({ bet }: BetCardProps) {
+export default function BetCard({ bet }: BetCardProps) {
+    const router = useRouter();
+
     const celebrities = bet?.CelebritiesOnBet.map((c) => c.celebrity);
 
     const inLife = celebrities?.filter((c) => !c.death).length;
@@ -27,7 +20,7 @@ export default async function BetCard({ bet }: BetCardProps) {
     const total = bet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
 
     return (
-        <Card shadow="none" fullWidth>
+        <Card shadow="none" fullWidth onPress={() => router.push(`/bets/${bet.id}`)} isPressable>
             <CardHeader className="justify-between">
                 <div className="flex gap-3">
                     <Avatar isBordered radius="full" size="sm" src={bet.user.image ?? ""} />
@@ -37,16 +30,6 @@ export default async function BetCard({ bet }: BetCardProps) {
                         </h4>
                     </div>
                 </div>
-                <Button
-                    as={Link}
-                    isIconOnly
-                    color="primary"
-                    radius="md"
-                    size="sm"
-                    variant="flat"
-                    showAnchorIcon
-                    href={`/bets/${bet.id}`}
-                />
             </CardHeader>
             <CardBody className="px-3 py-0 text-small text-default-400">
                 <Progress
