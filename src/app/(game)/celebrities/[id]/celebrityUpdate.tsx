@@ -97,6 +97,7 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
                     showMonthAndYearPickers
                     className="w-full"
                     label="Date de naissance"
+                    // @ts-ignore
                     value={birthDate}
                     isInvalid={birthDate === null}
                     onChange={setBirthDate}
@@ -106,6 +107,7 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
                     variant="bordered"
                     className="w-full"
                     label="Date de décès"
+                    // @ts-ignore
                     value={deathDate}
                     onChange={setDeathDate}
                     isDisabled={!!celebrity.death}
