@@ -25,9 +25,9 @@
         "importOrderSortSpecifiers": true
     },
     "dependencies": {
-        "@clerk/localizations": "^3.0.4",
-        "@clerk/nextjs": "^5.5.2",
-        "@clerk/themes": "^2.1.29",
+        "@clerk/localizations": "^3.13.13",
+        "@clerk/nextjs": "^6.17.0",
+        "@clerk/themes": "^2.2.35",
         "@headlessui/react": "^2.1.9",
         "@heroicons/react": "^2.0.18",
         "@internationalized/date": "^3.5.6",
