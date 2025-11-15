@@ -4,8 +4,8 @@ import { readFileSync } from "fs";
 const prisma = new PrismaClient();
 
 async function main() {
-    const raw = readFileSync("scripts/export.json", "utf-8");
-    const data = JSON.parse(raw);
+    // const raw = readFileSync("scripts/export.json", "utf-8");
+    // const data = JSON.parse(raw);
 
     // await prisma.user.createMany({ data: data.users });
     // await prisma.celebrity.createMany({ data: data.celebrities });
@@ -43,6 +43,17 @@ async function main() {
     } else {
         console.log("⚠️ Aucun utilisateur à ajouter.");
     }
+
+    const betUpdatedWithCircleId = await prisma.bet.updateMany({
+        where: {
+            year: 2025
+        },
+        data: {
+            circleId: circle.id
+        }
+    });
+
+    console.log(`✅ Pronos mis à jour : ${memberships.length}`);
 
     console.log("✅ Données réimportées depuis export.json");
 }
