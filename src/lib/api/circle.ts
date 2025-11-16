@@ -44,6 +44,26 @@ export const listCirclesByUser = unstable_cache(
     { tags: ["circles", "memberships"] }
 );
 
+export const listCirclesByUserWithBets = unstable_cache(
+    async (userId: string) => {
+        return prisma.circle.findMany({
+            where: {
+                memberships: {
+                    some: {
+                        userId: userId
+                    }
+                }
+            },
+            include: {
+                memberships: true,
+                bets: true
+            }
+        });
+    },
+    ["circles-by-user-with-memberships-and-bets"],
+    { tags: ["circles", "memberships", "bets"] }
+);
+
 export const insertCircle = async (circle: CreatedCircle) => {
     const result = prisma.circle.create({
         data: {

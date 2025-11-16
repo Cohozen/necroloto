@@ -88,6 +88,23 @@ export const listBetsByYear = unstable_cache(
     { tags: ["bets", "celebrities", "users"] }
 );
 
+export const listBetsByYearAndCircle = unstable_cache(
+    async (year: number, circleId: string) => {
+        return prisma.bet.findMany({
+            where: {
+                year,
+                circleId
+            },
+            include: {
+                user: true,
+                CelebritiesOnBet: { include: { celebrity: true } }
+            }
+        });
+    },
+    ["bets-by-year-and-circle-with-user-and-celebrities"],
+    { tags: ["bets", "celebrities", "users"] }
+);
+
 export const insertBet = async (bet: CreatedBet) => {
     const result = prisma.bet.create({
         data: {
