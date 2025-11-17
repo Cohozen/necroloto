@@ -4,6 +4,7 @@ import { SignedIn } from "@clerk/nextjs";
 
 import Navbar from "@/components/layout/navbar";
 import Sidebar from "@/components/layout/sidebar";
+import BottomNav from "@/components/layout/bottomNav";
 
 export const viewport = {
     themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#202124" }]
@@ -13,10 +14,13 @@ export default async function GameLayout({ children }: { children: React.ReactNo
     return (
         <div className="lg:flex lg:flex-row lg:gap-4">
             <SignedIn>
-                <Navbar />
+                {/*<Navbar />*/}
                 <Sidebar />
+                <BottomNav />
             </SignedIn>
-            <main className="lg:max-w-[700px] xl:max-w-[1024px] lg:pl-40 w-full lg:mx-auto lg:py-16">{children}</main>
+            <main className="lg:max-w-[700px] xl:max-w-[1024px] lg:pl-40 w-full lg:mx-auto lg:py-16 pb-14">
+                {children}
+            </main>
         </div>
     );
 }

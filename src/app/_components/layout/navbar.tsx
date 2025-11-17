@@ -136,7 +136,6 @@ export default function Navbar() {
                         </div>
                     </DrawerHeader>
 
-                    {/*<Spacer y={8} />*/}
                     <DrawerBody className="pt-16 px-2">
                         <Listbox
                             variant="bordered"

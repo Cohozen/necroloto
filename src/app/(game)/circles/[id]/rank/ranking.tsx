@@ -25,11 +25,12 @@ import Confetti from "react-confetti-boom";
 import Link from "next/link";
 
 interface RankingProps {
+    circleId: string;
     bets: RankedBetsWithUsers[];
     year: number;
 }
 
-export default function Ranking({ bets, year }: RankingProps) {
+export default function Ranking({ circleId, bets, year }: RankingProps) {
     const router = useRouter();
 
     const [selectedTab, setSelectedTab] = useState("points");
@@ -63,7 +64,7 @@ export default function Ranking({ bets, year }: RankingProps) {
 
     useEffect(() => {
         router.replace(
-            `/rank/?sort=${encodeURIComponent(selectedTab)}&year=${encodeURIComponent(yearState)}`
+            `/circles/${circleId}/rank/?sort=${encodeURIComponent(selectedTab)}&year=${encodeURIComponent(yearState)}`
         );
     }, [selectedTab, yearState, router]);
 
@@ -181,7 +182,7 @@ export default function Ranking({ bets, year }: RankingProps) {
                                 </div>
 
                                 <div className="flex flex-col items-center gap-2">
-                                    {bets[0].user && (
+                                    {bets[0]?.user && (
                                         <Popover
                                             showArrow
                                             backdrop="opaque"

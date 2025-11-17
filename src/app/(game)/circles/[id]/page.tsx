@@ -2,22 +2,23 @@ import { currentUser } from "@clerk/nextjs/server";
 import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
 import { listBets } from "@/lib/api/bet";
 import React from "react";
-import { CreateOrUpdateUserByClerkAuth } from "@/lib/actions/user";
 import { GetPositionOfUserForYear } from "@/lib/actions/bet";
 import { Card, CardBody, Button, Link } from "@nextui-org/react";
 import { SearchCelebrities } from "@/lib/api/celebrity";
-import { listCirclesByUser } from "@/lib/api/circle";
 
 export default async function CirclePage({ params }: { params: { id: string } }) {
     const user = await currentUser();
 
+    // TODO Check membership current user
+
+    const circleId = params.id;
     const currentYear = 2025;
     const allowNewBet = process.env.ALLOW_NEW_BET;
 
     let currentRank = 0;
 
     const bets = await listBets<BetsWithUserAndCelebrities>({
-        where: { year: currentYear, circleId: params.id },
+        where: { year: currentYear, circleId },
         include: { user: true, CelebritiesOnBet: { include: { celebrity: true } } }
     });
 
@@ -32,13 +33,9 @@ export default async function CirclePage({ params }: { params: { id: string } })
         currentRank = await GetPositionOfUserForYear(
             myCurrentBet.userId,
             myCurrentBet.year,
+            circleId,
             "points"
         );
-    }
-
-    if (user?.externalId) {
-        const circles = await listCirclesByUser(user?.externalId);
-        console.log(circles);
     }
 
     return (
@@ -60,7 +57,7 @@ export default async function CirclePage({ params }: { params: { id: string } })
 
                     <Button
                         color="primary"
-                        href={`/rank?year=${currentYear}`}
+                        href={`/circles/${circleId}/rank?year=${currentYear}`}
                         as={Link}
                         variant="flat"
                         size="lg"
