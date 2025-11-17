@@ -7,6 +7,7 @@ import { HomeIcon } from "@/ui/icons/HomeIcon";
 import { PeopleIcon } from "@/ui/icons/PeopleIcon";
 import { Tabs, Tab, Avatar } from "@nextui-org/react";
 import { useUser } from "@clerk/nextjs";
+import { LinkCircleIcon } from "@/ui/icons/LinkCircleIcon";
 
 export default function BottomNav() {
     const pathname = usePathname();
@@ -43,10 +44,10 @@ export default function BottomNav() {
                 />
                 <Tab
                     key="circles"
-                    href="/rank"
+                    href="/circles"
                     title={
                         <div className="flex flex-col items-center gap-1">
-                            <RankingIcon className="w-5 h-5" />
+                            <LinkCircleIcon className="w-5 h-5" />
                             <span>Cercles</span>
                         </div>
                     }
