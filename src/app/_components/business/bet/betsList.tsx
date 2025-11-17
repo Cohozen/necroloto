@@ -10,9 +10,10 @@ import { sortBy } from "lodash";
 interface BetsListProps {
     bets: BetsWithUserAndCelebrities[];
     year: number;
+    circleId: string
 }
 
-export function BetsList({ bets, year }: BetsListProps) {
+export function BetsList({ bets, year, circleId }: BetsListProps) {
     const router = useRouter();
 
     const [yearState, setYearState] = useState("");
@@ -29,7 +30,7 @@ export function BetsList({ bets, year }: BetsListProps) {
     ];
 
     useEffect(() => {
-        router.replace(`/bets/?year=${encodeURIComponent(yearState)}`);
+        router.replace(`/circles/${circleId}/bets/?year=${encodeURIComponent(yearState)}`);
     }, [yearState, router]);
 
     useEffect(() => {

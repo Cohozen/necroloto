@@ -34,14 +34,11 @@ export const listCirclesByUser = unstable_cache(
                         userId: userId
                     }
                 }
-            },
-            include: {
-                memberships: true
             }
         });
     },
-    ["circles-by-user-with-memberships"],
-    { tags: ["circles", "memberships"] }
+    ["circles-by-user"],
+    { tags: ["circles"] }
 );
 
 export const listCirclesByUserWithBets = unstable_cache(
