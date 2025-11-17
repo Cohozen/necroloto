@@ -5,6 +5,7 @@ import React from "react";
 import { GetPositionOfUserForYear } from "@/lib/actions/bet";
 import { Card, CardBody, Button, Link } from "@nextui-org/react";
 import { SearchCelebrities } from "@/lib/api/celebrity";
+import CircleNav from "@/components/business/circle/CircleNav";
 
 export default async function CirclePage({ params }: { params: { id: string } }) {
     const user = await currentUser();

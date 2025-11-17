@@ -15,13 +15,13 @@ import CelebritiesTable from "@/components/business/celebrities/CelebritiesTable
 import { GetCelebritiesAliveStats, GetPositionOfUserForYear } from "@/lib/actions/bet";
 import { CardHeader } from "@nextui-org/card";
 
-export default async function BetPage({ params }: { params: { id: string } }) {
-    const bet = await getBetWithCelebrities(params.id);
+export default async function BetPage({ params }: { params: { betId: string; id: string } }) {
+    const bet = await getBetWithCelebrities(params.betId);
     let rank = 0;
     let aliveStats: number = 0;
 
     if (bet) {
-        rank = await GetPositionOfUserForYear(bet.userId, bet.year, "points");
+        rank = await GetPositionOfUserForYear(bet.userId, bet.year, params.id, "points");
         const resultAliveStats = await GetCelebritiesAliveStats(bet.userId, bet.year);
         if (resultAliveStats) aliveStats = resultAliveStats;
     }
@@ -35,9 +35,17 @@ export default async function BetPage({ params }: { params: { id: string } }) {
     const inLifePercent = inLife ? (inLife / celebrities.length) * 100 : 0;
 
     const olderCelebrity = head(
-        sortBy(celebrities?.filter((c) => c.birth && !c.death), (c) => c.birth)
+        sortBy(
+            celebrities?.filter((c) => c.birth && !c.death),
+            (c) => c.birth
+        )
     );
-    const youngerCelebrity = last(sortBy(celebrities?.filter((c) => c.birth), (c) => c.birth));
+    const youngerCelebrity = last(
+        sortBy(
+            celebrities?.filter((c) => c.birth),
+            (c) => c.birth
+        )
+    );
 
     return (
         <div className="flex flex-col gap-4 p-4">

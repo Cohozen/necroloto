@@ -2,9 +2,8 @@ import { currentUser } from "@clerk/nextjs/server";
 import React from "react";
 import { CreateOrUpdateUserByClerkAuth } from "@/lib/actions/user";
 import { GetPositionOfUserForYear } from "@/lib/actions/bet";
-import { Card, CardBody, Button, Link, Avatar, CardFooter } from "@nextui-org/react";
+import { Button, Link } from "@nextui-org/react";
 import { listCirclesByUserWithBets } from "@/lib/api/circle";
-import { CardHeader } from "@nextui-org/card";
 import CircleCard from "@/components/business/circle/CircleCard";
 
 export default async function IndexPage() {
@@ -18,7 +17,6 @@ export default async function IndexPage() {
 
     if (user?.externalId) {
         myCircles = await listCirclesByUserWithBets(user?.externalId);
-        console.log(myCircles);
     }
 
     return (
