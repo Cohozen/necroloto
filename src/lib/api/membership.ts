@@ -11,6 +11,9 @@ export const listMembershipsByCircle = unstable_cache(
                 circle: {
                     id: circleId
                 }
+            },
+            include: {
+                user: true
             }
         });
     },
