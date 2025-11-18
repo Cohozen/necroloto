@@ -121,42 +121,38 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
                 }}
             >
                 <DrawerContent>
-                    {(onClose) => (
-                        <>
-                            <div
-                                aria-hidden="true"
-                                className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 dark:bg-default-200 mt-2"
-                            ></div>
-                            <DrawerBody>
-                                <RadioGroup
-                                    label="Mes Cercles"
-                                    defaultValue={circleId}
-                                    onValueChange={(value) => {
-                                        router.push(`/circles/${value}`);
-                                    }}
-                                >
-                                    {myCircles.map((c) => {
-                                        return (
-                                            <Radio
-                                                key={c.id}
-                                                description={c.visibility}
-                                                value={c.id}
-                                                classNames={{
-                                                    base: cn(
-                                                        "inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between",
-                                                        "flex-row-reverse max-w-[800px] cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent",
-                                                        "data-[selected=true]:border-primary"
-                                                    )
-                                                }}
-                                            >
-                                                {c.name}
-                                            </Radio>
-                                        );
-                                    })}
-                                </RadioGroup>
-                            </DrawerBody>
-                        </>
-                    )}
+                    <div
+                        aria-hidden="true"
+                        className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 dark:bg-default-200 mt-2"
+                    ></div>
+                    <DrawerBody>
+                        <RadioGroup
+                            label="Mes Cercles"
+                            defaultValue={circleId}
+                            onValueChange={(value) => {
+                                router.push(`/circles/${value}`);
+                            }}
+                        >
+                            {myCircles.map((c) => {
+                                return (
+                                    <Radio
+                                        key={c.id}
+                                        description={c.visibility}
+                                        value={c.id}
+                                        classNames={{
+                                            base: cn(
+                                                "inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between",
+                                                "flex-row-reverse max-w-[800px] cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent",
+                                                "data-[selected=true]:border-primary"
+                                            )
+                                        }}
+                                    >
+                                        {c.name}
+                                    </Radio>
+                                );
+                            })}
+                        </RadioGroup>
+                    </DrawerBody>
                 </DrawerContent>
             </Drawer>
         </>

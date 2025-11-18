@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, Card, CardBody, CardFooter } from "@nextui-org/react";
+import { Avatar, Card, CardBody } from "@nextui-org/react";
 import { CardHeader } from "@nextui-org/card";
 import React from "react";
 import { CircleWithMembershipsAndBets } from "@/lib/types/circle";
@@ -56,18 +56,18 @@ export default function CircleCard({ circle, currentRank }: CircleCardProps) {
                     )}
                 </div>
             </CardBody>
-            <CardFooter className="gap-3">
-                {/*<Button*/}
-                {/*    color="primary"*/}
-                {/*    radius="full"*/}
-                {/*    size="sm"*/}
-                {/*    fullWidth*/}
-                {/*    variant="flat"*/}
-                {/*    //onPress={() => router.push(`/circles/${c.id}/rank`)}*/}
-                {/*>*/}
-                {/*    Classement*/}
-                {/*</Button>*/}
-            </CardFooter>
+            {/*<CardFooter className="gap-3">*/}
+            {/*    <Button*/}
+            {/*        color="primary"*/}
+            {/*        radius="full"*/}
+            {/*        size="sm"*/}
+            {/*        fullWidth*/}
+            {/*        variant="flat"*/}
+            {/*        //onPress={() => router.push(`/circles/${c.id}/rank`)}*/}
+            {/*    >*/}
+            {/*        Classement*/}
+            {/*    </Button>*/}
+            {/*</CardFooter>*/}
         </Card>
     );
 }
