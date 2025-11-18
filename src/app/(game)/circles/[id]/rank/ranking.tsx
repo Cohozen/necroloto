@@ -352,7 +352,7 @@ export default function Ranking({ circleId, bets, year }: RankingProps) {
                                 return (
                                     <Card
                                         as={Link}
-                                        href={`/bets/${bet.id}`}
+                                        href={`/circles/${circleId}/bets/${bet.id}`}
                                         key={bet.id}
                                         fullWidth
                                         isPressable

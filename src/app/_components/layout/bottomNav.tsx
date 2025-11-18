@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import React from "react";
-import { RankingIcon } from "@/ui/icons/RankingIcon";
 import { HomeIcon } from "@/ui/icons/HomeIcon";
 import { PeopleIcon } from "@/ui/icons/PeopleIcon";
 import { Tabs, Tab, Avatar } from "@nextui-org/react";

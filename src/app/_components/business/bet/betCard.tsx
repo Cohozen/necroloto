@@ -3,13 +3,14 @@
 import { Card, CardHeader, CardFooter, Avatar, CardBody, Chip, Progress } from "@nextui-org/react";
 import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 interface BetCardProps {
     bet: BetsWithUserAndCelebrities;
 }
 
 export default function BetCard({ bet }: BetCardProps) {
+    const params = useParams<{ id: string }>();
     const router = useRouter();
 
     const celebrities = bet?.CelebritiesOnBet.map((c) => c.celebrity);
@@ -20,7 +21,12 @@ export default function BetCard({ bet }: BetCardProps) {
     const total = bet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
 
     return (
-        <Card shadow="none" fullWidth onPress={() => router.push(`/bets/${bet.id}`)} isPressable>
+        <Card
+            shadow="none"
+            fullWidth
+            onPress={() => router.push(`/circles/${params.id}/bets/${bet.id}`)}
+            isPressable
+        >
             <CardHeader className="justify-between">
                 <div className="flex gap-3">
                     <Avatar isBordered radius="full" size="sm" src={bet.user.image ?? ""} />

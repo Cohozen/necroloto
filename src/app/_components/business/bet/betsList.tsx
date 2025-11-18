@@ -30,7 +30,7 @@ export function BetsList({ bets, year, circleId }: BetsListProps) {
     ];
 
     useEffect(() => {
-        router.replace(`/circles/${circleId}/bets/?year=${encodeURIComponent(yearState)}`);
+        router.replace(`/circles/${circleId}/bets?year=${encodeURIComponent(yearState)}`);
     }, [yearState, router]);
 
     useEffect(() => {

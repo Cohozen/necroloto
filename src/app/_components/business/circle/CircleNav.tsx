@@ -20,6 +20,7 @@ import React from "react";
 import { SettingsIcon } from "@/ui/icons/SettingsIcon";
 import { Circle } from "@prisma/client";
 import { MaximizeIcon } from "@/ui/icons/MaximizeIcon";
+import { PressEvent } from "@react-types/shared";
 
 interface CircleNavProps {
     circleId: string;
@@ -36,6 +37,11 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
 
     const selectedCircle = myCircles.find((c) => c.id === circleId);
 
+    const onPressReturn = (e: PressEvent) => {
+        if (pathnames.length === 5) router.back();
+        else router.push("/circles/");
+    };
+
     return (
         <>
             <div className="flex px-1 gap-4 w-full flex-row relative flex-nowrap items-center justify-between h-12 overflow-hidden">
@@ -46,7 +52,7 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
                         radius="full"
                         isIconOnly
                         startContent={<ArrowLeftLineIcon className="h-5 w-5" />}
-                        onPress={(e) => router.push("/circles/")}
+                        onPress={onPressReturn}
                     />
                 </div>
                 <div className="flex gap-4 h-full flex-row flex-nowrap items-center justify-center flex-shrink min-w-0">
@@ -103,7 +109,6 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
                 <Tab key="rank" href={`/circles/${circleId}/rank`} title="Classement" />
                 <Tab key="bets" href={`/circles/${circleId}/bets`} title="Pronos" />
                 <Tab key="memberships" href={`/circles/${circleId}/memberships`} title="Membres" />
-                {/*<Tab key="settings" href={`/circles/${circleId}/settings`} title="Paramètres" />*/}
             </Tabs>
 
             <Drawer
