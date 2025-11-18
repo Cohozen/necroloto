@@ -81,6 +81,7 @@ export default function Ranking({ circleId, bets, year }: RankingProps) {
             onSelectionChange={(key) => setSelectedTab(key.toString())}
             items={tabs}
             radius="full"
+            size="sm"
         >
             {(item) => (
                 <Tab key={item.id} title={item.label} className="flex flex-col gap-6 px-0">
@@ -90,6 +91,7 @@ export default function Ranking({ circleId, bets, year }: RankingProps) {
                         disallowEmptySelection
                         variant="bordered"
                         radius="lg"
+                        size="sm"
                         fullWidth
                         selectedKeys={[yearState]}
                         onChange={(event) => setYearState(event.target.value)}

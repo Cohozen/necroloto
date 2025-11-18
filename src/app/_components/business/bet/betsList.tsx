@@ -49,6 +49,7 @@ export function BetsList({ bets, year, circleId }: BetsListProps) {
                 selectedKeys={[yearState]}
                 onChange={(event) => setYearState(event.target.value)}
                 items={yearSelect}
+                size="sm"
             >
                 {(item) => <SelectItem key={item.key}>{item.label}</SelectItem>}
             </Select>
