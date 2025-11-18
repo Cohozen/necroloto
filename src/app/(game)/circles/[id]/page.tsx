@@ -40,35 +40,25 @@ export default async function CirclePage({ params }: { params: { id: string } })
 
     return (
         <div className="flex flex-col gap-6 p-4 md:p-6">
-            <div className="flex flex-col gap-6">
-                <div className="text-[28px] font-semibold mb-3 lg:mb-4">Prédiction en cours</div>
+            <div className="flex flex-col gap-2">
+                <div className="text-xl font-semibold mb-2 lg:mb-4 uppercase">
+                    Prédiction en cours
+                </div>
 
                 <div className="flex flex-row w-full gap-2">
-                    <Card shadow="none" className="basis-1/3 h-28 lg:h-40 border-2 bg-background">
+                    <Card shadow="none" className="basis-1/2 h-32 lg:h-44 border-2 bg-background">
                         <CardBody className="justify-center items-center">
                             <span className="font-bold text-3xl">{currentYear}</span>
                         </CardBody>
                     </Card>
-                    <Card shadow="none" className="basis-1/3 h-28 lg:h-40">
+                    <Card shadow="none" className="basis-1/2 h-32 lg:h-44">
                         <CardBody className="justify-center">
                             <span className="text-center lg:text-xl">Prédictions fermés</span>
                         </CardBody>
                     </Card>
-
-                    <Button
-                        color="primary"
-                        href={`/circles/${circleId}/rank?year=${currentYear}`}
-                        as={Link}
-                        variant="flat"
-                        size="lg"
-                        showAnchorIcon
-                        className="flex flex-col basis-1/3 h-28 lg:h-40 lg:text-xl"
-                    >
-                        Classement
-                    </Button>
                 </div>
 
-                <div className="flex flex-row w-full gap-3">
+                <div className="flex flex-row w-full gap-2">
                     <Card
                         shadow="none"
                         className="basis-1/2 h-32 lg:h-44 border-none bg-gradient-to-br from-primary to-secondary text-white"
@@ -90,33 +80,35 @@ export default async function CirclePage({ params }: { params: { id: string } })
                 </div>
             </div>
 
-            <div className="flex flex-col gap-4 mt-4">
-                <div className="text-[28px] font-semibold mb-3 lg:mb-4">Prochaine prédiction</div>
+            <div className="flex flex-col gap-2">
+                <div className="text-xl font-semibold mb-2 lg:mb-4 uppercase">
+                    Prochaine prédiction
+                </div>
 
                 <div className="flex flex-row w-full gap-2">
-                    <Card shadow="none" className="basis-1/3 h-28 lg:h-40 border-2 bg-background">
+                    <Card shadow="none" className="basis-1/2 h-32 lg:h-44 border-2 bg-background">
                         <CardBody className="justify-center items-center">
                             <span className="font-bold text-3xl">{currentYear + 1}</span>
                         </CardBody>
                     </Card>
-                    <Card shadow="none" className="basis-1/3 h-28 lg:h-40">
+                    <Card shadow="none" className="basis-1/2 h-32 lg:h-44">
                         <CardBody className="justify-center">
                             <span className="text-center lg:text-xl">A venir</span>
                         </CardBody>
                     </Card>
-                    {allowNewBet === "true" && (
-                        <Button
-                            color="primary"
-                            href={`/bet/${currentYear + 1}`}
-                            as={Link}
-                            variant="flat"
-                            size="lg"
-                            showAnchorIcon
-                            className="flex flex-col basis-1/3 h-28 lg:h-40 lg:text-xl"
-                        >
-                            Prédire
-                        </Button>
-                    )}
+                    {/*{allowNewBet === "true" && (*/}
+                    {/*    <Button*/}
+                    {/*        color="primary"*/}
+                    {/*        href={`/bet/${currentYear + 1}`}*/}
+                    {/*        as={Link}*/}
+                    {/*        variant="flat"*/}
+                    {/*        size="lg"*/}
+                    {/*        showAnchorIcon*/}
+                    {/*        className="flex flex-col basis-1/3 h-28 lg:h-40 lg:text-xl"*/}
+                    {/*    >*/}
+                    {/*        Prédire*/}
+                    {/*    </Button>*/}
+                    {/*)}*/}
                 </div>
             </div>
 

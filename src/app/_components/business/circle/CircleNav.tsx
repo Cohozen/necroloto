@@ -8,7 +8,6 @@ import {
     DrawerContent,
     Radio,
     RadioGroup,
-    DrawerHeader,
     Tab,
     Tabs,
     useDisclosure,
@@ -37,8 +36,9 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
 
     const selectedCircle = myCircles.find((c) => c.id === circleId);
 
-    const onPressReturn = (e: PressEvent) => {
+    const onPressReturn = (_e: PressEvent) => {
         if (pathnames.length === 5) router.back();
+        else if (pathnames.length === 3) router.push("/home/");
         else router.push("/circles/");
     };
 
@@ -107,7 +107,7 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
             >
                 <Tab key="resume" href={`/circles/${circleId}`} title="Résumé" />
                 <Tab key="rank" href={`/circles/${circleId}/rank`} title="Classement" />
-                <Tab key="bets" href={`/circles/${circleId}/bets`} title="Pronos" />
+                <Tab key="bets" href={`/circles/${circleId}/bets`} title="Prédictions" />
                 <Tab key="memberships" href={`/circles/${circleId}/memberships`} title="Membres" />
             </Tabs>
 
