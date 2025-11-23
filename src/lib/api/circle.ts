@@ -5,10 +5,10 @@ import { Circle } from "@prisma/client";
 type CreatedCircle = Pick<Circle, "name" | "visibility">;
 
 const generateCircleCode = (length: number = 8): string => {
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let code = "";
     for (let i = 0; i < length; i++) {
-        code += letters[Math.floor(Math.random() * letters.length)];
+        code += chars[Math.floor(Math.random() * chars.length)];
     }
     return code;
 };
@@ -82,7 +82,8 @@ export const updateCircle = async (circle: Circle) => {
         where: { id: circle.id },
         data: {
             name: circle.name,
-            status: circle.status
+            status: circle.status,
+            allowNewBet: circle.allowNewBet
         }
     });
 

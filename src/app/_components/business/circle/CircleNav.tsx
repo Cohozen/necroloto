@@ -37,7 +37,7 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
     const selectedCircle = myCircles.find((c) => c.id === circleId);
 
     const onPressReturn = (_e: PressEvent) => {
-        if (pathnames.length === 5) router.back();
+        if (pathnames.length >= 5 || pathnames[3] === "settings") router.back();
         else if (pathnames.length === 3) router.push("/home/");
         else router.push("/circles/");
     };
@@ -88,7 +88,13 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
                         variant="light"
                         radius="full"
                         isIconOnly
-                        startContent={<SettingsIcon className="h-5 w-5" />}
+                        startContent={
+                            <SettingsIcon
+                                className={cn("h-5 w-5", {
+                                    "text-secondary": pathnames[3] === "settings"
+                                })}
+                            />
+                        }
                         onPress={(e) => router.push(`/circles/${circleId}/settings`)}
                     />
                 </div>
@@ -124,8 +130,8 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
                     <div
                         aria-hidden="true"
                         className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 dark:bg-default-200 mt-2"
-                    ></div>
-                    <DrawerBody>
+                    />
+                    <DrawerBody className="my-2">
                         <RadioGroup
                             label="Mes Cercles"
                             defaultValue={circleId}

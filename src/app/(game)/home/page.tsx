@@ -33,6 +33,7 @@ export default async function IndexPage() {
                         size="lg"
                         showAnchorIcon
                         className="flex flex-col basis-1/2 h-28 lg:h-40 lg:text-xl"
+                        isDisabled
                     >
                         Créer
                     </Button>
@@ -45,6 +46,7 @@ export default async function IndexPage() {
                         size="lg"
                         showAnchorIcon
                         className="flex flex-col basis-1/2 h-28 lg:h-40 lg:text-xl"
+                        isDisabled
                     >
                         Rejoindre
                     </Button>

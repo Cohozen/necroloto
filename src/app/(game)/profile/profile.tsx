@@ -88,7 +88,7 @@ export default function Profile({ userDb }: ProfileProps) {
                             color="primary"
                             variant="solid"
                             radius="full"
-                            onClick={() => signOut()}
+                            onPress={() => signOut()}
                         >
                             Déconnexion
                         </Button>
