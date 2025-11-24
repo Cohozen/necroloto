@@ -20,7 +20,7 @@ export const metadata = {
 
 export default async function GameLayout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="fr">
+        <html lang="fr" suppressHydrationWarning>
             <body className="antialiased bg-background">
                 <Providers>{children}</Providers>
             </body>
