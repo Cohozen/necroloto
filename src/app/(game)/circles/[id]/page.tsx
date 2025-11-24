@@ -5,6 +5,7 @@ import React from "react";
 import { GetPositionOfUserForYear } from "@/lib/actions/bet";
 import { Card, CardBody, Button, Link } from "@nextui-org/react";
 import { SearchCelebrities } from "@/lib/api/celebrity";
+import { getCircle } from "@/lib/api/circle";
 
 export default async function CirclePage({ params }: { params: { id: string } }) {
     const user = await currentUser();
@@ -13,9 +14,11 @@ export default async function CirclePage({ params }: { params: { id: string } })
 
     const circleId = params.id;
     const currentYear = 2025;
-    const allowNewBet = process.env.ALLOW_NEW_BET;
 
     let currentRank = 0;
+
+    const circle = await getCircle(circleId);
+    if (!circle) throw new Error(`Circle with id ${circleId} not found`);
 
     const bets = await listBets<BetsWithUserAndCelebrities>({
         where: { year: currentYear, circleId },
@@ -91,24 +94,25 @@ export default async function CirclePage({ params }: { params: { id: string } })
                             <span className="font-bold text-3xl">{currentYear + 1}</span>
                         </CardBody>
                     </Card>
-                    <Card shadow="none" className="basis-1/2 h-32 lg:h-44">
-                        <CardBody className="justify-center">
-                            <span className="text-center lg:text-xl">A venir</span>
-                        </CardBody>
-                    </Card>
-                    {/*{allowNewBet === "true" && (*/}
-                    {/*    <Button*/}
-                    {/*        color="primary"*/}
-                    {/*        href={`/bet/${currentYear + 1}`}*/}
-                    {/*        as={Link}*/}
-                    {/*        variant="flat"*/}
-                    {/*        size="lg"*/}
-                    {/*        showAnchorIcon*/}
-                    {/*        className="flex flex-col basis-1/3 h-28 lg:h-40 lg:text-xl"*/}
-                    {/*    >*/}
-                    {/*        Prédire*/}
-                    {/*    </Button>*/}
-                    {/*)}*/}
+                    {(circle.allowNewBet && (
+                        <Button
+                            color="primary"
+                            href={`/bet/${currentYear + 1}`}
+                            as={Link}
+                            variant="flat"
+                            size="lg"
+                            showAnchorIcon
+                            className="flex flex-col basis-1/2 h-32 lg:h-44 lg:text-xl"
+                        >
+                            Prédire
+                        </Button>
+                    )) || (
+                        <Card shadow="none" className="basis-1/2 h-32 lg:h-44">
+                            <CardBody className="justify-center">
+                                <span className="text-center lg:text-xl">A venir</span>
+                            </CardBody>
+                        </Card>
+                    )}
                 </div>
             </div>
 
