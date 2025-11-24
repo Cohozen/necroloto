@@ -38,7 +38,7 @@ export default async function CelebrityPage({
         });
     }
 
-    const rankedBets = await RankBetsByYearWithTotalPoints(num, "points");
+    //const rankedBets = await RankBetsByYearWithTotalPoints(num, "points");
 
     const celebrities = await SearchCelebrities("", true, true);
     const celebritiesSorted =
@@ -55,7 +55,7 @@ export default async function CelebrityPage({
                     celebrity={celebrity}
                     celebrities={celebritiesSorted}
                     bets={bets}
-                    rankedBets={rankedBets}
+                    //rankedBets={rankedBets}
                     isAdmin={isAdmin}
                     year={num}
                 />
