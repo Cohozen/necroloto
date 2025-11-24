@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Key } from "react";
+import React, { useState, Key, useEffect } from "react";
 import { Celebrity } from "@prisma/client";
 import { useFilter } from "@react-aria/i18n";
 
@@ -14,16 +14,21 @@ import {
     Card,
     CardBody,
     CardHeader,
-    MenuTriggerAction
+    Drawer,
+    DrawerBody,
+    DrawerContent,
+    MenuTriggerAction,
+    useDisclosure
 } from "@nextui-org/react";
 import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { Drawer } from "vaul";
-import { createBetWithCelebritiesAction } from "@/lib/actions/bet";
+import { createBetWithCelebritiesAction, updateBetWithCelebritiesAction } from "@/lib/actions/bet";
+import { BetsWithCelebrities } from "@/lib/types/bet";
 
 interface BetCreateProps {
     year: number;
+    circleId: string;
     celebrities: Celebrity[];
+    bet: BetsWithCelebrities | null;
 }
 
 type AutocompleteState = {
@@ -32,13 +37,12 @@ type AutocompleteState = {
     items: Celebrity[];
 };
 
-export default function BetCreate({ year, celebrities }: BetCreateProps) {
+export default function UpsertBet({ year, circleId, celebrities, bet }: BetCreateProps) {
     const { user } = useUser();
-    const router = useRouter();
+    const { isOpen, onOpenChange: setConfirmationOpened, onClose } = useDisclosure();
 
     const maxCelebritiesInBet = 50;
 
-    const [confirmationOpened, setConfirmationOpened] = useState(false);
     const [fieldState, setFieldState] = useState<AutocompleteState>({
         selectedKey: null,
         inputValue: "",
@@ -112,20 +116,36 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
         setLoadingCreate(true);
 
         if (!user?.externalId) return;
-
-        const result = await createBetWithCelebritiesAction(
-            user.externalId,
-            year,
-            selectedCelebrities
-        );
+        await createBetWithCelebritiesAction(user.externalId, year, circleId, selectedCelebrities);
 
         setLoadingCreate(false);
-        router.push(`/bets/${result.id}`);
     };
+
+    const onUpdateBet = async () => {
+        setLoadingCreate(true);
+        if (!bet) return;
+
+        await updateBetWithCelebritiesAction(bet.id, selectedCelebrities);
+
+        setLoadingCreate(false);
+    };
+
+    const onConfirm = async () => {
+        if (bet) await onUpdateBet();
+        else await onCreateBet();
+        onClose();
+    };
+
+    useEffect(() => {
+        if (bet) {
+            const selected = bet.CelebritiesOnBet.map((c) => c.celebrityId);
+            setSelectedCelebrities(selected);
+        }
+    }, [bet]);
 
     return (
         <div className="flex flex-col gap-6">
-            <div className="text-xl font-medium">{`Mes prédictions pour l'année ${year}`}</div>
+            <h1 className="text-xl font-semibold">{`${bet ? "Modifier" : "Nouvelle"} prédiction ${year}`}</h1>
             <Progress
                 label="Progression de la prédiction"
                 value={selectedCelebrities.length}
@@ -164,6 +184,7 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
                     }}
                     description="Tu peux ajouter de nouvelles célébrités"
                     isDisabled={selectedCelebrities.length >= maxCelebritiesInBet}
+                    isVirtualized
                 >
                     {(celebrity) => (
                         <AutocompleteItem
@@ -228,59 +249,58 @@ export default function BetCreate({ year, celebrities }: BetCreateProps) {
                 color="primary"
                 variant="solid"
                 radius="full"
-                isDisabled={selectedCelebrities.length < maxCelebritiesInBet || loadingCreate}
-                onPress={() => setConfirmationOpened(true)}
+                // isDisabled={selectedCelebrities.length < maxCelebritiesInBet || loadingCreate}
+                onPress={() => setConfirmationOpened()}
             >
-                Valider la prédiction
+                Enregistrer la prédiction
             </Button>
 
-            <Drawer.Root
-                direction="bottom"
-                open={confirmationOpened}
+            <Drawer
+                isOpen={isOpen}
                 onOpenChange={setConfirmationOpened}
+                placement="bottom"
+                hideCloseButton
+                classNames={{
+                    base: "bg-background"
+                }}
             >
-                <Drawer.Portal>
-                    <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-                    <Drawer.Content className="bg-background flex flex-col rounded-t-2xl mt-24 h-fit fixed bottom-0 left-0 right-0 outline-none">
-                        <div className="p-4 bg-background rounded-t-2xl flex-1">
-                            <div
-                                aria-hidden
-                                className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 dark:bg-default-200 mb-8"
-                            />
-                            <div className="max-w-md mx-auto flex flex-col gap-4">
-                                <Drawer.Title className="text-xl font-medium">
-                                    Confirmation
-                                </Drawer.Title>
-                                <p>
-                                    Vérifie bien ta prédiction avant de la valider, il serait
-                                    dommage de se tromper !
-                                </p>
-                                <div className="flex flex-row gap-2">
-                                    <Button
-                                        color="default"
-                                        variant="ghost"
-                                        radius="full"
-                                        className="basis-1/2"
-                                        onPress={() => setConfirmationOpened(false)}
-                                    >
-                                        Retour
-                                    </Button>
-                                    <Button
-                                        color="primary"
-                                        variant="solid"
-                                        radius="full"
-                                        className="basis-1/2"
-                                        isLoading={loadingCreate}
-                                        onPress={() => onCreateBet()}
-                                    >
-                                        Confirmer
-                                    </Button>
-                                </div>
-                            </div>
+                <DrawerContent>
+                    <div
+                        aria-hidden="true"
+                        className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 dark:bg-default-200 mt-2"
+                    />
+                    <DrawerBody className="my-2">
+                        <div className="text-xl font-medium">Confirmation</div>
+                        <p className="text-sm">
+                            Vérifie bien ta prédiction, il serait dommage de se tromper !
+                        </p>
+                        <p className="text-sm">
+                            Tu as jusqu'au 31 décembre à 23h59 pour modifier la prédiction.
+                        </p>
+                        <div className="flex flex-row gap-2 mt-2">
+                            <Button
+                                color="default"
+                                variant="ghost"
+                                radius="full"
+                                className="basis-1/2"
+                                onPress={() => onClose()}
+                            >
+                                Retour
+                            </Button>
+                            <Button
+                                color="primary"
+                                variant="solid"
+                                radius="full"
+                                className="basis-1/2"
+                                isLoading={loadingCreate}
+                                onPress={() => onConfirm()}
+                            >
+                                Confirmer
+                            </Button>
                         </div>
-                    </Drawer.Content>
-                </Drawer.Portal>
-            </Drawer.Root>
+                    </DrawerBody>
+                </DrawerContent>
+            </Drawer>
         </div>
     );
 }

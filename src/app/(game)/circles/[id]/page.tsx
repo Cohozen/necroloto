@@ -1,11 +1,12 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
-import { listBets } from "@/lib/api/bet";
+import { BetsWithCelebrities, BetsWithUserAndCelebrities } from "@/lib/types/bet";
+import { getBetByUserAndYearAndCircle, listBets } from "@/lib/api/bet";
 import React from "react";
 import { GetPositionOfUserForYear } from "@/lib/actions/bet";
 import { Card, CardBody, Button, Link } from "@nextui-org/react";
 import { SearchCelebrities } from "@/lib/api/celebrity";
 import { getCircle } from "@/lib/api/circle";
+import CurrentBet from "./currentBet";
 
 export default async function CirclePage({ params }: { params: { id: string } }) {
     const user = await currentUser();
@@ -40,6 +41,11 @@ export default async function CirclePage({ params }: { params: { id: string } })
             "points"
         );
     }
+
+    const allowNewBet = circle.allowNewBet && new Date().getFullYear() === currentYear;
+    const currentNewBet: BetsWithCelebrities | null = user?.externalId
+        ? await getBetByUserAndYearAndCircle(user.externalId, currentYear + 1, params.id)
+        : null;
 
     return (
         <div className="flex flex-col gap-6 p-4 md:p-6">
@@ -94,37 +100,42 @@ export default async function CirclePage({ params }: { params: { id: string } })
                             <span className="font-bold text-3xl">{currentYear + 1}</span>
                         </CardBody>
                     </Card>
-                    {(circle.allowNewBet && (
+                    {allowNewBet && (
                         <Button
                             color="primary"
-                            href={`/bet/${currentYear + 1}`}
+                            href={`/circles/${circleId}/bet/${currentYear + 1}`}
                             as={Link}
                             variant="flat"
                             size="lg"
                             showAnchorIcon
                             className="flex flex-col basis-1/2 h-32 lg:h-44 lg:text-xl"
                         >
-                            Prédire
+                            {currentNewBet ? "Modifier" : "Prédire"}
                         </Button>
-                    )) || (
+                    )}
+                    {!allowNewBet && (
                         <Card shadow="none" className="basis-1/2 h-32 lg:h-44">
                             <CardBody className="justify-center">
-                                <span className="text-center lg:text-xl">A venir</span>
+                                <span className="text-center lg:text-xl">
+                                    {new Date().getFullYear() === currentYear
+                                        ? "A venir"
+                                        : "Passée"}
+                                </span>
                             </CardBody>
                         </Card>
                     )}
                 </div>
             </div>
 
-            {/*{myCurrentBet && (*/}
-            {/*    <div className="flex flex-col gap-4 mt-4">*/}
-            {/*        <div className="text-[28px] font-semibold mb-3 lg:mb-4">Ma prediction</div>*/}
+            {myCurrentBet && (
+                <div className="flex flex-col gap-4 mt-4">
+                    <div className="text-[28px] font-semibold mb-3 lg:mb-4">Ma prediction</div>
 
-            {/*        <div className="flex flex-row">*/}
-            {/*            <CurrentBet bet={myCurrentBet} rank={currentRank} />*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*)}*/}
+                    <div className="flex flex-row">
+                        <CurrentBet bet={myCurrentBet} rank={currentRank} />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

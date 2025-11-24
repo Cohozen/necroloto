@@ -1,6 +1,11 @@
 "use server";
 
-import { insertBetWithCelebrities, listBetsByYear, listBetsByYearAndCircle } from "@/lib/api/bet";
+import {
+    insertBetWithCelebrities,
+    listBetsByYear,
+    listBetsByYearAndCircle,
+    updateBetWithCelebrities
+} from "@/lib/api/bet";
 import { sortBy } from "lodash";
 import { revalidatePath } from "next/cache";
 
@@ -82,14 +87,24 @@ export async function GetCelebritiesAliveStats(userId: string, year: number) {
 export async function createBetWithCelebritiesAction(
     userId: string,
     year: number,
+    circleId: string,
     celebrities: string[]
 ) {
     const bet = {
-        userId: userId,
-        year: year
+        userId,
+        year,
+        circleId
     };
 
     const result = await insertBetWithCelebrities(bet, celebrities);
+
+    revalidatePath("/bets");
+
+    return result;
+}
+
+export async function updateBetWithCelebritiesAction(betId: string, celebrities: string[]) {
+    const result = await updateBetWithCelebrities(betId, celebrities);
 
     revalidatePath("/bets");
 

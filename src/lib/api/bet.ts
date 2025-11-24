@@ -2,7 +2,7 @@ import { Bet, CelebritiesOnBet, Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { unstable_cache, revalidateTag } from "next/cache";
 
-type CreatedBet = Pick<Bet, "userId" | "year">;
+type CreatedBet = Pick<Bet, "userId" | "year" | "circleId">;
 
 export const getBet = unstable_cache(
     async (id: string) => {
@@ -32,12 +32,13 @@ export const getBetWithCelebrities = unstable_cache(
     { tags: ["bets", "celebrities"] }
 );
 
-export const getBetByUserAndYear = unstable_cache(
-    async (userId: string, year: number) => {
+export const getBetByUserAndYearAndCircle = unstable_cache(
+    async (userId: string, year: number, circleId: string) => {
         return prisma.bet.findFirst({
             where: {
                 userId,
-                year
+                year,
+                circleId
             },
             include: {
                 CelebritiesOnBet: { include: { celebrity: true } }
@@ -124,7 +125,8 @@ export const insertBetWithCelebrities = async (bet: CreatedBet, celebrities: str
             const createdBet = await tx.bet.create({
                 data: {
                     userId: bet.userId,
-                    year: bet.year
+                    year: bet.year,
+                    circleId: bet.circleId
                 }
             });
 
@@ -170,6 +172,66 @@ export const insertBetWithCelebrities = async (bet: CreatedBet, celebrities: str
             await Promise.all(celebritiesOnBetPromises);
 
             return createdBet;
+        },
+        { timeout: 60000 }
+    );
+
+    revalidateTag("bets");
+
+    return result;
+};
+
+export const updateBetWithCelebrities = async (betId: string, celebrities: string[]) => {
+    const result = prisma.$transaction(
+        async (tx) => {
+            await tx.celebritiesOnBet.deleteMany({
+                where: {
+                    betId: betId
+                }
+            });
+
+            const celebritiesOnBetPromises: Promise<CelebritiesOnBet>[] = [];
+
+            for (const celebrityKey of celebrities) {
+                let celebrityFound = await tx.celebrity.findUnique({
+                    where: { id: celebrityKey.trim() }
+                });
+
+                if (!celebrityFound)
+                    celebrityFound = await tx.celebrity.findFirst({
+                        where: { name: { equals: celebrityKey.trim(), mode: "insensitive" } }
+                    });
+
+                if (celebrityFound) {
+                    celebritiesOnBetPromises.push(
+                        tx.celebritiesOnBet.create({
+                            data: {
+                                betId: betId,
+                                celebrityId: celebrityFound.id
+                            }
+                        })
+                    );
+                } else {
+                    const createdCelebrity = await tx.celebrity.create({
+                        data: {
+                            name: celebrityKey.trim()
+                        }
+                    });
+
+                    celebritiesOnBetPromises.push(
+                        tx.celebritiesOnBet.create({
+                            data: {
+                                betId: betId,
+                                celebrityId: createdCelebrity.id
+                            }
+                        })
+                    );
+                }
+            }
+
+            await Promise.all(celebritiesOnBetPromises);
+
+            return tx.bet.update({ where: { id: betId }, data: { updatedAt: new Date() } });
         },
         { timeout: 60000 }
     );
