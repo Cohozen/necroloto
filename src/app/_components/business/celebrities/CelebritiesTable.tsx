@@ -24,7 +24,7 @@ interface CelebritiesTableProps {
 
 export default function CelebritiesTable({ celebrities, hideHeader }: CelebritiesTableProps) {
     return (
-        <Table removeWrapper hideHeader={hideHeader} fullWidth>
+        <Table removeWrapper hideHeader={hideHeader} fullWidth isVirtualized>
             <TableHeader>
                 <TableColumn>Célébrités</TableColumn>
                 <TableColumn align="center">Etat</TableColumn>
