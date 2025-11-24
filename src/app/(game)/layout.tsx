@@ -14,7 +14,7 @@ export default async function GameLayout({ children }: { children: React.ReactNo
     return (
         <div className="lg:flex lg:flex-row lg:gap-4">
             <SignedIn>
-                {/*<Navbar />*/}
+                <Navbar />
                 <Sidebar />
                 <BottomNav />
             </SignedIn>
