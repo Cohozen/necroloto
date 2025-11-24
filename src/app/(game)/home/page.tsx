@@ -15,9 +15,7 @@ export default async function IndexPage() {
 
     if (user) await CreateOrUpdateUserByClerkAuth(user);
 
-    if (user?.externalId) {
-        myCircles = await listCirclesByUserWithBets(user?.externalId);
-    }
+    if (user?.externalId) myCircles = await listCirclesByUserWithBets(user?.externalId);
 
     return (
         <div className="flex flex-col gap-6 p-4 md:p-6">
@@ -61,7 +59,9 @@ export default async function IndexPage() {
                     {myCircles &&
                         myCircles.map(async (c) => {
                             let currentRank = 0;
-                            const myCurrentBet = c.bets.find((b) => b.userId === user?.externalId);
+                            const myCurrentBet = c.bets.find(
+                                (b) => b.userId === user?.externalId && b.year === currentYear
+                            );
 
                             if (myCurrentBet) {
                                 currentRank = await GetPositionOfUserForYear(

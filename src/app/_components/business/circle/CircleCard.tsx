@@ -50,7 +50,7 @@ export default function CircleCard({ circle, currentRank }: CircleCardProps) {
                         {`${circle.memberships.length} participant${circle.memberships.length > 1 ? "s" : ""}`}
                     </span>
                     {currentRank > 0 ? (
-                        <span>{`${currentRank} / ${circle.bets.length}`}</span>
+                        <span>{`${currentRank} / ${circle.bets.map((b) => b.year === 2025).length}`}</span>
                     ) : (
                         "Non classé"
                     )}
