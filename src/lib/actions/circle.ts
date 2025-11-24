@@ -22,5 +22,5 @@ export async function updateCircleAction(circleId: string, allowNewBet: boolean)
 
     await updateCircle(circleToUpdate);
 
-    revalidateTag("circles");
+    revalidatePath("/circles");
 }

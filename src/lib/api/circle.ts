@@ -87,7 +87,7 @@ export const updateCircle = async (circle: Circle) => {
         }
     });
 
-    revalidateTag("celebrities");
+    revalidateTag("circles");
 
     return result;
 };
