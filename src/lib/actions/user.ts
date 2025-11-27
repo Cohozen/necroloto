@@ -2,9 +2,11 @@
 
 import { User } from "@prisma/client";
 import { findUserByClerkId, insertUser, updateUser } from "@/lib/api/user";
-import { clerkClient } from "@clerk/nextjs/server";
+import { createClerkClient } from "@clerk/nextjs/server";
 import { User as UserClerk } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
+
+const clerkClient = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY });
 
 export async function CreateOrUpdateUserByClerkAuth(clerkUser: UserClerk) {
     let userDb = await findUserByClerkId(clerkUser.id);

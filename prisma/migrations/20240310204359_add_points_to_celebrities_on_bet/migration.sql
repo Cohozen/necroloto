@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "CelebritiesOnBet" ADD COLUMN     "points" DOUBLE PRECISION NOT NULL DEFAULT 0;

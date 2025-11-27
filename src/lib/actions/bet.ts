@@ -1,13 +1,22 @@
 "use server";
 
-import { insertBetWithCelebrities, listBetsByYear } from "@/lib/api/bet";
+import {
+    insertBetWithCelebrities,
+    listBetsByYear,
+    listBetsByYearAndCircle,
+    updateBetWithCelebrities
+} from "@/lib/api/bet";
 import { sortBy } from "lodash";
 import { revalidatePath } from "next/cache";
 
 export type sortByRank = "points" | "death";
 
-export async function RankBetsByYearWithTotalPoints(year: number, sort: sortByRank) {
-    const bets = await listBetsByYear(year);
+export async function RankBetsByYearWithTotalPoints(
+    year: number,
+    circleId: string,
+    sort: sortByRank
+) {
+    const bets = await listBetsByYearAndCircle(year, circleId);
 
     const totals = bets?.map((b) => {
         const total = b.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0);
@@ -42,8 +51,13 @@ export async function RankBetsByYearWithTotalPoints(year: number, sort: sortByRa
     });
 }
 
-export async function GetPositionOfUserForYear(userId: string, year: number, sort: sortByRank) {
-    const bets = await RankBetsByYearWithTotalPoints(year, sort);
+export async function GetPositionOfUserForYear(
+    userId: string,
+    year: number,
+    circleId: string,
+    sort: sortByRank
+) {
+    const bets = await RankBetsByYearWithTotalPoints(year, circleId, sort);
 
     const currentBet = bets.find((b) => b.userId === userId);
 
@@ -73,14 +87,24 @@ export async function GetCelebritiesAliveStats(userId: string, year: number) {
 export async function createBetWithCelebritiesAction(
     userId: string,
     year: number,
+    circleId: string,
     celebrities: string[]
 ) {
     const bet = {
-        userId: userId,
-        year: year
+        userId,
+        year,
+        circleId
     };
 
     const result = await insertBetWithCelebrities(bet, celebrities);
+
+    revalidatePath("/bets");
+
+    return result;
+}
+
+export async function updateBetWithCelebritiesAction(betId: string, celebrities: string[]) {
+    const result = await updateBetWithCelebrities(betId, celebrities);
 
     revalidatePath("/bets");
 

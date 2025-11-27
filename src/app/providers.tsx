@@ -17,10 +17,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     const router = useRouter();
 
     return (
-        // @ts-ignore
         <ClerkProvider afterSignOutUrl="/" localization={frFR}>
             <NextUIProvider navigate={router.push}>
-                <NextThemesProvider attribute="class" defaultTheme="dark">
+                <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem>
                     {children}
                 </NextThemesProvider>
             </NextUIProvider>

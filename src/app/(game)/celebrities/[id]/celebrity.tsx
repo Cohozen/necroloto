@@ -33,7 +33,7 @@ interface CelebrityProps {
     celebrity: Celebrity;
     celebrities: Celebrity[];
     bets: BetsWithUserAndCelebritiesOnBet[];
-    rankedBets: RankedBets[];
+    //rankedBets: RankedBets[];
     isAdmin: boolean;
     year: number;
 }
@@ -42,7 +42,7 @@ export default function Celebrity({
     celebrity,
     celebrities,
     bets,
-    rankedBets,
+    //rankedBets,
     isAdmin,
     year
 }: CelebrityProps) {
@@ -120,93 +120,93 @@ export default function Celebrity({
 
                     <Divider className="my-1" />
 
-                    <Tabs
-                        fullWidth
-                        variant="bordered"
-                        color="primary"
-                        selectedKey={selectedTab}
-                        disabledKeys={disabledKey}
-                        onSelectionChange={(key) => setSelectedTab(key.toString())}
-                        items={tabs}
-                        radius="full"
-                    >
-                        {(item) => (
-                            <Tab key={item.id} title={item.label}>
-                                <Card>
-                                    <CardHeader className="flex flex-col">
-                                        <p className="text-lg font-medium text-center">
-                                            {`${usersWhoBetThisCelebrity?.length} Prédiction${
-                                                usersWhoBetThisCelebrity?.length > 1 ? "s" : ""
-                                            }`}
-                                        </p>
-                                    </CardHeader>
-                                    <Divider />
-                                    <CardBody>
-                                        <Table removeWrapper hideHeader>
-                                            <TableHeader>
-                                                <TableColumn>Nom</TableColumn>
-                                                <TableColumn align="center">Points</TableColumn>
-                                                <TableColumn align="center">Classement</TableColumn>
-                                                <TableColumn align="end">Action</TableColumn>
-                                            </TableHeader>
-                                            <TableBody
-                                                items={usersWhoBetThisCelebrity}
-                                                emptyContent="Aucune prédiction pour l'année sélectionnée"
-                                            >
-                                                {(item) => {
-                                                    const currentBet = rankedBets.find(
-                                                        (b) => b.userId === item.id
-                                                    );
+                    {/*<Tabs*/}
+                    {/*    fullWidth*/}
+                    {/*    variant="bordered"*/}
+                    {/*    color="primary"*/}
+                    {/*    selectedKey={selectedTab}*/}
+                    {/*    disabledKeys={disabledKey}*/}
+                    {/*    onSelectionChange={(key) => setSelectedTab(key.toString())}*/}
+                    {/*    items={tabs}*/}
+                    {/*    radius="full"*/}
+                    {/*>*/}
+                    {/*    {(item) => (*/}
+                    {/*        <Tab key={item.id} title={item.label}>*/}
+                    {/*            <Card>*/}
+                    {/*                <CardHeader className="flex flex-col">*/}
+                    {/*                    <p className="text-lg font-medium text-center">*/}
+                    {/*                        {`${usersWhoBetThisCelebrity?.length} Prédiction${*/}
+                    {/*                            usersWhoBetThisCelebrity?.length > 1 ? "s" : ""*/}
+                    {/*                        }`}*/}
+                    {/*                    </p>*/}
+                    {/*                </CardHeader>*/}
+                    {/*                <Divider />*/}
+                    {/*                <CardBody>*/}
+                    {/*                    <Table removeWrapper hideHeader>*/}
+                    {/*                        <TableHeader>*/}
+                    {/*                            <TableColumn>Nom</TableColumn>*/}
+                    {/*                            <TableColumn align="center">Points</TableColumn>*/}
+                    {/*                            <TableColumn align="center">Classement</TableColumn>*/}
+                    {/*                            <TableColumn align="end">Action</TableColumn>*/}
+                    {/*                        </TableHeader>*/}
+                    {/*                        <TableBody*/}
+                    {/*                            items={usersWhoBetThisCelebrity}*/}
+                    {/*                            emptyContent="Aucune prédiction pour l'année sélectionnée"*/}
+                    {/*                        >*/}
+                    {/*                            {(item) => {*/}
+                    {/*                                const currentBet = rankedBets.find(*/}
+                    {/*                                    (b) => b.userId === item.id*/}
+                    {/*                                );*/}
 
-                                                    const index = findIndex(
-                                                        rankedBets,
-                                                        (b) => b.total === currentBet?.total
-                                                    );
+                    {/*                                const index = findIndex(*/}
+                    {/*                                    rankedBets,*/}
+                    {/*                                    (b) => b.total === currentBet?.total*/}
+                    {/*                                );*/}
 
-                                                    return (
-                                                        <TableRow key={item.id}>
-                                                            <TableCell>
-                                                                <User
-                                                                    name={`${item.firstname} ${
-                                                                        item.lastname ?? ""
-                                                                    }`}
-                                                                    avatarProps={{
-                                                                        isBordered: true,
-                                                                        radius: "full",
-                                                                        size: "sm",
-                                                                        src: item.image ?? undefined
-                                                                    }}
-                                                                />
-                                                            </TableCell>
-                                                            <TableCell className="text-xs font-light">
-                                                                {`${currentBet?.total} Pts`}
-                                                            </TableCell>
-                                                            <TableCell className="text-xs font-light">
-                                                                {`${index + 1}${
-                                                                    index + 1 === 1 ? "er" : "ème"
-                                                                }`}
-                                                            </TableCell>
-                                                            <TableCell className="">
-                                                                <Button
-                                                                    isIconOnly
-                                                                    href={`/bets/${currentBet?.id}`}
-                                                                    as={Link}
-                                                                    color="primary"
-                                                                    showAnchorIcon
-                                                                    variant="flat"
-                                                                    size="sm"
-                                                                />
-                                                            </TableCell>
-                                                        </TableRow>
-                                                    );
-                                                }}
-                                            </TableBody>
-                                        </Table>
-                                    </CardBody>
-                                </Card>
-                            </Tab>
-                        )}
-                    </Tabs>
+                    {/*                                return (*/}
+                    {/*                                    <TableRow key={item.id}>*/}
+                    {/*                                        <TableCell>*/}
+                    {/*                                            <User*/}
+                    {/*                                                name={`${item.firstname} ${*/}
+                    {/*                                                    item.lastname ?? ""*/}
+                    {/*                                                }`}*/}
+                    {/*                                                avatarProps={{*/}
+                    {/*                                                    isBordered: true,*/}
+                    {/*                                                    radius: "full",*/}
+                    {/*                                                    size: "sm",*/}
+                    {/*                                                    src: item.image ?? undefined*/}
+                    {/*                                                }}*/}
+                    {/*                                            />*/}
+                    {/*                                        </TableCell>*/}
+                    {/*                                        <TableCell className="text-xs font-light">*/}
+                    {/*                                            {`${currentBet?.total} Pts`}*/}
+                    {/*                                        </TableCell>*/}
+                    {/*                                        <TableCell className="text-xs font-light">*/}
+                    {/*                                            {`${index + 1}${*/}
+                    {/*                                                index + 1 === 1 ? "er" : "ème"*/}
+                    {/*                                            }`}*/}
+                    {/*                                        </TableCell>*/}
+                    {/*                                        <TableCell className="">*/}
+                    {/*                                            <Button*/}
+                    {/*                                                isIconOnly*/}
+                    {/*                                                href={`/bets/${currentBet?.id}`}*/}
+                    {/*                                                as={Link}*/}
+                    {/*                                                color="primary"*/}
+                    {/*                                                showAnchorIcon*/}
+                    {/*                                                variant="flat"*/}
+                    {/*                                                size="sm"*/}
+                    {/*                                            />*/}
+                    {/*                                        </TableCell>*/}
+                    {/*                                    </TableRow>*/}
+                    {/*                                );*/}
+                    {/*                            }}*/}
+                    {/*                        </TableBody>*/}
+                    {/*                    </Table>*/}
+                    {/*                </CardBody>*/}
+                    {/*            </Card>*/}
+                    {/*        </Tab>*/}
+                    {/*    )}*/}
+                    {/*</Tabs>*/}
                 </>
             )}
 

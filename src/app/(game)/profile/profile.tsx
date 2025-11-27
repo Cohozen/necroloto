@@ -6,6 +6,7 @@ import { useAuth, useUser } from "@clerk/nextjs";
 import { ChevronRightIcon } from "@/ui/icons/ChevronRightIcon";
 import { GoogleIcon } from "@/ui/icons/GoogleIcon";
 import { User } from "@prisma/client";
+import ToggleTheme from "@/components/layout/toggleTheme";
 
 interface ProfileProps {
     userDb: User;
@@ -82,13 +83,18 @@ export default function Profile({ userDb }: ProfileProps) {
                                     <span className="text-gray-500">{userDb.email}</span>
                                 </div>
                             </ListboxItem>
+                            <ListboxItem key="theme" endContent={<ToggleTheme />}>
+                                <div className="flex justify-between">
+                                    <span>Thème</span>
+                                </div>
+                            </ListboxItem>
                         </Listbox>
 
                         <Button
                             color="primary"
                             variant="solid"
                             radius="full"
-                            onClick={() => signOut()}
+                            onPress={() => signOut()}
                         >
                             Déconnexion
                         </Button>
