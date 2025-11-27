@@ -21,6 +21,22 @@ export const listMembershipsByCircle = unstable_cache(
     { tags: ["memberships", "circles"] }
 );
 
+export const getMembershipsByCircle = unstable_cache(
+    async (circleId: string, userId) => {
+        return prisma.membership.findMany({
+            where: {
+                circleId,
+                userId
+            },
+            include: {
+                user: true
+            }
+        });
+    },
+    ["memberships-by-circle"],
+    { tags: ["memberships", "circles"] }
+);
+
 export const insertMembership = async (membership: CreatedMembership) => {
     const result = prisma.membership.create({
         data: {
