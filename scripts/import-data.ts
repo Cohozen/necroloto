@@ -15,6 +15,7 @@ async function main() {
     const circle = await prisma.circle.create({
         data: {
             name: "Les Angevins",
+            code: "VJ4ZB2MW",
             allowNewBet: false
         }
     });

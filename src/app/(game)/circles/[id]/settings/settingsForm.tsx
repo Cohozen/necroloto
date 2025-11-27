@@ -7,9 +7,10 @@ import { updateCircleAction } from "@/lib/actions/circle";
 
 interface SettingsFormProps {
     circle: Circle;
+    isAdmin: boolean;
 }
 
-export default function SettingsForm({ circle }: SettingsFormProps) {
+export default function SettingsForm({ circle, isAdmin }: SettingsFormProps) {
     const [allowNewBet, setAllowNewBet] = useState(circle.allowNewBet);
 
     const onUpdateAllowNewBet = async (value: boolean) => {
@@ -51,6 +52,7 @@ export default function SettingsForm({ circle }: SettingsFormProps) {
                     key="allowNewBet"
                     endContent={
                         <Switch
+                            isDisabled={!isAdmin}
                             color="secondary"
                             isSelected={allowNewBet}
                             aria-label="Allow new bet"
