@@ -12,13 +12,13 @@ export const viewport = {
 
 export default async function GameLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="lg:flex lg:flex-row lg:gap-4">
+        <div className="lg:gap-4">
             <SignedIn>
                 <Navbar />
-                <Sidebar />
+                {/*<Sidebar />*/}
                 <BottomNav />
             </SignedIn>
-            <main className="lg:max-w-[700px] xl:max-w-[1024px] lg:pl-40 w-full lg:mx-auto lg:py-16 pb-14">
+            <main className="lg:max-w-[700px] xl:max-w-[1024px] w-full lg:mx-auto lg:py-4 pb-14">
                 {children}
             </main>
         </div>
