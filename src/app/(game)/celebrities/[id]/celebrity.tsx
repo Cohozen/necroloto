@@ -120,6 +120,19 @@ export default function Celebrity({
 
                     <Divider className="my-1" />
 
+                    {isAdmin && mode === "consultation" && (
+                        <Button
+                            color="primary"
+                            variant="solid"
+                            fullWidth
+                            size="lg"
+                            onPress={() => setMode("editing")}
+                            startContent={<EditPenIcon className="w-5 h-5" />}
+                        >
+                            Modifier
+                        </Button>
+                    )}
+
                     {/*<Tabs*/}
                     {/*    fullWidth*/}
                     {/*    variant="bordered"*/}
@@ -208,22 +221,6 @@ export default function Celebrity({
                     {/*    )}*/}
                     {/*</Tabs>*/}
                 </>
-            )}
-
-            {isAdmin && mode === "consultation" && (
-                <div className="fixed bottom-4 right-4">
-                    <Button
-                        color="primary"
-                        variant="shadow"
-                        radius="full"
-                        size="lg"
-                        isIconOnly
-                        onPress={() => setMode("editing")}
-                        className=""
-                    >
-                        <EditPenIcon className="w-7 h-7" />
-                    </Button>
-                </div>
             )}
 
             {isAdmin && mode === "editing" && (
