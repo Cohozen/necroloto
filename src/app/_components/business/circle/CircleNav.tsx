@@ -38,7 +38,7 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
 
     const onPressReturn = (_e: PressEvent) => {
         if (pathnames.length >= 5 || pathnames[3] === "settings") router.back();
-        else if (pathnames.length === 3) router.push("/home/");
+        else if (pathnames.length === 3) router.push("/overview/");
         else router.push("/circles/");
     };
 

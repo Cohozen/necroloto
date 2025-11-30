@@ -39,7 +39,7 @@ export default function Navbar() {
                     </div>
                     <ul className="h-full flex-row flex-nowrap items-center justify-center hidden sm:flex gap-6">
                         <li className="text-medium whitespace-nowrap box-border list-none">
-                            <Link color="foreground" href="/home">
+                            <Link color="foreground" href="/overview">
                                 Necroloto
                             </Link>
                         </li>

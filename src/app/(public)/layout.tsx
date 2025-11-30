@@ -9,7 +9,7 @@ export const viewport = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const user = await currentUser();
-    if (user) redirect("/home");
+    if (user) redirect("/overview");
 
     return (
         <div className="relative overflow-hidden h-[100dvh] dark bg-background">{children}</div>
