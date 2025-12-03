@@ -87,7 +87,8 @@ export default function Celebrity({
                     <div className="flex flex-col gap-4">
                         <Avatar
                             isBordered
-                            src={celebrity.photo ?? undefined}
+                            src={`https://teqvyzkwfdewkklculpf.supabase.co/storage/v1/object/public/images/celebrities/${celebrity.id}`}
+                            showFallback
                             name={celebrity.name}
                             radius="md"
                             className="w-full h-56 md:h-80 text-large"

@@ -26,17 +26,24 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
     const [birthDate, setBirthDate] = useState<CalendarDate | null>(null);
     const [deathDate, setDeathDate] = useState<CalendarDate | null>(null);
     const [urlPhoto, setUrlPhoto] = useState<string | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [name, setName] = useState<string>("");
 
     const [key, setValue] = React.useState<React.Key | null>(null);
 
     const onUpdateCelebrity = async () => {
+        let formData = null;
+        if (selectedFile) {
+            formData = new FormData();
+            formData.append("file", selectedFile);
+        }
+
         await updateCelebrityAction(
             celebrity.id,
             name,
             birthDate ? new Date(birthDate.toString()).toISOString() : null,
             deathDate ? new Date(deathDate.toString()).toISOString() : null,
-            urlPhoto
+            formData
         );
 
         onBack();
@@ -50,6 +57,7 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
     const updateIsDisabled = () => {
         if (name?.length === 0) return true;
         if (birthDate === null) return true;
+        if (selectedFile) return false;
         if (celebrity.photo !== urlPhoto) return false;
         if (celebrity.name !== name) return false;
         if (!!birthDate && celebrity.birth && !deathDate) return true;
@@ -76,6 +84,33 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
     return (
         <div className="flex flex-col gap-4 h-screen">
             <div className="flex flex-col gap-4">
+                <div className="flex flex-row gap-4 items-center">
+                    <Avatar
+                        isBordered
+                        radius="full"
+                        size="md"
+                        src={
+                            urlPhoto ||
+                            `https://teqvyzkwfdewkklculpf.supabase.co/storage/v1/object/public/images/celebrities/${celebrity.id}`
+                        }
+                        className="shrink-0"
+                        showFallback
+                    />
+                    <Input
+                        type="file"
+                        accept="image/*"
+                        variant="bordered"
+                        label="Image"
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                setSelectedFile(file);
+                                setUrlPhoto(URL.createObjectURL(file));
+                            }
+                        }}
+                    />
+                </div>
+
                 <Input
                     isRequired
                     variant="bordered"
@@ -83,12 +118,6 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
                     value={name || ""}
                     onValueChange={setName}
                     isInvalid={name.length === 0}
-                />
-                <Input
-                    variant="bordered"
-                    label="Url photo"
-                    value={urlPhoto || ""}
-                    onValueChange={setUrlPhoto}
                 />
 
                 <DatePicker
