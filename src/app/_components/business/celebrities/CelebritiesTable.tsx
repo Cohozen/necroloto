@@ -36,12 +36,16 @@ export default function CelebritiesTable({ celebrities, hideHeader }: Celebritie
 
                     return (
                         <TableRow key={item.id}>
-                            <TableCell>
+                            <TableCell className="pl-0">
                                 <User
                                     avatarProps={{
-                                        radius: "lg",
-                                        src: item.photo || undefined,
-                                        name: item.name
+                                        radius: "full",
+                                        src: `https://teqvyzkwfdewkklculpf.supabase.co/storage/v1/object/public/images/celebrities/${item.id}`,
+                                        name: item.name,
+                                        showFallback: true
+                                    }}
+                                    classNames={{
+                                        name: "truncate w-32 lg:w-80"
                                     }}
                                     description={old ? `${old} ans` : "-"}
                                     name={item.name}

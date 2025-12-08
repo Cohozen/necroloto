@@ -2,7 +2,14 @@ import React from "react";
 
 import { Providers } from "./providers";
 
+import { Inter } from "next/font/google";
 import "./globals.css";
+
+const inter = Inter({
+    subsets: ["latin"],
+    display: "swap",
+    variable: "--font-inter"
+});
 
 export const metadata = {
     title: "Necroloto",
@@ -21,8 +28,13 @@ export const metadata = {
 export default async function GameLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="fr" suppressHydrationWarning>
-            <body className="antialiased bg-background">
-                <Providers>{children}</Providers>
+            <body
+                className={`${inter.className} overflow-y-scroll scroll-auto antialiased bg-background`}
+                suppressHydrationWarning
+            >
+                <div className="mx-auto max-w-screen-2xl">
+                    <Providers>{children}</Providers>
+                </div>
             </body>
         </html>
     );

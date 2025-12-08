@@ -1,4 +1,4 @@
-import CelebritiesList from "../../_components/business/celebrities/CelebritiesList";
+import CelebritiesList from "../../../_components/business/celebrities/CelebritiesList";
 import React from "react";
 import { listAllCelebrities, SearchCelebrities } from "@/lib/api/celebrity";
 

@@ -24,7 +24,7 @@ export default function NotFound() {
 
                 <Button
                     color="primary"
-                    href="/home"
+                    href="/overview"
                     as={Link}
                     variant="solid"
                     size="lg"

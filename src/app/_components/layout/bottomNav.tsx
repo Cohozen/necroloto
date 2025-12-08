@@ -32,8 +32,8 @@ export default function BottomNav() {
                 }}
             >
                 <Tab
-                    key="home"
-                    href="/home"
+                    key="overview"
+                    href="/overview"
                     title={
                         <div className="flex flex-col items-center gap-1">
                             <HomeIcon className="w-5 h-5" />

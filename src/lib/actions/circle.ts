@@ -1,8 +1,8 @@
 "use server";
 
 import { Circle } from "@prisma/client";
-import { getCircle, updateCircle } from "@/lib/api/circle";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { getCircle, listCirclesByUser, updateCircle } from "@/lib/api/circle";
+import { revalidatePath } from "next/cache";
 
 export async function updateCircleAction(circleId: string, allowNewBet: boolean) {
     const circle = await getCircle(circleId);
@@ -23,4 +23,8 @@ export async function updateCircleAction(circleId: string, allowNewBet: boolean)
     await updateCircle(circleToUpdate);
 
     revalidatePath("/circles");
+}
+
+export async function listCirclesByUserAction(circleId: string) {
+    return listCirclesByUser(circleId);
 }

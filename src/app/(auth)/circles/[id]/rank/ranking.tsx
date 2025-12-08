@@ -100,7 +100,7 @@ export default function Ranking({ circleId, bets, year }: RankingProps) {
                         {(item) => <SelectItem key={item.key}>{item.label}</SelectItem>}
                     </Select>
 
-                    <Card shadow="none">
+                    <Card shadow="none" className="bg-content2 dark:bg-content1">
                         <CardBody className="pb-0">
                             <div className="flex flex-row justify-center items-end md:pb-4">
                                 <div className="flex flex-col items-center gap-2">
@@ -359,6 +359,7 @@ export default function Ranking({ circleId, bets, year }: RankingProps) {
                                         fullWidth
                                         isPressable
                                         shadow="none"
+                                        className="bg-content2 dark:bg-content1"
                                     >
                                         <CardHeader className="flex gap-3">
                                             <div className="flex bg-default-300 p-2 rounded-xl h-full">

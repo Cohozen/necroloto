@@ -22,14 +22,14 @@ export default function CircleCard({ circle, currentRank }: CircleCardProps) {
                         isBordered
                         radius="full"
                         size="md"
-                        src="https://heroui.com/avatars/avatar-1.png"
+                        src={`https://teqvyzkwfdewkklculpf.supabase.co/storage/v1/object/public/images/circle/${circle.id}`}
                     />
                     <div className="flex flex-col gap-1 items-start justify-center">
                         <h4 className="text-small font-semibold leading-none text-default-600">
                             {circle.name}
                         </h4>
                         <h5 className="text-small tracking-tight text-default-400">
-                            {circle.visibility}
+                            {circle.visibility === "PRIVATE" ? "Privée" : "Public"}
                         </h5>
                     </div>
                 </div>

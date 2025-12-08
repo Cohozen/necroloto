@@ -17,29 +17,33 @@ import { useRouter } from "next/navigation";
 interface CelebrityUpdateProps {
     celebrity: Celebrity;
     celebrities: Celebrity[];
-    onBack: () => void;
 }
 
-export default function CelebrityUpdate({ celebrity, onBack, celebrities }: CelebrityUpdateProps) {
+export default function CelebrityUpdate({ celebrity, celebrities }: CelebrityUpdateProps) {
     const router = useRouter();
 
     const [birthDate, setBirthDate] = useState<CalendarDate | null>(null);
     const [deathDate, setDeathDate] = useState<CalendarDate | null>(null);
     const [urlPhoto, setUrlPhoto] = useState<string | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [name, setName] = useState<string>("");
 
     const [key, setValue] = React.useState<React.Key | null>(null);
 
     const onUpdateCelebrity = async () => {
+        let formData = null;
+        if (selectedFile) {
+            formData = new FormData();
+            formData.append("file", selectedFile);
+        }
+
         await updateCelebrityAction(
             celebrity.id,
             name,
             birthDate ? new Date(birthDate.toString()).toISOString() : null,
             deathDate ? new Date(deathDate.toString()).toISOString() : null,
-            urlPhoto
+            formData
         );
-
-        onBack();
     };
 
     const onMergeCelebrity = async () => {
@@ -50,6 +54,7 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
     const updateIsDisabled = () => {
         if (name?.length === 0) return true;
         if (birthDate === null) return true;
+        if (selectedFile) return false;
         if (celebrity.photo !== urlPhoto) return false;
         if (celebrity.name !== name) return false;
         if (!!birthDate && celebrity.birth && !deathDate) return true;
@@ -74,8 +79,35 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
     }, [celebrity]);
 
     return (
-        <div className="flex flex-col gap-4 h-screen">
-            <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3 h-full">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-row gap-3 items-center">
+                    <Avatar
+                        isBordered
+                        radius="full"
+                        size="md"
+                        src={
+                            urlPhoto ||
+                            `https://teqvyzkwfdewkklculpf.supabase.co/storage/v1/object/public/images/celebrities/${celebrity.id}`
+                        }
+                        className="shrink-0"
+                        showFallback
+                    />
+                    <Input
+                        type="file"
+                        accept="image/*"
+                        variant="bordered"
+                        label="Image"
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                setSelectedFile(file);
+                                setUrlPhoto(URL.createObjectURL(file));
+                            }
+                        }}
+                    />
+                </div>
+
                 <Input
                     isRequired
                     variant="bordered"
@@ -83,12 +115,6 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
                     value={name || ""}
                     onValueChange={setName}
                     isInvalid={name.length === 0}
-                />
-                <Input
-                    variant="bordered"
-                    label="Url photo"
-                    value={urlPhoto || ""}
-                    onValueChange={setUrlPhoto}
                 />
 
                 <DatePicker
@@ -131,7 +157,7 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
                     fullWidth
                     isVirtualized
                     onSelectionChange={setValue}
-                    description={`La célébrité ${celebrity.name} sera remplacé par celle sélectionné. Cela implique toutes les prédictions concernant ${celebrity.name}.`}
+                    description={`La célébrité '${celebrity.name}' sera remplacée par celle sélectionnée. Cela implique toutes les prédictions concernant '${celebrity.name}'.`}
                 >
                     {(item) => (
                         <AutocompleteItem key={item.id} textValue={item.name}>
@@ -140,7 +166,8 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
                                     alt={item.name}
                                     className="shrink-0"
                                     size="sm"
-                                    src={item.photo ?? undefined}
+                                    showFallback
+                                    src={`https://teqvyzkwfdewkklculpf.supabase.co/storage/v1/object/public/images/celebrities/${item.id}`}
                                 />
                                 <div className="flex flex-col">
                                     <span className="text-small">{item.name}</span>
@@ -158,10 +185,6 @@ export default function CelebrityUpdate({ celebrity, onBack, celebrities }: Cele
                     Fusionner
                 </Button>
             </div>
-
-            <Button color="secondary" variant="solid" onPress={onBack}>
-                Retour
-            </Button>
         </div>
     );
 }

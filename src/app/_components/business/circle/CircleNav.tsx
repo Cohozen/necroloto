@@ -38,7 +38,7 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
 
     const onPressReturn = (_e: PressEvent) => {
         if (pathnames.length >= 5 || pathnames[3] === "settings") router.back();
-        else if (pathnames.length === 3) router.push("/home/");
+        else if (pathnames.length === 3) router.push("/overview/");
         else router.push("/circles/");
     };
 
@@ -67,7 +67,7 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
                                     <Avatar
                                         isBordered
                                         radius="full"
-                                        src="https://heroui.com/avatars/avatar-1.png"
+                                        src={`https://teqvyzkwfdewkklculpf.supabase.co/storage/v1/object/public/images/circle/${selectedCircle.id}`}
                                         classNames={{
                                             base: "w-5 h-5 flex-shrink-0"
                                         }}
@@ -143,17 +143,35 @@ export default function CircleNav({ circleId, myCircles }: CircleNavProps) {
                                 return (
                                     <Radio
                                         key={c.id}
-                                        description={c.visibility}
                                         value={c.id}
                                         classNames={{
                                             base: cn(
                                                 "inline-flex m-0 bg-content1 hover:bg-content2 items-center justify-between",
-                                                "flex-row-reverse max-w-[800px] cursor-pointer rounded-lg gap-4 p-4 border-2 border-transparent",
+                                                "flex-row-reverse max-w-[8000px] cursor-pointer rounded-lg gap-4 p-3 border-2 border-transparent",
                                                 "data-[selected=true]:border-primary"
                                             )
                                         }}
                                     >
-                                        {c.name}
+                                        <div className="flex flex-row items-center gap-3">
+                                            <Avatar
+                                                isBordered
+                                                radius="full"
+                                                src={`https://teqvyzkwfdewkklculpf.supabase.co/storage/v1/object/public/images/circle/${c.id}`}
+                                                classNames={{
+                                                    base: "w-7 h-7 flex-shrink-0"
+                                                }}
+                                            />
+                                            <div className="flex flex-col items-start justify-center">
+                                                <span className="text-md font-medium">
+                                                    {c.name}
+                                                </span>
+                                                <span className="text-xs font-light">
+                                                    {c.visibility === "PRIVATE"
+                                                        ? "Privée"
+                                                        : "Public"}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </Radio>
                                 );
                             })}
