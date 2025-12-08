@@ -1,4 +1,5 @@
 import React from "react";
+import Navbar from "@/components/layout/navbar";
 
 export default async function MainLayout({
     children
@@ -6,8 +7,11 @@ export default async function MainLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="relative">
-            <div className="lg:px-10 lg:pt-7">{children}</div>
-        </div>
+        <>
+            <Navbar />
+            <div className="relative">
+                <div className="lg:px-10 lg:pt-7">{children}</div>
+            </div>
+        </>
     );
 }

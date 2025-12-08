@@ -1,6 +1,5 @@
 import React from "react";
 
-import Navbar from "@/components/layout/navbar";
 import Sidebar from "@/components/layout/sidebar";
 import BottomNav from "@/components/layout/bottomNav";
 
@@ -11,12 +10,9 @@ export const viewport = {
 export default async function AuthLayout({ children }: { children: React.ReactNode }) {
     return (
         <>
-            {/*<Navbar />*/}
             <Sidebar />
             <BottomNav />
-            <main className="lg:pl-72">
-                {children}
-            </main>
+            <main className="lg:pl-72">{children}</main>
         </>
     );
 }

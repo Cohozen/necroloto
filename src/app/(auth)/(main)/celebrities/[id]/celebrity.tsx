@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import CelebrityUpdate from "./celebrityUpdate";
+import CelebrityUpdate from "@/components/business/celebrities/celebrityUpdate";
 import {
     Avatar,
     Chip,
@@ -49,7 +49,6 @@ export default function Celebrity({
     const router = useRouter();
 
     const [selectedTab, setSelectedTab] = useState(year.toString());
-    const [mode, setMode] = useState("consultation");
 
     const tabs = [
         {
@@ -82,155 +81,144 @@ export default function Celebrity({
 
     return (
         <>
-            {mode === "consultation" && (
-                <>
-                    <div className="flex flex-col gap-4">
-                        <Avatar
-                            isBordered
-                            src={`https://teqvyzkwfdewkklculpf.supabase.co/storage/v1/object/public/images/celebrities/${celebrity.id}`}
-                            showFallback
-                            name={celebrity.name}
-                            radius="md"
-                            className="w-full h-56 md:h-80 text-large"
-                        />
+            <div className="flex flex-col gap-4">
+                <Avatar
+                    isBordered
+                    src={`https://teqvyzkwfdewkklculpf.supabase.co/storage/v1/object/public/images/celebrities/${celebrity.id}`}
+                    showFallback
+                    name={celebrity.name}
+                    radius="md"
+                    className="w-full h-56 md:h-80 text-large"
+                />
 
-                        <div className="text-3xl font-bold">{celebrity.name}</div>
+                <div className="text-3xl font-bold">{celebrity.name}</div>
 
-                        <div className="flex flex-row items-center gap-2">
-                            <Chip
-                                className="capitalize"
-                                color={celebrity.death ? "danger" : "success"}
-                                variant="flat"
-                            >
-                                {celebrity.death ? "Décédé" : "En vie"}
-                            </Chip>
+                <div className="flex flex-row items-center gap-2">
+                    <Chip
+                        className="capitalize"
+                        color={celebrity.death ? "danger" : "success"}
+                        variant="flat"
+                    >
+                        {celebrity.death ? "Décédé" : "En vie"}
+                    </Chip>
 
-                            {!!old && (
-                                <Chip className="capitalize" color="default" variant="flat">
-                                    {`${old} ans`}
-                                </Chip>
-                            )}
-
-                            {!!points && (
-                                <Chip className="capitalize" color="warning" variant="flat">
-                                    {celebrity.birth && `${points} point${points > 1 ? "s" : ""}`}
-                                </Chip>
-                            )}
-                        </div>
-                    </div>
-
-                    <Divider className="my-1" />
-
-                    {isAdmin && mode === "consultation" && (
-                        <Button
-                            color="primary"
-                            variant="solid"
-                            fullWidth
-                            size="lg"
-                            onPress={() => setMode("editing")}
-                            startContent={<EditPenIcon className="w-5 h-5" />}
-                        >
-                            Modifier
-                        </Button>
+                    {!!old && (
+                        <Chip className="capitalize" color="default" variant="flat">
+                            {`${old} ans`}
+                        </Chip>
                     )}
 
-                    {/*<Tabs*/}
-                    {/*    fullWidth*/}
-                    {/*    variant="bordered"*/}
-                    {/*    color="primary"*/}
-                    {/*    selectedKey={selectedTab}*/}
-                    {/*    disabledKeys={disabledKey}*/}
-                    {/*    onSelectionChange={(key) => setSelectedTab(key.toString())}*/}
-                    {/*    items={tabs}*/}
-                    {/*    radius="full"*/}
-                    {/*>*/}
-                    {/*    {(item) => (*/}
-                    {/*        <Tab key={item.id} title={item.label}>*/}
-                    {/*            <Card>*/}
-                    {/*                <CardHeader className="flex flex-col">*/}
-                    {/*                    <p className="text-lg font-medium text-center">*/}
-                    {/*                        {`${usersWhoBetThisCelebrity?.length} Prédiction${*/}
-                    {/*                            usersWhoBetThisCelebrity?.length > 1 ? "s" : ""*/}
-                    {/*                        }`}*/}
-                    {/*                    </p>*/}
-                    {/*                </CardHeader>*/}
-                    {/*                <Divider />*/}
-                    {/*                <CardBody>*/}
-                    {/*                    <Table removeWrapper hideHeader>*/}
-                    {/*                        <TableHeader>*/}
-                    {/*                            <TableColumn>Nom</TableColumn>*/}
-                    {/*                            <TableColumn align="center">Points</TableColumn>*/}
-                    {/*                            <TableColumn align="center">Classement</TableColumn>*/}
-                    {/*                            <TableColumn align="end">Action</TableColumn>*/}
-                    {/*                        </TableHeader>*/}
-                    {/*                        <TableBody*/}
-                    {/*                            items={usersWhoBetThisCelebrity}*/}
-                    {/*                            emptyContent="Aucune prédiction pour l'année sélectionnée"*/}
-                    {/*                        >*/}
-                    {/*                            {(item) => {*/}
-                    {/*                                const currentBet = rankedBets.find(*/}
-                    {/*                                    (b) => b.userId === item.id*/}
-                    {/*                                );*/}
+                    {!!points && (
+                        <Chip className="capitalize" color="warning" variant="flat">
+                            {celebrity.birth && `${points} point${points > 1 ? "s" : ""}`}
+                        </Chip>
+                    )}
+                </div>
+            </div>
 
-                    {/*                                const index = findIndex(*/}
-                    {/*                                    rankedBets,*/}
-                    {/*                                    (b) => b.total === currentBet?.total*/}
-                    {/*                                );*/}
+            <Divider className="my-1" />
 
-                    {/*                                return (*/}
-                    {/*                                    <TableRow key={item.id}>*/}
-                    {/*                                        <TableCell>*/}
-                    {/*                                            <User*/}
-                    {/*                                                name={`${item.firstname} ${*/}
-                    {/*                                                    item.lastname ?? ""*/}
-                    {/*                                                }`}*/}
-                    {/*                                                avatarProps={{*/}
-                    {/*                                                    isBordered: true,*/}
-                    {/*                                                    radius: "full",*/}
-                    {/*                                                    size: "sm",*/}
-                    {/*                                                    src: item.image ?? undefined*/}
-                    {/*                                                }}*/}
-                    {/*                                            />*/}
-                    {/*                                        </TableCell>*/}
-                    {/*                                        <TableCell className="text-xs font-light">*/}
-                    {/*                                            {`${currentBet?.total} Pts`}*/}
-                    {/*                                        </TableCell>*/}
-                    {/*                                        <TableCell className="text-xs font-light">*/}
-                    {/*                                            {`${index + 1}${*/}
-                    {/*                                                index + 1 === 1 ? "er" : "ème"*/}
-                    {/*                                            }`}*/}
-                    {/*                                        </TableCell>*/}
-                    {/*                                        <TableCell className="">*/}
-                    {/*                                            <Button*/}
-                    {/*                                                isIconOnly*/}
-                    {/*                                                href={`/bets/${currentBet?.id}`}*/}
-                    {/*                                                as={Link}*/}
-                    {/*                                                color="primary"*/}
-                    {/*                                                showAnchorIcon*/}
-                    {/*                                                variant="flat"*/}
-                    {/*                                                size="sm"*/}
-                    {/*                                            />*/}
-                    {/*                                        </TableCell>*/}
-                    {/*                                    </TableRow>*/}
-                    {/*                                );*/}
-                    {/*                            }}*/}
-                    {/*                        </TableBody>*/}
-                    {/*                    </Table>*/}
-                    {/*                </CardBody>*/}
-                    {/*            </Card>*/}
-                    {/*        </Tab>*/}
-                    {/*    )}*/}
-                    {/*</Tabs>*/}
-                </>
+            {isAdmin && (
+                <Button
+                    color="primary"
+                    variant="solid"
+                    fullWidth
+                    size="lg"
+                    as={Link}
+                    href={`/celebrities/${celebrity.id}/edit`}
+                    startContent={<EditPenIcon className="w-5 h-5" />}
+                >
+                    Modifier
+                </Button>
             )}
 
-            {isAdmin && mode === "editing" && (
-                <CelebrityUpdate
-                    celebrity={celebrity}
-                    celebrities={celebrities}
-                    onBack={() => setMode("consultation")}
-                />
-            )}
+            {/*<Tabs*/}
+            {/*    fullWidth*/}
+            {/*    variant="bordered"*/}
+            {/*    color="primary"*/}
+            {/*    selectedKey={selectedTab}*/}
+            {/*    disabledKeys={disabledKey}*/}
+            {/*    onSelectionChange={(key) => setSelectedTab(key.toString())}*/}
+            {/*    items={tabs}*/}
+            {/*    radius="full"*/}
+            {/*>*/}
+            {/*    {(item) => (*/}
+            {/*        <Tab key={item.id} title={item.label}>*/}
+            {/*            <Card>*/}
+            {/*                <CardHeader className="flex flex-col">*/}
+            {/*                    <p className="text-lg font-medium text-center">*/}
+            {/*                        {`${usersWhoBetThisCelebrity?.length} Prédiction${*/}
+            {/*                            usersWhoBetThisCelebrity?.length > 1 ? "s" : ""*/}
+            {/*                        }`}*/}
+            {/*                    </p>*/}
+            {/*                </CardHeader>*/}
+            {/*                <Divider />*/}
+            {/*                <CardBody>*/}
+            {/*                    <Table removeWrapper hideHeader>*/}
+            {/*                        <TableHeader>*/}
+            {/*                            <TableColumn>Nom</TableColumn>*/}
+            {/*                            <TableColumn align="center">Points</TableColumn>*/}
+            {/*                            <TableColumn align="center">Classement</TableColumn>*/}
+            {/*                            <TableColumn align="end">Action</TableColumn>*/}
+            {/*                        </TableHeader>*/}
+            {/*                        <TableBody*/}
+            {/*                            items={usersWhoBetThisCelebrity}*/}
+            {/*                            emptyContent="Aucune prédiction pour l'année sélectionnée"*/}
+            {/*                        >*/}
+            {/*                            {(item) => {*/}
+            {/*                                const currentBet = rankedBets.find(*/}
+            {/*                                    (b) => b.userId === item.id*/}
+            {/*                                );*/}
+
+            {/*                                const index = findIndex(*/}
+            {/*                                    rankedBets,*/}
+            {/*                                    (b) => b.total === currentBet?.total*/}
+            {/*                                );*/}
+
+            {/*                                return (*/}
+            {/*                                    <TableRow key={item.id}>*/}
+            {/*                                        <TableCell>*/}
+            {/*                                            <User*/}
+            {/*                                                name={`${item.firstname} ${*/}
+            {/*                                                    item.lastname ?? ""*/}
+            {/*                                                }`}*/}
+            {/*                                                avatarProps={{*/}
+            {/*                                                    isBordered: true,*/}
+            {/*                                                    radius: "full",*/}
+            {/*                                                    size: "sm",*/}
+            {/*                                                    src: item.image ?? undefined*/}
+            {/*                                                }}*/}
+            {/*                                            />*/}
+            {/*                                        </TableCell>*/}
+            {/*                                        <TableCell className="text-xs font-light">*/}
+            {/*                                            {`${currentBet?.total} Pts`}*/}
+            {/*                                        </TableCell>*/}
+            {/*                                        <TableCell className="text-xs font-light">*/}
+            {/*                                            {`${index + 1}${*/}
+            {/*                                                index + 1 === 1 ? "er" : "ème"*/}
+            {/*                                            }`}*/}
+            {/*                                        </TableCell>*/}
+            {/*                                        <TableCell className="">*/}
+            {/*                                            <Button*/}
+            {/*                                                isIconOnly*/}
+            {/*                                                href={`/bets/${currentBet?.id}`}*/}
+            {/*                                                as={Link}*/}
+            {/*                                                color="primary"*/}
+            {/*                                                showAnchorIcon*/}
+            {/*                                                variant="flat"*/}
+            {/*                                                size="sm"*/}
+            {/*                                            />*/}
+            {/*                                        </TableCell>*/}
+            {/*                                    </TableRow>*/}
+            {/*                                );*/}
+            {/*                            }}*/}
+            {/*                        </TableBody>*/}
+            {/*                    </Table>*/}
+            {/*                </CardBody>*/}
+            {/*            </Card>*/}
+            {/*        </Tab>*/}
+            {/*    )}*/}
+            {/*</Tabs>*/}
         </>
     );
 }
