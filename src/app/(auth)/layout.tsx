@@ -12,7 +12,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
         <>
             <Sidebar />
             <BottomNav />
-            <main className="lg:pl-72">{children}</main>
+            <main className="lg:pl-72 pb-[66px]">{children}</main>
         </>
     );
 }
