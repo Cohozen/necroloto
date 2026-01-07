@@ -42,7 +42,6 @@ export default async function CirclePage({ params }: { params: { id: string } })
         );
     }
 
-    const allowNewBet = circle.allowNewBet && new Date().getFullYear() === currentYear;
     const currentNewBet: BetsWithCelebrities | null = user?.externalId
         ? await getBetByUserAndYearAndCircle(user.externalId, currentYear + 1, params.id)
         : null;
@@ -100,7 +99,7 @@ export default async function CirclePage({ params }: { params: { id: string } })
                             <span className="font-bold text-3xl">{currentYear + 1}</span>
                         </CardBody>
                     </Card>
-                    {allowNewBet && (
+                    {circle.allowNewBet && (
                         <Button
                             color="primary"
                             href={`/circles/${circleId}/bet/${currentYear + 1}`}
@@ -113,7 +112,7 @@ export default async function CirclePage({ params }: { params: { id: string } })
                             {currentNewBet ? "Modifier" : "Prédire"}
                         </Button>
                     )}
-                    {!allowNewBet && (
+                    {!circle.allowNewBet && (
                         <Card shadow="none" className="basis-1/2 h-32 lg:h-44">
                             <CardBody className="justify-center">
                                 <span className="text-center lg:text-xl">
