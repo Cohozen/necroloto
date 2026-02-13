@@ -108,7 +108,7 @@ export default function Ranking({ circleId, bets, year }: RankingProps) {
                         <CardBody className="pb-0">
                             <div className="flex flex-row justify-center items-end md:pb-4">
                                 <div className="flex flex-col items-center gap-2">
-                                    {bets[2]?.user && (
+                                    {bets[2]?.user && betsThirdRank.length && (
                                         <Popover
                                             showArrow
                                             backdrop="opaque"
@@ -188,7 +188,7 @@ export default function Ranking({ circleId, bets, year }: RankingProps) {
                                 </div>
 
                                 <div className="flex flex-col items-center gap-2">
-                                    {bets[0]?.user && (
+                                    {bets[0]?.user && betsFirstRank.length && (
                                         <Popover
                                             showArrow
                                             backdrop="opaque"
@@ -268,7 +268,7 @@ export default function Ranking({ circleId, bets, year }: RankingProps) {
                                 </div>
 
                                 <div className="flex flex-col items-center gap-2">
-                                    {bets[1]?.user && (
+                                    {bets[1]?.user && betsSecondRank.length && (
                                         <Popover
                                             showArrow
                                             backdrop="opaque"
