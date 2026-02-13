@@ -26,6 +26,10 @@ export function BetsList({ bets, year, circleId }: BetsListProps) {
         {
             key: "2025",
             label: "2025"
+        },
+        {
+            key: "2026",
+            label: "2026"
         }
     ];
 

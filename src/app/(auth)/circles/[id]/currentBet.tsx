@@ -1,14 +1,6 @@
 "use client";
 
-import {
-    Card,
-    Button,
-    CardFooter,
-    CardBody,
-    Link,
-    Chip,
-    Progress
-} from "@nextui-org/react";
+import { Card, Button, CardFooter, CardBody, Link, Chip, Progress } from "@nextui-org/react";
 import { BetsWithUserAndCelebrities } from "@/lib/types/bet";
 import React from "react";
 import dayjs from "dayjs";
@@ -19,9 +11,10 @@ dayjs.extend(duration);
 interface CurrentBetProps {
     bet: BetsWithUserAndCelebrities;
     rank: number;
+    circleId: string;
 }
 
-export default async function CurrentBet({ bet, rank }: CurrentBetProps) {
+export default function CurrentBet({ bet, rank, circleId }: CurrentBetProps) {
     const total = bet?.CelebritiesOnBet.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
     const celebrities = bet?.CelebritiesOnBet.map((c) => c.celebrity);
 
@@ -77,7 +70,7 @@ export default async function CurrentBet({ bet, rank }: CurrentBetProps) {
                 </div>
                 <Button
                     color="primary"
-                    href={`/bets/${bet.id}`}
+                    href={`/circles/${circleId}/bets/${bet.id}`}
                     as={Link}
                     showAnchorIcon
                     variant="flat"

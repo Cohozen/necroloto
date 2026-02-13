@@ -10,7 +10,7 @@ export default async function RankPage({
     params: { id: string };
 }) {
     const { sort, year } = await searchParams;
-    const num = isNaN(parseInt(year, 10)) ? 2025 : parseInt(year, 10);
+    const num = isNaN(parseInt(year, 10)) ? 2026 : parseInt(year, 10);
 
     const bets = await RankBetsByYearWithTotalPoints(num, params.id, sort as sortByRank);
 

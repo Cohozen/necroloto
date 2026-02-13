@@ -11,7 +11,7 @@ export default async function BetsPage({
     params: { id: string };
 }) {
     const { year } = await searchParams;
-    const num = isNaN(parseInt(year, 10)) ? 2025 : parseInt(year, 10);
+    const num = isNaN(parseInt(year, 10)) ? 2026 : parseInt(year, 10);
 
     const bets = await listBets<BetsWithUserAndCelebrities>({
         where: { year: num, circleId: params.id },

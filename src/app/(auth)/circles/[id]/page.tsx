@@ -14,7 +14,7 @@ export default async function CirclePage({ params }: { params: { id: string } })
     // TODO Check membership current user
 
     const circleId = params.id;
-    const currentYear = 2025;
+    const currentYear = 2026;
 
     let currentRank = 0;
 
@@ -131,7 +131,7 @@ export default async function CirclePage({ params }: { params: { id: string } })
                     <div className="text-[28px] font-semibold mb-3 lg:mb-4">Ma prediction</div>
 
                     <div className="flex flex-row">
-                        <CurrentBet bet={myCurrentBet} rank={currentRank} />
+                        <CurrentBet bet={myCurrentBet} rank={currentRank} circleId={circleId} />
                     </div>
                 </div>
             )}

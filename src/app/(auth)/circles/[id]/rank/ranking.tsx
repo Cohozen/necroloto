@@ -55,6 +55,10 @@ export default function Ranking({ circleId, bets, year }: RankingProps) {
         {
             key: "2025",
             label: "2025"
+        },
+        {
+            key: "2026",
+            label: "2026"
         }
     ];
 
