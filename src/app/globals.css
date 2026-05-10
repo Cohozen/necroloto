@@ -1,12 +1,132 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@heroui/styles";
 
+/*
+ * HeroUI Theme Customization — "The Neon Nocturne"
+ * @see https://heroui.com/docs/react/getting-started/theming
+ */
 
-.no-bg {
-    background: none;
+:root,
+.light,
+.default,
+[data-theme="light"],
+[data-theme="default"] {
+    /* Theme Colors (Light Mode) */
+    --accent: oklch(54.13% 0.2466 293.00);
+    --accent-foreground: oklch(99.11% 0 0);
+    --background: oklch(97.02% 0.0000 293.00);
+    --border: oklch(90.00% 0.0000 293.00);
+    --danger: oklch(65.32% 0.2328 30.44);
+    --danger-foreground: oklch(99.11% 0 0);
+    --default: oklch(94.00% 0.0000 293.00);
+    --default-foreground: oklch(21.03% 0.0059 293.00);
+    --field-background: oklch(100.00% 0.0000 293.00);
+    --field-foreground: oklch(21.03% 0.0000 293.00);
+    --field-placeholder: oklch(55.17% 0.0000 293.00);
+    --focus: oklch(54.13% 0.2466 293.00);
+    --foreground: oklch(21.03% 0.0000 293.00);
+    --muted: oklch(55.17% 0.0000 293.00);
+    --overlay: oklch(100.00% 0.0000 293.00);
+    --overlay-foreground: oklch(21.03% 0.0000 293.00);
+    --scrollbar: oklch(87.10% 0.0000 293.00);
+    --segment: oklch(100.00% 0.0000 293.00);
+    --segment-foreground: oklch(21.03% 0.0000 293.00);
+    --separator: oklch(92.00% 0.0000 293.00);
+    --success: oklch(73.29% 0.1935 155.51);
+    --success-foreground: oklch(21.03% 0.0059 155.51);
+    --surface: oklch(100.00% 0.0000 293.00);
+    --surface-foreground: oklch(21.03% 0.0000 293.00);
+    --surface-secondary: oklch(95.24% 0.0000 293.00);
+    --surface-secondary-foreground: oklch(21.03% 0.0000 293.00);
+    --surface-tertiary: oklch(93.73% 0.0000 293.00);
+    --surface-tertiary-foreground: oklch(21.03% 0.0000 293.00);
+    --warning: oklch(78.19% 0.1585 77.03);
+    --warning-foreground: oklch(21.03% 0.0059 77.03);
+
+    /* Border Radius */
+    --radius: 0.75rem;
+    --field-radius: 1rem;
+
+    /* Font Family — Inter */
+    --font-sans: var(--font-inter);
 }
 
-.clerk-footer > :nth-child(2) {
-    display: none;
+.dark,
+[data-theme="dark"] {
+    color-scheme: dark;
+    /* Theme Colors (Dark Mode) — "The Neon Nocturne" palette */
+    --accent: oklch(54.13% 0.2466 293.00);
+    --accent-foreground: oklch(99.11% 0 0);
+    /* #131318 */
+    --background: oklch(8.20% 0.0050 293.00);
+    --border: oklch(28.00% 0.0050 293.00);
+    --danger: oklch(59.40% 0.1967 29.33);
+    --danger-foreground: oklch(99.11% 0 0);
+    /* #2a292f */
+    --default: oklch(18.50% 0.0050 293.00);
+    --default-foreground: oklch(99.11% 0 0);
+    /* #1b1b20 */
+    --field-background: oklch(12.50% 0.0050 293.00);
+    --field-foreground: oklch(99.11% 0.0000 293.00);
+    --field-placeholder: oklch(70.50% 0.0050 293.00);
+    --focus: oklch(54.13% 0.2466 293.00);
+    --foreground: oklch(89.50% 0.0050 293.00);
+    --muted: oklch(70.50% 0.0050 293.00);
+    /* #1b1b20 */
+    --overlay: oklch(12.50% 0.0050 293.00);
+    --overlay-foreground: oklch(89.50% 0.0050 293.00);
+    --scrollbar: oklch(70.50% 0.0050 293.00);
+    --segment: oklch(25.00% 0.0050 293.00);
+    --segment-foreground: oklch(99.11% 0.0000 293.00);
+    --separator: oklch(20.00% 0.0050 293.00);
+    --success: oklch(73.29% 0.1935 155.51);
+    --success-foreground: oklch(21.03% 0.0059 155.51);
+    /* #131318 — background = surface; sections separated by tonal shifts */
+    --surface: oklch(8.20% 0.0050 293.00);
+    --surface-foreground: oklch(89.50% 0.0050 293.00);
+    /* #1b1b20 */
+    --surface-secondary: oklch(12.50% 0.0050 293.00);
+    --surface-secondary-foreground: oklch(89.50% 0.0050 293.00);
+    /* #2a292f */
+    --surface-tertiary: oklch(18.50% 0.0050 293.00);
+    --surface-tertiary-foreground: oklch(89.50% 0.0050 293.00);
+    --warning: oklch(82.03% 0.1388 81.04);
+    --warning-foreground: oklch(21.03% 0.0059 77.03);
+
+    /* Font Family — Inter */
+    --font-sans: var(--font-inter);
+}
+
+/* ─── Custom design-system utilities ─────────────────────────── */
+
+/* Glassmorphism card */
+.glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Purple ambient glow */
+.neon-aura {
+    box-shadow: 0 10px 40px rgba(124, 58, 237, 0.12);
+}
+
+/* Subtle dot-grid — apply to an absolute full-size overlay div */
+.grid-texture {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
+    background-size: 40px 40px;
+}
+
+/* Purple-to-pink gradient text */
+.gradient-text {
+    background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Purple-to-pink gradient background */
+.gradient-bg {
+    background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
 }

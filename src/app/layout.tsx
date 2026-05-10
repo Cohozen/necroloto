@@ -1,40 +1,26 @@
-import React from "react";
-
-import { Providers } from "./providers";
-
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Providers } from "@/app/providers";
+
 import "./globals.css";
 
-const inter = Inter({
-    subsets: ["latin"],
-    display: "swap",
-    variable: "--font-inter"
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
-export const metadata = {
-    title: "Necroloto",
-    description: "Necroloto Application.",
-    generator: "Next.js",
-    manifest: "/site.webmanifest",
-    keywords: ["necroloto"],
-    authors: [{ name: "LE GAL Corentin" }],
-    icons: [
-        { rel: "apple-touch-icon", url: "/apple-touch-icon.png", sizes: "180x180" },
-        { rel: "icon", url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-        { rel: "shortcut icon", url: "/favicon.svg", type: "image/svg+xml" }
-    ]
+export const metadata: Metadata = {
+    title: "Necroloto — La compétition stratégique feutrée",
+    description:
+        "Formez vos cercles. Faites vos prédictions. Gravez votre nom dans l'éternité numérique."
 };
 
-export default async function GameLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+    children
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
     return (
-        <html lang="fr" suppressHydrationWarning>
-            <body
-                className={`${inter.className} overflow-y-scroll scroll-auto antialiased bg-background`}
-                suppressHydrationWarning
-            >
-                <div className="mx-auto max-w-screen-2xl">
-                    <Providers>{children}</Providers>
-                </div>
+        <html lang="fr" className={`dark ${inter.variable}`}>
+            <body className="min-h-full flex flex-col bg-[#131318] text-[#e4e1e9]">
+                <Providers>{children}</Providers>
             </body>
         </html>
     );

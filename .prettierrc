@@ -1,0 +1,10 @@
+{
+    "arrowParens": "always",
+    "singleQuote": false,
+    "tabWidth": 4,
+    "trailingComma": "none",
+    "printWidth": 100,
+    "importOrder": ["^@/ui/(.*)$", "^[./]"],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+}

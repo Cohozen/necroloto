@@ -3,15 +3,9 @@ import React from "react";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-export const viewport = {
-    themeColor: [{ media: "(prefers-color-scheme: light)", color: "#fff" }]
-};
-
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function PublicLayout({ children }: { children: React.ReactNode }) {
     const user = await currentUser();
     if (user) redirect("/overview");
 
-    return (
-        <div className="relative overflow-hidden h-[100dvh] dark bg-background">{children}</div>
-    );
+    return <div className="">{children}</div>;
 }
